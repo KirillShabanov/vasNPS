@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css"></style>
+    <title>Adminka NPS</title>
+</head>
+
+<body>
+    <div class="container" id="addNewOrder">
+        <h3>Создание заявки на обратную связь</h3>
+        <div>
+            <input type="text" name="" id="ownerFullName" placeholder="Полное имя Владельца">
+            <input type="text" name="" id="clientFullName" placeholder="Полное имя Клиента">
+            <input type="text" name="" id="phone1" placeholder="Телефон 1">
+            <input type="text" name="" id="phone2" placeholder="Телефон 2">
+            <input type="text" name="" id="vin" placeholder="VIN">
+            <input type="text" name="" id="regNum" placeholder="Гос. номер">
+            <input type="text" name="" id="brand" placeholder="Бренд">
+            <input type="text" name="" id="model" placeholder="Модель">
+            <input type="text" name="" id="masterName" placeholder="ФИО приемщика">
+            <input type="text" name="" id="department" placeholder="Направление">
+            <input type="text" name="" id="yearRelease" placeholder="Год выпуска">
+            <input type="text" name="" id="numOrderCreate" placeholder="Номер зн">
+            <input type="date" name="" id="dateOrderCreate">
+            <input type="text" name="" id="categoryCreate" placeholder="Категория">
+            <input type="text" name="" id="masterNameCreate" placeholder="ФИО Приемщика">
+            <button onclick="createOrder()" class="btn_user" type="submit">Добавить</button>
+        </div>
+    </div>
+    <div class="container" id="updateCallDateOrder">
+        <h3>Изменить дату обратной связи</h3>
+        <div>
+            <input type="text" name="" id="numOrderUpdate" placeholder="Номер зн">
+            <input type="date" name="" id="dateCallOrderUpdate">
+            <button onclick="updateCallDateOrder()" class="btn_user" type="submit">Изменить</button>
+        </div>
+    </div>
+    <div class="container" id="nps">
+        <h3>Оценка клиента при обратной связи</h3>
+        <div>
+            <input type="text" name="" id="numOrderCall" placeholder="Номер зн">
+            <input type="text" name="" id="npsCall" placeholder="Оценка клиента">
+            <input type="text" name="" id="adminCommentCall" placeholder="Комментарий коментарий">
+            <input type="text" name="" id="adminNameCall" placeholder="ФИО Администратора">
+            <button onclick="nps()" class="btn_user" type="submit">Сохранить</button>
+        </div>
+    </div>
+    <div class="container" id="callManager" style="margin-right: 35px;">
+        <h3>Назначить ответственного за обратную связь с клиентом</h3>
+        <div style="padding: 10px;">
+            <span>Кому: </span>
+            <input type="text" name="" id="callManagerToName" placeholder="ФИО Администратора">
+            <input type="text" name="" id="callManagerToEmail" placeholder="Email Администратора">
+            <input type="text" name="" id="callManagerToBrand" placeholder="Название бренда">
+            <button onclick="callManagerTo()" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div>
+            <span>Копия: </span>
+            <input type="text" name="" id="callManagerCcName" placeholder="ФИО Администратора">
+            <input type="text" name="" id="callManagerCcEmail" placeholder="Email Администратора">
+            <button onclick="callManagerCc()" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div style="padding: 15px;">
+            <span style="margin: 5px;">Список кому:</span>
+                <table id="tableNPSto" class="table table-striped" style="padding: 15px;">
+                </table>
+            <span style="margin: 5px;">Список копия:</span>
+                <table id="tableNPScc" class="table table-striped" style="padding: 15px;">
+                </table>
+        </div>
+    </div>
+
+    <div class="container" id="" style="margin-right: 35px;">
+        <h3>Настройка групп по сотрудникам</h3>
+        <div style="padding: 10px;">
+            <span>Сотрудник: </span>
+            <input type="text" name="" id="" placeholder="ФИО сотрудника">
+            <select name="Подразделение" id="">
+                <option value="1">ОТОА</option>
+                <option value="2">МКЦ</option>
+            </select>
+            <button onclick="" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div style="padding: 15px;">
+            <span style="margin: 5px;">Список ОТОА:</span>
+                <table id="" class="table table-striped" style="padding: 15px;">
+                </table>
+            <span style="margin: 5px;">Список МКЦ:</span>
+                <table id="" class="table table-striped" style="padding: 15px;">
+                </table>
+        </div>
+    </div>
+
+    <div class="container" id="">
+        <h3>Настройка категорий</h3>
+        <div style="padding: 10px;">
+            <span>Категория: </span>
+            <input type="text" name="" id="" placeholder="Наименование">
+            <button onclick="" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div style="padding: 15px;">
+            <span style="margin: 5px;">Категории на удаление:</span>
+                <table id="" class="table table-striped" style="padding: 15px;">
+                </table>
+        </div>
+    </div>
+
+
+
+
+    <div class="container" id="report" style="margin-top: 70px;">
+        <h3>Настройка адреса выгрузки отчёта</h3>
+        <div style="padding: 10px;">
+            <span>Кому: </span>
+            <input type="text" name="" id="managerToName" placeholder="ФИО Получателя">
+            <input type="text" name="" id="managerToEmail" placeholder="Email Получателя">
+            <button onclick="ManagerTo()" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div>
+            <span>Копия: </span>
+            <input type="text" name="" id="managerCcName" placeholder="ФИО Получателя">
+            <input type="text" name="" id="managerCcEmail" placeholder="Email Получателя">
+            <button onclick="ManagerCc()" class="btn_user" type="submit">Сохранить</button>
+        </div>
+        <div style="padding: 15px;">
+            <span style="margin: 5px;">Список кому:</span>
+                <table id="tableManagerNPSto" class="table table-striped" style="padding: 15px;">
+                </table>
+            <span style="margin: 5px;">Список копия:</span>
+                <table id="tableManagerNPScc" class="table table-striped" style="padding: 15px;">
+                </table>
+        </div>
+    </div>
+</body>
+
+    <script src="js/adminka.js"></script>
+
+</html>
