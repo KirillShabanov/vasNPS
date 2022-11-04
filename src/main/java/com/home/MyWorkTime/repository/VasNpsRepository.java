@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 
 public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
 
@@ -16,16 +19,19 @@ public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE vas_nps SET call_date = :call_date WHERE num_order = :num_order ", nativeQuery = true)
-    void updateCallDate(@Param("num_order") int num_order,
-                        @Param("call_date") String call_date);
+    @Query(value = "UPDATE vas_nps SET mail_date = :mailDate, admin_name = :adminName WHERE num_order = :numOrder ", nativeQuery = true)
+    void updateCallDate(@Param("numOrder") String numOrder,
+                        @Param("mailDate") Date mailDate,
+                        @Param("adminName") String adminName);
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE vas_nps SET nps = :nps, admin_comment = :admin_comment, admin_name = :admin_name, call_status = :call_status WHERE num_order = :num_order ", nativeQuery = true)
-    void npsCall(@Param("num_order") int num_order,
-                 @Param("nps") int nps,
-                 @Param("admin_comment") String admin_comment,
-                 @Param("admin_name") String admin_name,
-                 @Param("call_status") String call_status);
+    @Query(value = "UPDATE vas_nps SET nps = :nps, admin_comment = :adminComment, admin_name = :adminName, call_status = :callStatus, outgoing_call_date = :outgoingCallDate WHERE num_order = :numOrder ", nativeQuery = true)
+    void outgoingCall(@Param("numOrder") String numOrder,
+                      @Param("nps") int nps,
+                      @Param("adminComment") String adminComment,
+                      @Param("adminName") String adminName,
+                      @Param("callStatus") String callStatus,
+                      @Param("outgoingCallDate") Date outgoingCallDate);
+
 }

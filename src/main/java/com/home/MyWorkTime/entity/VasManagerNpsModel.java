@@ -24,4 +24,6 @@ public class VasManagerNpsModel {
     private String position;
     @Column
     private String brand;
+    @Column
+    private String organisation;
 }

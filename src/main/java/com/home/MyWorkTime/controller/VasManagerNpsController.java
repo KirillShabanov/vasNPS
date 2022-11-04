@@ -38,4 +38,19 @@ public class VasManagerNpsController {
         vasManagerNpsService.deleteNpsTo(id);
         return vasManagerNpsService.deleteNpsTo(id);
     }
+
+    @GetMapping("/findAllTechnical")
+    public List<VasManagerNpsModel> findAllTechnical(){
+        return vasManagerNpsService.findAllTechnical();
+    }
+
+    @GetMapping("/findAllBodyRepair")
+    public List<VasManagerNpsModel> findAllBodyRepair(){
+        return vasManagerNpsService.findAllBodyRepair();
+    }
+
+    @PostMapping("/saveManager")
+    public VasManagerNpsModel saveManager(@RequestBody VasManagerNpsModel vasManagerNpsModel){
+        return vasManagerNpsService.saveNpsCall(vasManagerNpsModel);
+    }
 }

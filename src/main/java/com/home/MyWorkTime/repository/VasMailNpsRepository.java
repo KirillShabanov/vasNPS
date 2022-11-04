@@ -9,21 +9,22 @@ import java.util.ArrayList;
 public interface VasMailNpsRepository extends JpaRepository<VasMailNpsModel, Long> {
 
     @Query(value = "SELECT * FROM vas_nps " +
-            "WHERE call_date = CURRENT_DATE() " +
-            "AND brand = 'KIA' " +
+            "WHERE mail_date = CURRENT_DATE() " +
+            "AND brand = 'Kia' " +
             "AND call_status = 'not call' ", nativeQuery = true)
     ArrayList<VasMailNpsModel> npsListKia();
 
     @Query(value = "SELECT * FROM vas_nps " +
-            "WHERE call_date = CURRENT_DATE() " +
-            "AND brand = 'SKODA' " +
+            "WHERE mail_date = CURRENT_DATE() " +
+            "AND brand = 'Skoda' " +
             "AND call_status = 'not call' ", nativeQuery = true)
     ArrayList<VasMailNpsModel> npsListSkoda();
 
     @Query(value = "SELECT * FROM vas_nps " +
-            "WHERE call_date = CURRENT_DATE() " +
-            "AND brand != 'KIA' " +
-            "AND brand != 'SKODA' " +
+            "WHERE mail_date = CURRENT_DATE() " +
+            "AND brand != 'Kia' " +
+            "AND brand != 'Skoda' " +
             "AND call_status = 'not call' ", nativeQuery = true)
     ArrayList<VasMailNpsModel> npsListMultibrand();
+
 }

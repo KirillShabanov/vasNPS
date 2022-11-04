@@ -35,4 +35,12 @@ public class VasManagerNpsService {
         vasManagerNpsRepository.deleteNpsTo(id);
         return null;
     }
+
+    public List<VasManagerNpsModel> findAllTechnical() {
+        return vasManagerNpsRepository.findAllTechnical();
+    }
+
+    public List<VasManagerNpsModel> findAllBodyRepair() {
+        return vasManagerNpsRepository.findAllBodyRepair();
+    }
 }

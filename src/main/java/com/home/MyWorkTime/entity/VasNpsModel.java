@@ -23,15 +23,15 @@ public class VasNpsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String owner_full_name;
+    private String client_surname;
     @Column
-    private String client_full_name;
+    private String client_name;
     @Column
     private String phone_1;
     @Column
     private String phone_2;
     @Column
-    private String vin;
+    private String vehicle_identification_number;
     @Column
     private String reg_num;
     @Column
@@ -39,21 +39,25 @@ public class VasNpsModel {
     @Column
     private String model;
     @Column
-    private Long year_release;
+    private String year_release;
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_order;
     @Column
-    private Long num_order;
+    private String num_order;
     @Column
-    private String master_name;
+    private String organisation;
     @Column
     private String department;
+    @Column
+    private String category;
+    @Column
+    private String master_name;
     @Column
     private Integer nps;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date call_date;
+    private Date mail_date;
     @Column
     private String call_status;
     @Column
@@ -63,6 +67,7 @@ public class VasNpsModel {
     private String admin_name;
     @Column
     private String admin_comment;
+
 
     public Date getDate_order() {
         return date_order;

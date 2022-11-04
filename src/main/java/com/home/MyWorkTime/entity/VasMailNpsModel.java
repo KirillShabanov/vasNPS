@@ -27,7 +27,7 @@ public class VasMailNpsModel {
     @Column
     private String phone_2;
     @Column
-    private String vin;
+    private String vehicle_identification_number;
     @Column
     private String reg_num;
     @Column
@@ -35,21 +35,25 @@ public class VasMailNpsModel {
     @Column
     private String model;
     @Column
-    private Long year_release;
+    private String year_release;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_order;
     @Column
-    private Long num_order;
+    private String num_order;
     @Column
-    private String master_name;
+    private String organisation;
     @Column
     private String department;
+    @Column
+    private String category;
+    @Column
+    private String master_name;
     @Column
     private Integer nps;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date call_date;
+    private Date mail_date;
     @Column
     private String call_status;
     @Column

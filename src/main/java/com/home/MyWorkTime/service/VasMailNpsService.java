@@ -7,19 +7,19 @@ import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Slf4j
@@ -29,6 +29,8 @@ public class VasMailNpsService {
     private final VasMailNpsRepository vasMailNpsRepository;
     private final JavaMailSender javaMailSender;
     private final VasManagerNpsRepository vasManagerNpsRepository;
+    private final HashMap<String, Double> npsReportWeek = new HashMap<>();
+    private final HashMap<String, Double> npsReportMonth = new HashMap<>();
 
     public VasMailNpsService(VasMailNpsRepository vasMailNpsRepository,
                              JavaMailSender javaMailSender,
@@ -39,7 +41,7 @@ public class VasMailNpsService {
     }
 
     @SneakyThrows
-    @Scheduled(cron = "1 00 20 * * *")
+    @Scheduled(cron = "1 00 00 * * *")
     private void SendVasNpsMail() {
         List<VasMailNpsModel> listKia = vasMailNpsRepository.npsListKia();
         List<VasMailNpsModel> listSkoda = vasMailNpsRepository.npsListSkoda();
@@ -73,60 +75,24 @@ public class VasMailNpsService {
         String setTo;
         String setCc;
 
-        HSSFWorkbook workbookNPSCall = new HSSFWorkbook(); // книга
+        HSSFWorkbook workbookNPSCall; // книга
         HSSFSheet sheetNPSCall;
         HSSFRow rowHeadNPSCall;
 
         String replace = addressListCopy.toString().replace("[", "").replace("]", ",");//Волшебная подсказка!!!!
-        System.out.println(replace);
+
         if (!(listKia.isEmpty())){
-            String file = "NPSkia.xls";
-
-            String npsSheet = "NPS_KIA";
-
-            sheetNPSCall = workbookNPSCall.createSheet(npsSheet); // лист
-            rowHeadNPSCall = sheetNPSCall.createRow((short)0); // строка
-
-            rowHeadNPSCall.createCell(0).setCellValue("No.");
-            rowHeadNPSCall.createCell(1).setCellValue("Фамилия");
-            rowHeadNPSCall.createCell(2).setCellValue("Имя");
-            rowHeadNPSCall.createCell(3).setCellValue("Телефон 1");
-            rowHeadNPSCall.createCell(4).setCellValue("Телефон 2");
-            rowHeadNPSCall.createCell(5).setCellValue("Номер З/Н");
-            rowHeadNPSCall.createCell(6).setCellValue("Оценка");
-            rowHeadNPSCall.createCell(7).setCellValue("Комментарий");
-            rowHeadNPSCall.createCell(8).setCellValue("Дата звонка");
-            rowHeadNPSCall.createCell(9).setCellValue("ФИО администратора");
-                for (int i=0; i< listKia.size(); i++) {
-                    HSSFRow rowNpsCall = sheetNPSCall.createRow((short) i+1);
-                    rowNpsCall.createCell(0).setCellValue(i + 1);
-                    rowNpsCall.createCell(1).setCellValue(listKia.get(i).getClient_surname());
-                    rowNpsCall.createCell(2).setCellValue(listKia.get(i).getClient_name());
-                    rowNpsCall.createCell(3).setCellValue(listKia.get(i).getPhone_1());
-                    if (listKia.get(i).getPhone_2() != null) {
-                        rowNpsCall.createCell(4).setCellValue(listKia.get(i).getPhone_2());
-                    } else {
-                        rowNpsCall.createCell(4).setCellValue("");
-                    }
-                    rowNpsCall.createCell(5).setCellValue(listKia.get(i).getNum_order());
-                    sheetNPSCall.autoSizeColumn(0);
-                    sheetNPSCall.autoSizeColumn(1);
-                    sheetNPSCall.autoSizeColumn(2);
-                    sheetNPSCall.autoSizeColumn(3);
-                    sheetNPSCall.autoSizeColumn(4);
-                    sheetNPSCall.autoSizeColumn(5);
-                    sheetNPSCall.autoSizeColumn(6);
-                    sheetNPSCall.autoSizeColumn(7);
-                    sheetNPSCall.autoSizeColumn(8);
-                    sheetNPSCall.autoSizeColumn(9);
-                }
-            FileOutputStream fileOut = new FileOutputStream(file);
-            workbookNPSCall.write(fileOut);
-            fileOut.close();
 
             setTo = addressListKia.toString().replace("[","").replace("]","");
             setCc = replace;
             InternetAddress[] setCopy = InternetAddress.parse(setCc);
+
+            List<VasMailNpsModel> numOrderList = vasMailNpsRepository.npsListKia();
+            ArrayList<Long> list = new ArrayList<>();
+            for (VasMailNpsModel vasMailNpsModel : numOrderList) {
+                list.add(Long.valueOf(vasMailNpsModel.getNum_order()));
+            }
+            String numOrder = list.toString().replace("[","").replace("]","");
 
             MimeMessage messageVasNpsMail = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(messageVasNpsMail, true, "UTF-8");
@@ -135,39 +101,41 @@ public class VasMailNpsService {
             helper.setCc(setCopy); //-копия
             helper.setSubject("NPS KIA");
             helper.setText("""
-                Добрый день! \s
-  
-                Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
-                После заполнения - отправить файл на электронную почту: k.shabanov@vitautocity.by \s
-                
-                Исходящий звонок осуществляется с ПН по ПТ, временная рамка с 10.00 до 17.00. \s
-                
-                При общении с клиентами придерживайтесь данного регламента разговора: \s
-                Добрый день, ..........! \s
-                Меня зовут ........ . Я представляю Автоцентр ВитебсАвтоСити. \s
-                В настоящее время мы проводим опрос, чтобы оценить степень удовлетворенности клиентов. \s
-                Это займет не более 2-х минут. \s
-                Мы будем очень признательны, если Вы примете участие в нашем опросе. \s
-                
-                ПРИ СОГЛАСИИ: \s
-                1. Как бы Вы оценили уровень сервисного обслуживания в целом? \s
-                2. Какова вероятность, что Вы порекомендуете данный автоцентр другим? (Данную оценку вносим в отчётный файл). \s
-                3. Будите ли Вы посещать наш автоцентр снова? \s
-                
-                ПОЗВОНИТЬ ПОЗЖЕ: \s
-                Благодарим Вас за участие в опросе. Наши сотрудники позвонят Вам позже. Когда Вам будет удобно, чтобы мы перезвонили? (Озвученное время записать в поле "Комментарий"). \s
-                
-                ОТКАЗ: \s
-                Я прошу прощения, если я Вас побеспокоил. Хорошего Вам дня. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - ОТКАЗ ОТ ОПРОСА). \s
-                
-                Нет ответа: \s
-                Не звонить более 3-х раз. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - АБОНЕНТ НЕ ОТВЕЧАЕТ). \s
-                
-                P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
-                P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
+                 Добрый день! \s
+                      
+                    Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
+                    Номера заказ-нарядов приведены ниже: \s
+                    \s"""
+                    + numOrder +
+                    """
+                                
+                    
+                    Исходящий звонок осуществляется с ПН по ПТ, временная рамка с 10.00 до 17.00. \s
+                    
+                    При общении с клиентами придерживайтесь данного регламента разговора: \s
+                    Добрый день, ..........! \s
+                    Меня зовут ........ . Я представляю Автоцентр ВитебсАвтоСити. \s
+                    В настоящее время мы проводим опрос, чтобы оценить степень удовлетворенности клиентов. \s
+                    Это займет не более 2-х минут. \s
+                    Мы будем очень признательны, если Вы примете участие в нашем опросе. \s
+                    
+                    ПРИ СОГЛАСИИ: \s
+                    1. Как бы Вы оценили уровень сервисного обслуживания в целом? \s
+                    2. Какова вероятность, что Вы порекомендуете данный автоцентр другим? (Данную оценку вносим в отчётный файл). \s
+                    3. Будите ли Вы посещать наш автоцентр снова? \s
+                    
+                    ПОЗВОНИТЬ ПОЗЖЕ: \s
+                    Благодарим Вас за участие в опросе. Наши сотрудники позвонят Вам позже. Когда Вам будет удобно, чтобы мы перезвонили? (Озвученное время записать в поле "Комментарий"). \s
+                    
+                    ОТКАЗ: \s
+                    Я прошу прощения, если я Вас побеспокоил. Хорошего Вам дня. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - ОТКАЗ ОТ ОПРОСА). \s
+                    
+                    Нет ответа: \s
+                    Не звонить более 3-х раз. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - АБОНЕНТ НЕ ОТВЕЧАЕТ). \s
+                    
+                    P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
+                    P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
 
-            FileSystemResource npsCall = new FileSystemResource(new File(file));
-            helper.addAttachment(file, npsCall);
             javaMailSender.send(messageVasNpsMail);
         } else {
             System.err.println("Список KIA пустой!!!");
@@ -201,10 +169,6 @@ public class VasMailNpsService {
             rowHeadNPSCall.createCell(17).setCellValue("Номер импортёра");
             rowHeadNPSCall.createCell(18).setCellValue("Номер дилера");
             rowHeadNPSCall.createCell(19).setCellValue("");
-            rowHeadNPSCall.createCell(20).setCellValue("Оценка");
-            rowHeadNPSCall.createCell(21).setCellValue("Комментарий");
-            rowHeadNPSCall.createCell(22).setCellValue("Дата звонка");
-            rowHeadNPSCall.createCell(23).setCellValue("ФИО администратора");
 
             for (int i=0; i< listSkoda.size(); i++) {
                 HSSFRow rowNpsCall = sheetNPSCall.createRow((short) i+1);
@@ -219,7 +183,7 @@ public class VasMailNpsService {
                 }
                 rowNpsCall.createCell(5).setCellValue("VitebskAutoCity");
                 rowNpsCall.createCell(6).setCellValue("");
-                rowNpsCall.createCell(7).setCellValue(listSkoda.get(i).getVin());
+                rowNpsCall.createCell(7).setCellValue(listSkoda.get(i).getVehicle_identification_number());
                 rowNpsCall.createCell(8).setCellValue(listSkoda.get(i).getReg_num());
                 rowNpsCall.createCell(9).setCellValue(listSkoda.get(i).getBrand());
                 rowNpsCall.createCell(10).setCellValue(listSkoda.get(i).getModel());
@@ -252,10 +216,6 @@ public class VasMailNpsService {
                 sheetNPSCall.autoSizeColumn(17);
                 sheetNPSCall.autoSizeColumn(18);
                 sheetNPSCall.autoSizeColumn(19);
-                sheetNPSCall.autoSizeColumn(20);
-                sheetNPSCall.autoSizeColumn(21);
-                sheetNPSCall.autoSizeColumn(22);
-                sheetNPSCall.autoSizeColumn(23);
 
             }
             FileOutputStream fileOut = new FileOutputStream(file);
@@ -275,8 +235,8 @@ public class VasMailNpsService {
             helper.setText("""
                 Добрый день! \s
   
-                Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
-                После заполнения - отправить файл на электронную почту: k.shabanov@vitautocity.by \s
+                Прошу Вас провести обратную связь с клиентами, информация по клиентам находится во вложенном файле. \s
+                
                 
                 Исходящий звонок осуществляется с ПН по ПТ, временная рамка с 10.00 до 17.00. \s
                 Использовать регламент SKODA. \s
@@ -291,69 +251,19 @@ public class VasMailNpsService {
             System.err.println("Список SKODA пустой!!!");
         }
 
-        if (!(listMultibrand.isEmpty())){
-            String file = "NPSmultibrand.xls";
-            String npsSheet = "NPS_Multibrand";
-
-            sheetNPSCall = workbookNPSCall.createSheet(npsSheet); // лист
-            rowHeadNPSCall = sheetNPSCall.createRow((short)0); // строка
-
-            rowHeadNPSCall.createCell(0).setCellValue("No.");
-            rowHeadNPSCall.createCell(1).setCellValue("Фамилия");
-            rowHeadNPSCall.createCell(2).setCellValue("Имя");
-            rowHeadNPSCall.createCell(3).setCellValue("Телефон 1");
-            rowHeadNPSCall.createCell(4).setCellValue("Телефон 2");
-            rowHeadNPSCall.createCell(5).setCellValue("Номер З/Н");
-            rowHeadNPSCall.createCell(6).setCellValue("Номер шасси");
-            rowHeadNPSCall.createCell(7).setCellValue("Гос.номер");
-            rowHeadNPSCall.createCell(8).setCellValue("Марка");
-            rowHeadNPSCall.createCell(9).setCellValue("Модель");
-            rowHeadNPSCall.createCell(10).setCellValue("Срок мастерской");
-            rowHeadNPSCall.createCell(11).setCellValue("Оценка");
-            rowHeadNPSCall.createCell(12).setCellValue("Комментарий");
-            rowHeadNPSCall.createCell(13).setCellValue("Дата звонка");
-            rowHeadNPSCall.createCell(14).setCellValue("ФИО администратора");
-            for (int i=0; i< listMultibrand.size(); i++) {
-                HSSFRow rowNpsCall = sheetNPSCall.createRow((short) i+1);
-                rowNpsCall.createCell(0).setCellValue(i + 1);
-                rowNpsCall.createCell(1).setCellValue(listMultibrand.get(i).getClient_surname());
-                rowNpsCall.createCell(2).setCellValue(listMultibrand.get(i).getClient_name());
-                rowNpsCall.createCell(3).setCellValue(listMultibrand.get(i).getPhone_1());
-                if (listMultibrand.get(i).getPhone_2() != null) {
-                    rowNpsCall.createCell(4).setCellValue(listMultibrand.get(i).getPhone_2());
-                } else {
-                    rowNpsCall.createCell(4).setCellValue("");
-                }
-                rowNpsCall.createCell(5).setCellValue(listMultibrand.get(i).getNum_order());
-                rowNpsCall.createCell(6).setCellValue(listMultibrand.get(i).getVin());
-                rowNpsCall.createCell(7).setCellValue(listMultibrand.get(i).getReg_num());
-                rowNpsCall.createCell(8).setCellValue(listMultibrand.get(i).getBrand());
-                rowNpsCall.createCell(9).setCellValue(listMultibrand.get(i).getModel());
-                rowNpsCall.createCell(10).setCellValue(formatDate.format(listMultibrand.get(i).getDate_order()));
-                sheetNPSCall.autoSizeColumn(0);
-                sheetNPSCall.autoSizeColumn(1);
-                sheetNPSCall.autoSizeColumn(2);
-                sheetNPSCall.autoSizeColumn(3);
-                sheetNPSCall.autoSizeColumn(4);
-                sheetNPSCall.autoSizeColumn(5);
-                sheetNPSCall.autoSizeColumn(6);
-                sheetNPSCall.autoSizeColumn(7);
-                sheetNPSCall.autoSizeColumn(8);
-                sheetNPSCall.autoSizeColumn(9);
-                sheetNPSCall.autoSizeColumn(10);
-                sheetNPSCall.autoSizeColumn(11);
-                sheetNPSCall.autoSizeColumn(12);
-                sheetNPSCall.autoSizeColumn(13);
-                sheetNPSCall.autoSizeColumn(14);
-            }
-            FileOutputStream fileOut = new FileOutputStream(file);
-            workbookNPSCall.write(fileOut);
-            fileOut.close();
-
-            setTo = addressListMultibrand.toString().replace("[","").replace("]","");
+        //Письмо multibrand
+        if (!(listMultibrand.isEmpty())) {
+            setTo = addressListMultibrand.toString().replace("[", "").replace("]", "");
             setCc = replace;
 
             InternetAddress[] setCopy = InternetAddress.parse(setCc);
+
+            List<VasMailNpsModel> numOrderList = vasMailNpsRepository.npsListMultibrand();
+            ArrayList<Long> list = new ArrayList<>();
+            for (VasMailNpsModel vasMailNpsModel : numOrderList) {
+                list.add(Long.valueOf(vasMailNpsModel.getNum_order()));
+            }
+            String numOrder = list.toString().replace("[", "").replace("]", "");
 
             MimeMessage messageVasNpsMail = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(messageVasNpsMail, true, "UTF-8");
@@ -362,53 +272,327 @@ public class VasMailNpsService {
             helper.setCc(setCopy); //-копия
             helper.setSubject("NPS Multibrand");
             helper.setText("""
-                Добрый день! \s
-  
-                Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
-                После заполнения - отправить файл на электронную почту: k.shabanov@vitautocity.by \s
-                
-                Исходящий звонок осуществляется с ПН по ПТ, временная рамка с 10.00 до 17.00. \s
-                
-                При общении с клиентами придерживайтесь данного регламента разговора: \s
-                Добрый день, ..........! \s
-                Меня зовут ........ . Я представляю Автоцентр ВитебсАвтоСити. \s
-                В настоящее время мы проводим опрос, чтобы оценить степень удовлетворенности клиентов. \s
-                Это займет не более 2-х минут. \s
-                Мы будем очень признательны, если Вы примете участие в нашем опросе. \s
-                
-                ПРИ СОГЛАСИИ: \s
-                1. Как бы Вы оценили уровень сервисного обслуживания в целом? \s
-                2. Какова вероятность, что Вы порекомендуете данный автоцентр другим? (Данную оценку вносим в отчётный файл). \s
-                3. Будите ли Вы посещать наш автоцентр снова? \s
-                
-                ПОЗВОНИТЬ ПОЗЖЕ: \s
-                Благодарим Вас за участие в опросе. Наши сотрудники позвонят Вам позже. Когда Вам будет удобно, чтобы мы перезвонили? (Озвученное время записать в поле "Комментарий"). \s
-                
-                ОТКАЗ: \s
-                Я прошу прощения, если я Вас побеспокоил. Хорошего Вам дня. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - ОТКАЗ ОТ ОПРОСА). \s
-                
-                Нет ответа: \s
-                Не звонить более 3-х раз. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - АБОНЕНТ НЕ ОТВЕЧАЕТ). \s
-                
-                P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
-                P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
-
-            FileSystemResource npsCall = new FileSystemResource(new File(file));
-            helper.addAttachment(file, npsCall);
+                    Добрый день! \s
+                      
+                    Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
+                    Номера заказ-нарядов приведены ниже: \s
+                    \s"""
+                    + numOrder +
+                    """
+                                        
+                                            
+                            Исходящий звонок осуществляется с ПН по ПТ, временная рамка с 10.00 до 17.00. \s
+                                            
+                            При общении с клиентами придерживайтесь данного регламента разговора: \s
+                            Добрый день, ..........! \s
+                            Меня зовут ........ . Я представляю Автоцентр ВитебсАвтоСити. \s
+                            В настоящее время мы проводим опрос, чтобы оценить степень удовлетворенности клиентов. \s
+                            Это займет не более 2-х минут. \s
+                            Мы будем очень признательны, если Вы примете участие в нашем опросе. \s
+                                            
+                            ПРИ СОГЛАСИИ: \s
+                            1. Как бы Вы оценили уровень сервисного обслуживания в целом? \s
+                            2. Какова вероятность, что Вы порекомендуете данный автоцентр другим? (Данную оценку вносим в отчётный файл). \s
+                            3. Будите ли Вы посещать наш автоцентр снова? \s
+                                            
+                            ПОЗВОНИТЬ ПОЗЖЕ: \s
+                            Благодарим Вас за участие в опросе. Наши сотрудники позвонят Вам позже. Когда Вам будет удобно, чтобы мы перезвонили? (Озвученное время записать в поле "Комментарий"). \s
+                                            
+                            ОТКАЗ: \s
+                            Я прошу прощения, если я Вас побеспокоил. Хорошего Вам дня. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - ОТКАЗ ОТ ОПРОСА). \s
+                                            
+                            Нет ответа: \s
+                            Не звонить более 3-х раз. (Оценка ставим НОЛЬ, в поле "Комментарий" записываем - АБОНЕНТ НЕ ОТВЕЧАЕТ). \s
+                                            
+                            P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
+                            P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
             javaMailSender.send(messageVasNpsMail);
         } else {
-            System.err.println("Список Multibrand пустой!!!");
+            System.err.println("Список Multibrand пустой!");
+        }
+    }
+
+    @Scheduled(fixedDelay = 5000)
+    private void startReportNPS(){
+        gradeNpsNameTechnicalWeek();
+        gradeNpsNameBodyRepairWeek();
+        gradeNpsDepartmentWeek();
+        gradeNpsOrganisationWeek();
+        gradeNpsOrganisationMonth();
+        gradeNpsDepartmentMonth();
+        gradeNpsNameBodyRepairMonth();
+        gradeNpsNameTechnicalMonth();
+        createCurrentReport();
+    }
+
+    private void gradeNpsNameTechnicalWeek(){
+
+        String[] name = vasManagerNpsRepository.gradeNpsNameTech();
+
+        for (String s : name) {
+            double promoter = vasManagerNpsRepository.gradeNpsPromoterWeek(s);
+            double critic = vasManagerNpsRepository.gradeNpsCriticWeek(s);
+            double all = vasManagerNpsRepository.gradeNpsAllWeek(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportWeek.put(s, NPS);
+        }
+    }
+
+    private void gradeNpsNameBodyRepairWeek(){
+
+        String[] name = vasManagerNpsRepository.gradeNpsNameBodyRepair();
+
+        for (String s : name) {
+            double promoter = vasManagerNpsRepository.gradeNpsPromoterWeek(s);
+            double critic = vasManagerNpsRepository.gradeNpsCriticWeek(s);
+            double all = vasManagerNpsRepository.gradeNpsAllWeek(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportWeek.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsDepartmentWeek() {
+
+        String[] department = new String[]{"OTOA", "МКЦ"};
+
+        for (String s : department) {
+            double promoter = vasManagerNpsRepository.gradeNpsDepartmentPromoterWeek(s);
+            double critic = vasManagerNpsRepository.gradeNpsDepartmentCriticWeek(s);
+            double all = vasManagerNpsRepository.gradeNpsDepartmentAllWeek(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportWeek.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsOrganisationWeek() {
+
+        String[] organisation = new String[]{"ВитебскАвтоСити", "Джи-Моторс"};
+
+        for (String s : organisation) {
+            double promoter = vasManagerNpsRepository.gradeNpsOrganisationPromoterWeek(s);
+            double critic = vasManagerNpsRepository.gradeNpsOrganisationCriticWeek(s);
+            double all = vasManagerNpsRepository.gradeNpsOrganisationAllWeek(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportWeek.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsNameTechnicalMonth() {
+
+        String[] name = vasManagerNpsRepository.gradeNpsNameTech();
+
+        for (String s : name) {
+            double promoter = vasManagerNpsRepository.gradeNpsPromoterMonth(s);
+            double critic = vasManagerNpsRepository.gradeNpsCriticMonth(s);
+            double all = vasManagerNpsRepository.gradeNpsAllMonth(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportMonth.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsNameBodyRepairMonth() {
+
+        String[] name = vasManagerNpsRepository.gradeNpsNameBodyRepair();
+
+        for (String s : name) {
+            double promoter = vasManagerNpsRepository.gradeNpsPromoterMonth(s);
+            double critic = vasManagerNpsRepository.gradeNpsCriticMonth(s);
+            double all = vasManagerNpsRepository.gradeNpsAllMonth(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportMonth.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsDepartmentMonth() {
+
+        String[] department = new String[]{"OTOA", "МКЦ"};
+
+        for (String s : department) {
+            double promoter = vasManagerNpsRepository.gradeNpsDepartmentPromoterMonth(s);
+            double critic = vasManagerNpsRepository.gradeNpsDepartmentCriticMonth(s);
+            double all = vasManagerNpsRepository.gradeNpsDepartmentAllMonth(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportMonth.put(s, NPS);
+        }
+    }
+
+
+    private void gradeNpsOrganisationMonth() {
+
+        String[] organisation = new String[]{"ВитебскАвтоСити", "Джи-Моторс"};
+
+        for (String s : organisation) {
+            double promoter = vasManagerNpsRepository.gradeNpsOrganisationPromoterMonth(s);
+            double critic = vasManagerNpsRepository.gradeNpsOrganisationCriticMonth(s);
+            double all = vasManagerNpsRepository.gradeNpsOrganisationAllMonth(s);
+            double NPS = ((promoter - critic) / all) * 100;
+
+            npsReportMonth.put(s, NPS);
+        }
+    }
+
+    private void createCurrentReport() {
+
+        try {
+            FileInputStream npsReport = new FileInputStream("C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentWeekNPS.xlsx");
+            XSSFWorkbook report = new XSSFWorkbook(npsReport);
+            XSSFSheet listNps = report.getSheetAt(0);
+
+            //Для заполнения информации по ключу ИТ!!! - неделя
+            for (int i = 5; i < 15; i++) {
+                XSSFCell cell = listNps.getRow(i).getCell(0);
+                String findKey = String.valueOf(cell);
+                if (Double.isNaN(npsReportWeek.get(findKey))) {
+                    listNps.getRow(i).getCell(5).setCellValue("-");
+                } else  {
+                    listNps.getRow(i).getCell(5).setCellValue(String.format("%.2f", npsReportWeek.get(findKey)));
+                }
+            }
+            //Для заполнения информации по ключу ИТ!!! - месяц
+            for (int i = 5; i < 15; i++) {
+                XSSFCell cell = listNps.getRow(i).getCell(8);
+                String findKey = String.valueOf(cell);
+                if (Double.isNaN(npsReportMonth.get(findKey))) {
+                    listNps.getRow(i).getCell(13).setCellValue("-");
+                } else  {
+                    listNps.getRow(i).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get(findKey)));
+                }
+            }
+            //Для заполнения информации по ключу Департамент!!! - неделя
+            String[] department = new String[]{"Отдел технического обслуживания автомобилей","Малярно-кузовной цех"};
+            for (int i = 18; i < 20; i++) {
+                XSSFCell cell = listNps.getRow(i).getCell(0);
+                String findKey = String.valueOf(cell);
+                if (findKey.equals(department[0])) {
+                    if (Double.isNaN(npsReportWeek.get("OTOA"))) {
+                        listNps.getRow(i).getCell(5).setCellValue("-");
+                    } else {
+                        listNps.getRow(i).getCell(5).setCellValue(String.format("%.2f", npsReportWeek.get("OTOA")));
+                    }
+                }
+                if (findKey.equals(department[1])) {
+                    if (Double.isNaN(npsReportWeek.get("МКЦ"))) {
+                        listNps.getRow(i).getCell(5).setCellValue("-");
+                    } else {
+                        listNps.getRow(i).getCell(5).setCellValue(String.format("%.2f", npsReportWeek.get("МКЦ")));
+                    }
+                }
+            }
+            //Для заполнения информации по ключу Департамент!!! - месяц
+            for (int i = 18; i < 20; i++) {
+                XSSFCell cell = listNps.getRow(i).getCell(8);
+                String findKey = String.valueOf(cell);
+                if (findKey.equals(department[0])) {
+                    if (Double.isNaN(npsReportMonth.get("OTOA"))) {
+                        listNps.getRow(i).getCell(13).setCellValue("-");
+                    } else {
+                        listNps.getRow(i).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get("OTOA")));
+                    }
+                }
+                if (findKey.equals(department[1])) {
+                    if (Double.isNaN(npsReportMonth.get("МКЦ"))) {
+                        listNps.getRow(i).getCell(13).setCellValue("-");
+                    } else {
+                        listNps.getRow(i).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get("МКЦ")));
+                    }
+                }
+            }
+            //Для заполнения информации по ключу Организация!!! - неделя
+            String[] organisation = new String[]{"ООО \"ВитебскАвтоСити\"","Джи-моторс"};
+            XSSFCell cell = listNps.getRow(23).getCell(0);
+            String findKey = String.valueOf(cell);
+            if (findKey.equals(organisation[0])) {
+                if (Double.isNaN(npsReportWeek.get("ВитебскАвтоСити"))) {
+                    listNps.getRow(23).getCell(5).setCellValue("-");
+                } else {
+                    listNps.getRow(23).getCell(5).setCellValue(String.format("%.2f", npsReportWeek.get("ВитебскАвтоСити")));
+                }
+            }
+            if (findKey.equals(department[1])) {
+                if (Double.isNaN(npsReportWeek.get("Джи-моторс"))) {
+                    listNps.getRow(23).getCell(5).setCellValue("-");
+                } else {
+                    listNps.getRow(23).getCell(5).setCellValue(String.format("%.2f", npsReportWeek.get("Джи-моторс")));
+                }
+            }
+            //Для заполнения информации по ключу Организация!!! - месяц
+            cell = listNps.getRow(23).getCell(8);
+            findKey = String.valueOf(cell);
+            if (findKey.equals(organisation[0])) {
+                if (Double.isNaN(npsReportMonth.get("ВитебскАвтоСити"))) {
+                    listNps.getRow(23).getCell(13).setCellValue("-");
+                } else {
+                    listNps.getRow(23).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get("ВитебскАвтоСити")));
+                }
+            }
+            if (findKey.equals(department[1])) {
+                if (Double.isNaN(npsReportMonth.get("Джи-моторс"))) {
+                    listNps.getRow(23).getCell(13).setCellValue("-");
+                } else {
+                    listNps.getRow(23).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get("Джи-моторс")));
+                }
+            }
+            //Общее кол-во з/н за месяц
+            listNps.getRow(25).getCell(5).setCellValue(vasManagerNpsRepository.countCurrentMonthOrder());
+            //Общее кол-во закрытых з/н за месяц
+            listNps.getRow(26).getCell(5).setCellValue(vasManagerNpsRepository.countCurrentMonthCloseOrder());
+            //Процент отзвона KIA
+            if (vasManagerNpsRepository.countCurrentMonthKiaOrder() == 0) {
+                String percentKia = "-";
+                listNps.getRow(28).getCell(7).setCellValue(percentKia);
+            } else {
+                String percentKia = String.format("%.2f", (vasManagerNpsRepository.countCurrentMonthCloseKiaOrder() / vasManagerNpsRepository.countCurrentMonthKiaOrder()) * 100);
+                listNps.getRow(28).getCell(7).setCellValue(percentKia);
+            }
+            if (vasManagerNpsRepository.countCurrentMonthSkodaOrder() == 0) {
+                String percentSkoda = "-";
+                listNps.getRow(29).getCell(7).setCellValue(percentSkoda);
+            } else {
+                String percentSkoda = String.format("%.2f", (vasManagerNpsRepository.countCurrentMonthCloseSkodaOrder() / vasManagerNpsRepository.countCurrentMonthSkodaOrder()) * 100);
+                listNps.getRow(29).getCell(7).setCellValue(percentSkoda);
+            }
+            if (vasManagerNpsRepository.countCurrentMonthCloseMultibrandOrder() == 0) {
+                String percentMultibrand = "-";
+                listNps.getRow(30).getCell(7).setCellValue(percentMultibrand);
+            } else {
+                String percentMultibrand = String.format("%.2f", (vasManagerNpsRepository.countCurrentMonthCloseMultibrandOrder() / vasManagerNpsRepository.countCurrentMonthMultibrandOrder()) * 100);
+                listNps.getRow(30).getCell(7).setCellValue(percentMultibrand);
+            }
+
+            //Запись в файл
+            SimpleDateFormat dateReport = new SimpleDateFormat("dd.MM.yyyy");
+            String date = dateReport.format(new Date());
+            //Дата отчёта
+            listNps.getRow(30).getCell(12).setCellValue(date);
+
+            //Второй лист
+            XSSFSheet listData = report.getSheetAt(1);
+            String[][] dataArray = vasManagerNpsRepository.currentMonthAllOrder();
+            for (int i = 0; i < dataArray.length; i++){
+                for (int j = 0; j < 4; j++){
+                    listData.getRow(i+2).getCell(j+1).setCellValue(dataArray[i][j]);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\"+ date + "- currentWeekNPS.xlsx");
+            report.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
-
-    /*
-      В данном блоке выборка только по номеру - разберешься!!!!
-     List<VasMailNpsModel> numOrderList = vasMailNpsRepository.npsCall();
-     ArrayList<Long> list = new ArrayList<>();
-     for (VasMailNpsModel vasMailNpsModel : numOrderList) {
-     list.add(vasMailNpsModel.getNum_order());
-     }
-     String numOrder = list.toString().replace("[","").replace("]","");
-     */
 }

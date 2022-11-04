@@ -11,45 +11,6 @@
 </head>
 
 <body>
-    <div class="container" id="addNewOrder">
-        <h3>Создание заявки на обратную связь</h3>
-        <div>
-            <input type="text" name="" id="ownerFullName" placeholder="Полное имя Владельца">
-            <input type="text" name="" id="clientFullName" placeholder="Полное имя Клиента">
-            <input type="text" name="" id="phone1" placeholder="Телефон 1">
-            <input type="text" name="" id="phone2" placeholder="Телефон 2">
-            <input type="text" name="" id="vin" placeholder="VIN">
-            <input type="text" name="" id="regNum" placeholder="Гос. номер">
-            <input type="text" name="" id="brand" placeholder="Бренд">
-            <input type="text" name="" id="model" placeholder="Модель">
-            <input type="text" name="" id="masterName" placeholder="ФИО приемщика">
-            <input type="text" name="" id="department" placeholder="Направление">
-            <input type="text" name="" id="yearRelease" placeholder="Год выпуска">
-            <input type="text" name="" id="numOrderCreate" placeholder="Номер зн">
-            <input type="date" name="" id="dateOrderCreate">
-            <input type="text" name="" id="categoryCreate" placeholder="Категория">
-            <input type="text" name="" id="masterNameCreate" placeholder="ФИО Приемщика">
-            <button onclick="createOrder()" class="btn_user" type="submit">Добавить</button>
-        </div>
-    </div>
-    <div class="container" id="updateCallDateOrder">
-        <h3>Изменить дату обратной связи</h3>
-        <div>
-            <input type="text" name="" id="numOrderUpdate" placeholder="Номер зн">
-            <input type="date" name="" id="dateCallOrderUpdate">
-            <button onclick="updateCallDateOrder()" class="btn_user" type="submit">Изменить</button>
-        </div>
-    </div>
-    <div class="container" id="nps">
-        <h3>Оценка клиента при обратной связи</h3>
-        <div>
-            <input type="text" name="" id="numOrderCall" placeholder="Номер зн">
-            <input type="text" name="" id="npsCall" placeholder="Оценка клиента">
-            <input type="text" name="" id="adminCommentCall" placeholder="Комментарий коментарий">
-            <input type="text" name="" id="adminNameCall" placeholder="ФИО Администратора">
-            <button onclick="nps()" class="btn_user" type="submit">Сохранить</button>
-        </div>
-    </div>
     <div class="container" id="callManager" style="margin-right: 35px;">
         <h3>Назначить ответственного за обратную связь с клиентом</h3>
         <div style="padding: 10px;">
@@ -79,19 +40,20 @@
         <h3>Настройка групп по сотрудникам</h3>
         <div style="padding: 10px;">
             <span>Сотрудник: </span>
-            <input type="text" name="" id="" placeholder="ФИО сотрудника">
-            <select name="Подразделение" id="">
+            <input type="text" name="" id="nameManager" placeholder="ФИО сотрудника">
+            <input type="text" name="" id="emailManager" placeholder="Email">
+            <select name="Подразделение" id="managerPosition">
                 <option value="1">ОТОА</option>
                 <option value="2">МКЦ</option>
             </select>
-            <button onclick="" class="btn_user" type="submit">Сохранить</button>
+            <button onclick="createManagr()" class="btn_user" type="submit">Сохранить</button>
         </div>
         <div style="padding: 15px;">
             <span style="margin: 5px;">Список ОТОА:</span>
-                <table id="" class="table table-striped" style="padding: 15px;">
+                <table id="tableNPSNechnicalTable" class="table table-striped" style="padding: 15px;">
                 </table>
             <span style="margin: 5px;">Список МКЦ:</span>
-                <table id="" class="table table-striped" style="padding: 15px;">
+                <table id="tableNPSBodyRepairTable" class="table table-striped" style="padding: 15px;">
                 </table>
         </div>
     </div>
@@ -109,10 +71,6 @@
                 </table>
         </div>
     </div>
-
-
-
-
     <div class="container" id="report" style="margin-top: 70px;">
         <h3>Настройка адреса выгрузки отчёта</h3>
         <div style="padding: 10px;">
