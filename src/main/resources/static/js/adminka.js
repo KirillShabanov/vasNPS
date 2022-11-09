@@ -146,7 +146,7 @@ function showManagerBodyRepair(){
 }
 showManagerBodyRepair();
 
-function createManagr(){
+function createManager(){
     var managerName = document.getElementById("nameManager").value;
     var managerEmail = document.getElementById("emailManager").value;
     var managerPosition = document.getElementById("managerPosition").value;
@@ -161,7 +161,7 @@ function createManagr(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveManager");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position":position, "organisation":organisation}));
+    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_departament":position, "organisation":organisation}));
         
     clearManager();
     document.location.reload();
@@ -177,7 +177,7 @@ function callManagerTo(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveNpsCall");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position":position, "brand":managerBrand}));
+    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_nps_call":position, "brand":managerBrand}));
     
     clearCallManagerTo();
     document.location.reload();
@@ -192,7 +192,7 @@ function callManagerCc(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveNpsCall");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position":position}));
+    xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_nps_call_copy":position}));
 
     clearCallManagerCc();
     document.location.reload();

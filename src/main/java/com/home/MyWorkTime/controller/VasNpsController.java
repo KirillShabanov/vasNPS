@@ -20,8 +20,8 @@ public class VasNpsController {
     public VasNpsModel saveOrder(@RequestBody VasNpsModelDTO vasNpsModelDTO) {
         String[] notBase = new String[]{"Послепродажная установка доп.оборудования", "Внутр. раюоты", "Предпр. внутр. Б/У", "Предп. внутр."};
         String checkedCategory = vasNpsModelDTO.getCategory();
-        for (int i = 0; i < notBase.length; i++) {
-            if (checkedCategory.equals(notBase[i])) {
+        for (String s : notBase) {
+            if (checkedCategory.equals(s)) {
                 return null;
             }
         }
