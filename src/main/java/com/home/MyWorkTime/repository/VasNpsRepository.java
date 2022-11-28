@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
+
 
 
 public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {

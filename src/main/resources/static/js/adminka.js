@@ -1,52 +1,4 @@
-function createOrder(){
-    var ownerFullName = document.getElementById("ownerFullName").value;
-    var clientFullName = document.getElementById("clientFullName").value;
-    var phone1 = document.getElementById("phone1").value;
-    var phone2 = document.getElementById("phone2").value;
-    var vin = document.getElementById("vin").value;
-    var regNum = document.getElementById("regNum").value;
-    var brand = document.getElementById("brand").value;
-    var model = document.getElementById("model").value;
-    var masterName = document.getElementById("masterName").value;
-    var yearRelease = document.getElementById("yearRelease").value;
-    var numOrder = document.getElementById("numOrder").value;
-    var dateOrder = document.getElementById("dateOrder").value;
-    var category = document.getElementById("category").value;
-    var callStatus = 'not call';
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://localhost:8080/vas_nps/saveOrder");
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(JSON.stringify({"owner_full_name":ownerFullName, "client_full_name":clientFullName,
-                                    "phone_1":phone1, "phone_2":phone2,
-                                    "vin":vin, "reg_num":regNum,
-                                    "brand":brand, "model":model,
-                                    "year_release":yearRelease, "date_order":dateOrder,
-                                    "num_order":numOrder, "master_name":masterName,
-                                    "category":category, "call_status":callStatus}));
-    clearCreateOrder();
-};
-
-function updateCallDateOrder(){
-    var numOrder = document.getElementById("numOrderUpdate").value;
-    var callDate = document.getElementById("dateCallOrderUpdate").value;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", `http://localhost:8080/vas_nps/${numOrder}&${callDate}`);
-    xmlhttp.send();
-
-    clearUpdateCallDateOrder();
-};
-
-function nps(){
-    var numOrder = document.getElementById("numOrderCall").value;
-    var nps = document.getElementById("npsCall").value;
-    var adminComment = document.getElementById("adminCommentCall").value;
-    var adminName = document.getElementById("adminNameCall").value;
-    var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("GET", `http://localhost:8080/vas_nps/${numOrder}/${nps}/${adminName}/${adminComment}`);
-            xmlhttp.send();
-    clearNps();
-};
+var restApiAddressNPS = "http://localhost:8080/";
 
 function showCallManagerTo(){
     var xhttp = new XMLHttpRequest();
@@ -69,7 +21,7 @@ function showCallManagerTo(){
             }
         }
     };
-    xhttp.open("GET", "http://localhost:8080/vas_manager/findAllNpsTo", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_manager/findAllNpsTo", true);
     xhttp.send();
 }
 showCallManagerTo();
@@ -93,7 +45,7 @@ function showCallManagerCc(){
             }
         }
     };
-    xhttp.open("GET", "http://localhost:8080/vas_manager/findAllNpsCc", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_manager/findAllNpsCc", true);
     xhttp.send();
 }
 showCallManagerCc();
@@ -117,7 +69,7 @@ function showManagerTechnical(){
             }
         }
     };
-    xhttp.open("GET", "http://localhost:8080/vas_manager/findAllTechnical", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_manager/findAllTechnical", true);
     xhttp.send();
 }
 showManagerTechnical();
@@ -141,7 +93,7 @@ function showManagerBodyRepair(){
             }
         }
     };
-    xhttp.open("GET", "http://localhost:8080/vas_manager/findAllBodyRepair", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_manager/findAllBodyRepair", true);
     xhttp.send();
 }
 showManagerBodyRepair();
@@ -159,7 +111,7 @@ function createManager(){
     } 
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveManager");
+    xmlhttp.open("POST", restApiAddressNPS + "vas_manager/saveManager");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_departament":position, "organisation":organisation}));
         
@@ -175,7 +127,7 @@ function callManagerTo(){
     var position = 'NPS call';
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveNpsCall");
+    xmlhttp.open("POST", restApiAddressNPS + "vas_manager/saveNpsCall");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_nps_call":position, "brand":managerBrand}));
     
@@ -190,7 +142,7 @@ function callManagerCc(){
     var position = 'NPS call copy';
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://localhost:8080/vas_manager/saveNpsCall");
+    xmlhttp.open("POST", restApiAddressNPS + "vas_manager/saveNpsCall");
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({"manager_name":managerName, "manager_email":managerEmail, "position_nps_call_copy":position}));
 
@@ -200,7 +152,7 @@ function callManagerCc(){
 
 function deleteCallManagerTo(id){
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "http://localhost:8080/vas_manager/delete/" + id, true);
+    xhttp.open("DELETE", restApiAddressNPS + "vas_manager/delete/" + id, true);
     xhttp.send();
 
     xhttp.onreadystatechange = function(){
@@ -212,7 +164,7 @@ function deleteCallManagerTo(id){
 
 function deleteCallManagerCc(id){
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "http://localhost:8080/vas_manager/delete/" + id, true);
+    xhttp.open("DELETE", restApiAddressNPS + "vas_manager/delete/" + id, true);
     xhttp.send();
 
     xhttp.onreadystatechange = function(){

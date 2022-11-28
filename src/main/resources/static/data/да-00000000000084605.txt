@@ -1,0 +1,18 @@
+{
+"clientFullName": "Шабанов Кирилл Владимирович",
+"phone1": [
+"",
+"+375297693020"
+],
+"vin": [
+"WVWPD63B13P049836",
+""
+],
+"regNum": "0063 ET-2",
+"model": "VOLKSWAGEN PASSAT",
+"masterName": "Шабанов Кирилл Владимирович PIN-002",
+"yearRelease": "2 002",
+"numOrder": "да-00000000000084605",
+"dateOrderClose": "21.10.2022 9:17:57",
+"category": "Гарантия"
+}

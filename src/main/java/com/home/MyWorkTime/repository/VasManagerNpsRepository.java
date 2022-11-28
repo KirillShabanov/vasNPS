@@ -27,7 +27,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
     @Query(value = "SELECT * FROM vas_manager WHERE position_call_nps = 'checked' " +
             "AND brand NOT LIKE 'Kia' " +
             "AND brand NOT LIKE 'Skoda' " +
-            "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
+            "AND organisation = 'VitebskAutoCity' ", nativeQuery = true)
     List<VasManagerNpsModel> forMailMultibrand();
 
     @Query(value = "SELECT * FROM vas_manager WHERE position_call_nps_copy = 'checked' ", nativeQuery = true)

@@ -24,6 +24,7 @@ public interface VasMailNpsRepository extends JpaRepository<VasMailNpsModel, Lon
             "WHERE mail_date = CURRENT_DATE() " +
             "AND brand != 'Kia' " +
             "AND brand != 'Skoda' " +
+            "AND organisation = 'ВитебскАвтоСити' " +
             "AND call_status = 'not call' ", nativeQuery = true)
     ArrayList<VasMailNpsModel> npsListMultibrand();
 

@@ -6,12 +6,15 @@ import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import com.home.MyWorkTime.repository.VasNpsRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 
 @Slf4j
@@ -21,6 +24,8 @@ public class VasNpsService {
 
     private VasNpsRepository vasNpsRepository;
     private VasManagerNpsRepository vasManagerNpsRepository;
+    private static final Logger LOGGER = Logger.getLogger(VasNpsService.class.getName());
+
 
     @Autowired
     public VasNpsService(VasNpsRepository vasNpsRepository, VasManagerNpsRepository vasManagerNpsRepository) {
@@ -32,12 +37,19 @@ public class VasNpsService {
 
         VasNpsModel vasNpsModel = new VasNpsModel();
 
+
         try  {
             // Достал Фамилию и Имя
             String clientName = vasNpsModelDTO.getClientFullName();
             String[] ownerSurname = clientName.split(" ");
             String ownerFullName = ownerSurname[0];
-            String clientFullName = ownerSurname[1];
+            String clientFullName;//Имя для модели
+            //Фамилия для модели
+            if (ownerSurname.length > 1) {
+                clientFullName = ownerSurname[1];
+            } else {
+                clientFullName = "";
+            }
             vasNpsModel.setClient_surname(ownerFullName); //Фамилия для модели
             vasNpsModel.setClient_name(clientFullName); //Имя для модели
 
@@ -125,7 +137,9 @@ public class VasNpsService {
                     "спортейдж", "сид", "самара",
                     "саманд", "cheri", "специальный",
                     "альфа", "ромео", "ваз",
-                    "калина", "соренто", "пиканто"};
+                    "калина", "соренто", "пиканто",
+                    "специальнный", "кia", "категории",
+                    "m1", "марки", "модели"};
 
             String checkedModelWithReplaces = checkedModelWithOutSpace
                     .replace("Š", "S")
@@ -165,8 +179,14 @@ public class VasNpsService {
                     .replace(checkedArrAuto[32],"kalina")
                     .replace(checkedArrAuto[33],"sorento")
                     .replace(checkedArrAuto[34],"picanto")
+                    .replace(checkedArrAuto[35],"")
+                    .replace(checkedArrAuto[36],"kia")
+                    .replace(checkedArrAuto[37],"")
+                    .replace(checkedArrAuto[38],"")
+                    .replace(checkedArrAuto[39],"")
+                    .replace(checkedArrAuto[40],"")
                     .replace("  "," ")
-                    .replace("[а-я]/()-+,","")
+                    .replaceAll("[а-я]","")
                     .trim();
 
             String[] checkedArrModel = checkedModelWithReplaces.split(" ");
@@ -185,7 +205,10 @@ public class VasNpsService {
                     .replace("(","")
                     .replace(")","")
                     .replace("-","")
-                    .replace(",","");
+                    .replace(",","")
+                    .replace("_","")
+                    .replace("/","")
+                    .replace("+","");
 
             String model1 = checkedArrBrand[1].substring(0, 1).toUpperCase() + checkedArrBrand[1].substring(1);
             if (brand.equals("Skoda")){
@@ -304,17 +327,20 @@ public class VasNpsService {
         Date dateCall = new Date();
         dateCall.setTime(dateOrder.getTime() + 2 * 24 * 60 * 60 * 1000);
 
+
         vasNpsModel.setMail_date(dateCall); //Дата звонка для модели
         String call = "not call";
         vasNpsModel.setCall_status(call);
         String numOrder = vasNpsModel.getNum_order();
         String checkNumOrder = vasManagerNpsRepository.checkedNumOrder(numOrder);
         if (checkNumOrder == null){
-            System.err.println("Добавлен новый заказ-наряд в базу данных");
+            System.out.println("Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
             VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
             return VasNpsRepository.saveOrder(savedOrder);
         } else {
-            System.err.println("Попытка добавления неактуального по номеру заказ-наряда!");
+            System.out.println("Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
         }
         return null;
     }
@@ -358,6 +384,9 @@ public class VasNpsService {
         String adminName = vasNpsModelDTO.getAdminName();
 
         vasNpsRepository.updateCallDate(numOrder, mailDate, adminName);
+
+        System.out.println("Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
+        LOGGER.log(Level.INFO, "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
         return null;
     }
 
@@ -387,6 +416,10 @@ public class VasNpsService {
         String callStatus = "call";
         Date outgoingCallDate = new Date();
         vasNpsRepository.outgoingCall(numOrder, nps, adminComment, adminName, callStatus, outgoingCallDate);
+
+        System.out.println("Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+        LOGGER.log(Level.INFO, "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+
         return null;
     }
 }

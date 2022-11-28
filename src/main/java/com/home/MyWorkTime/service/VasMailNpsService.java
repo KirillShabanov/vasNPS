@@ -6,6 +6,8 @@ import com.home.MyWorkTime.repository.VasMailNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -30,6 +32,8 @@ import static java.util.Calendar.*;
 @Service
 public class VasMailNpsService {
 
+    private static final Logger LOGGER = Logger.getLogger(VasMailNpsService.class.getName());
+
     private final VasMailNpsRepository vasMailNpsRepository;
     private final JavaMailSender javaMailSender;
     private final VasManagerNpsRepository vasManagerNpsRepository;
@@ -46,7 +50,7 @@ public class VasMailNpsService {
     }
 
     @SneakyThrows
-    @Scheduled(cron = "1 00 21 * * *")
+    @Scheduled(cron = "1 00 16 * * *")
     private void SendVasNpsMail() {
         List<VasMailNpsModel> listKia = vasMailNpsRepository.npsListKia();
         List<VasMailNpsModel> listSkoda = vasMailNpsRepository.npsListSkoda();
@@ -109,7 +113,7 @@ public class VasMailNpsService {
             helper.setText("""
                  Добрый день! \s
                       
-                    Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
+                    Прошу Вас провести обратную связь с клиентами. \s
                     Номера заказ-нарядов приведены ниже: \s
                     \s"""
                     + numOrder +
@@ -143,8 +147,12 @@ public class VasMailNpsService {
                     P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
 
             javaMailSender.send(messageVasNpsMail);
+
+            LOGGER.log(Level.INFO, "Список KIA сформирован и отправлен.");
+            System.out.println("Список KIA сформирован и отправлен.");
         } else {
-            System.err.println("Список KIA пустой!!!");
+            System.out.println("Список KIA не сформирован, данных нет.");
+            LOGGER.log(Level.INFO, "Список KIA не сформирован, данных нет.");
         }
 
         if (!(listSkoda.isEmpty())){
@@ -253,8 +261,12 @@ public class VasMailNpsService {
             FileSystemResource npsCall = new FileSystemResource(new File(file));
             helper.addAttachment(file, npsCall);
             javaMailSender.send(messageVasNpsMail);
+
+            LOGGER.log(Level.INFO, "Список SKODA сформирован и отправлен.");
+            System.out.println("Список SKODA сформирован и отправлен.");
         } else {
-            System.err.println("Список SKODA пустой!!!");
+            System.out.println("Список SKODA не сформирован, данных нет.");
+            LOGGER.log(Level.INFO, "Список SKODA не сформирован, данных нет.");
         }
 
         //Письмо multibrand
@@ -280,7 +292,7 @@ public class VasMailNpsService {
             helper.setText("""
                     Добрый день! \s
                       
-                    Прошу Вас провести обратную связь с клиентами и заполнить вложенный файл. \s
+                    Прошу Вас провести обратную связь с клиентами. \s
                     Номера заказ-нарядов приведены ниже: \s
                     \s"""
                     + numOrder +
@@ -313,12 +325,16 @@ public class VasMailNpsService {
                             P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
                             P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
             javaMailSender.send(messageVasNpsMail);
+
+            System.out.println("Список Multibrand сформирован и отправлен.");
+            LOGGER.log(Level.INFO, "Список Multibrand сформирован и отправлен.");
         } else {
-            System.err.println("Список Multibrand пустой!");
+            System.out.println("Список Multibrand не сформирован, данных нет.");
+            LOGGER.log(Level.INFO, "Список Multibrand не сформирован, данных нет.");
         }
     }
 
-    @Scheduled(cron = "1 30 20 * * 0")
+    @Scheduled(cron = "1 00 16 * * 0")
     private void startReportNPSWeek(){
         gradeNpsNameTechnicalWeek();
         gradeNpsNameBodyRepairWeek();
@@ -470,7 +486,8 @@ public class VasMailNpsService {
         String replaceCc = addressNpsWeekCopy.toString().replace("[", "").replace("]", ",");//Волшебная подсказка!!!!
 
         try {
-            FileInputStream npsReport = new FileInputStream("C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentWeekNPS.xlsx");
+            FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentWeekNPS.xlsx");
+            //  "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentWeekNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 
@@ -639,12 +656,17 @@ public class VasMailNpsService {
             helper.addAttachment(file, currentWeekNpsReport);
             javaMailSender.send(messageVasNpsMail);
 
+            System.out.println("Отчёт NPS в разрезе неделя/месяц сформирован и отправлен.");
+            LOGGER.log(Level.INFO, "Отчёт NPS в разрезе неделя/месяц сформирован и отправлен.");
+
         } catch (IOException | MessagingException e) {
             e.printStackTrace();
+            System.out.println("Отчёт NPS в разрезе неделя/месяц не сформирован, данных нет.");
+            LOGGER.log(Level.INFO, "Отчёт NPS в разрезе неделя/месяц не сформирован, данных нет." + " Описание ошибки: ", e);
         }
     }
 
-    @Scheduled(cron = "1 00 08 4 * *")
+    @Scheduled(cron = "1 00 09 4 * *")
     private void reportingNpsMonth(){
         gradeNpsNameTechnicalMonthReporting();
         gradeNpsNameBodyRepairMonthReporting();
@@ -737,7 +759,8 @@ public class VasMailNpsService {
         String replaceCc = addressNpsMonthCopy.toString().replace("[", "").replace("]", ",");//Волшебная подсказка!!!!
 
         try {
-            FileInputStream npsReport = new FileInputStream("C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentMonthNPS.xlsx");
+            FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentMonthNPS.xlsx");
+            // "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentMonthNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 
@@ -861,8 +884,13 @@ public class VasMailNpsService {
             helper.addAttachment(file, currentWeekNpsReport);
             javaMailSender.send(messageVasNpsMail);
 
+            System.out.println("Отчёт NPS за отчётный месяц сформирован и отправлен.");
+            LOGGER.log(Level.INFO, "Отчёт NPS за отчётный месяц сформирован и отправлен.");
+
         } catch (IOException | MessagingException e) {
             e.printStackTrace();
+            System.out.println("Отчёт NPS за отчётный месяц не сформирован, данных нет.");
+            LOGGER.log(Level.INFO, "Отчёт NPS за отчётный месяц не сформирован, данных нет." + " Описание ошибки: ", e);
         }
     }
 

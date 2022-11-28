@@ -18,7 +18,9 @@ public class VasNpsController {
 
     @PostMapping("/saveOrder")
     public VasNpsModel saveOrder(@RequestBody VasNpsModelDTO vasNpsModelDTO) {
-        String[] notBase = new String[]{"Послепродажная установка доп.оборудования", "Внутр. раюоты", "Предпр. внутр. Б/У", "Предп. внутр."};
+        String[] notBase = new String[]{"Послепродажная установка доп.оборудования",
+                "Внутр. работы", "Предпр. внутр. Б/У",
+                "Предп. внутр.", "Предп. ВНЕШН.."};
         String checkedCategory = vasNpsModelDTO.getCategory();
         for (String s : notBase) {
             if (checkedCategory.equals(s)) {
