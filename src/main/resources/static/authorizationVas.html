@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <style type="text/css"></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/popupUsers.css">
+    <script src="js/jquery.js"></script>
+    <title>authorizationVas</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header id="header" class="header lock-padding">
+            <div class="header__container _container">
+                <a href="myWorktime.html" class="header__logo">
+                    <span class="logo_img"></span>
+                </a>
+                <nav id="button_navigation" class="button_navigation">
+                    <a href="" class="header__nav popup-link">
+                        Помощь
+                    </a>
+                    <a href="" class="header__nav popup-link">
+                        О программе
+                    </a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <div class="container" style="padding: 225px;">
+        <form action="${contextPath}/myWorktime.html" method="post" class="form-signin">
+            <h2 class="form-heading" style="color: aliceblue;">Log in</h2>
+
+            <div class="form-group ${error != null ? 'has-error' : ''}">
+                <span>${message}</span>
+                <input name="username" type="text" class="form-control" placeholder="Username" autofocus="true"/>
+                <input type="password" name="password" class="form-control" placeholder="Password"/>
+                <span>${error}</span>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

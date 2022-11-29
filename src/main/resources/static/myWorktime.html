@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <style type="text/css"></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/popupUsers.css">
+    <link rel="stylesheet" href="css/popupTools.css">
+    <script src="js/jquery.js"></script>
+    <title>MyWorkTime</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header id="header" class="header lock-padding">
+            <div class="header__container _container">
+                <a href="myWorkTime.html" class="header__logo">
+                    <span class="logo_img"></span>
+                </a>
+                <nav id="button_navigation" class="button_navigation">
+                    <a href="#popup_users" class="header__nav popup-link">
+                        Пользователи
+                    </a>
+                    <a href="" class="header__nav popup-link">
+                        Помощь
+                    </a>
+                    <a href="" class="header__nav popup-link">
+                        О программе
+                    </a>
+                    <a href="authorizationVas.html" class="header__nav">
+                        Выход
+                    </a>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <div class="wrapper__tools">
+        <header id="header__tools" class="header__tools lock-padding">
+            <div class="header__container__tools _container">
+                <nav id="button_navigation" class="button_navigation">
+                    <a href="vasNps.html" class="header__nav_tools popup-link">
+                        NPS
+                    </a>
+                </nav>
+            </div>
+        </header>
+        </div>
+
+    <div id="popup_users" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Пользователи</div>
+                <div class="popup__addUser header__nav popup-link" href="">
+                    <button id="" type="button">
+                            <i class="fa fa-plus">
+                                <i class="fa fa-user">   
+                                </i></i>
+                    </button>
+                </div>
+                <div class="popup__table">
+                    <table id="usersList" class="table table-striped">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup_addUsers" class="popup">
+            <div class="popup__body">
+                <div class="popup__content">
+                    <a href="#popup_users" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                    <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <div class="popup__title">Заполните данные</div>
+                    <div class="popup_addUsers">
+                        <div class="form-floating">
+                            <input type="name" class="form-user" id="floatingName" placeholder="Имя">
+                            <label for="floatingName"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="surname" class="form-user" id="floatingSurname" placeholder="Фамилия">
+                            <label for="floatingSurname"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="login" class="form-user" id="floatingLogin" placeholder="Логин">
+                            <label for="floatingLogin"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="pass" class="form-user" id="floatingPass" placeholder="Пароль">
+                            <label for="floatingPass"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
+                            <label for="floatingLevelAccess"></label>
+                        </div>
+                        <button onclick="createUser()" class="btn_user" type="submit">Добавить</button>
+                    </div>  
+                </div>
+            </div>
+    </div>    
+
+    <div id="popup_updateUsers" class="popup">
+            <div class="popup__body">
+                <div class="popup__content">
+                    <a href="#popup_users" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                    <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <div class="popup__title">Измените данные</div>
+                    <div class="popup_updateUsers">
+                        <input type="hidden" class="form-user" id="floatingId" placeholder="">
+                        <div class="form-floating">
+                            <input type="name" class="form-user" id="floatingName" placeholder="Имя">
+                            <label for="floatingName"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="surname" class="form-user" id="floatingSurname" placeholder="Фамилия">
+                            <label for="floatingSurname"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="login" class="form-user" id="floatingLogin" placeholder="Логин">
+                            <label for="floatingLogin"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="pass" class="form-user" id="floatingPass" placeholder="Пароль">
+                            <label for="floatingPass"></label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
+                            <label for="floatingLevelAccess"></label>
+                        </div>
+                        <button id="button_updateUsers" class="btn_user" type="submit">Сохранить</button>
+                    </div>  
+                </div>
+            </div>
+    </div>      
+    
+    <script src="js/showUser.js"></script>
+    <script src="js/updateUser.js"></script>
+    <script src="js/deleteUser.js"></script>
+    <script src="js/createUser.js"></script>
+    <script src="js/popupUsers.js"></script>
+</body>
+</html>
