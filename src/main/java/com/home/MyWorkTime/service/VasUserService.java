@@ -17,5 +17,4 @@ public interface VasUserService {
 
     void deleteUser(Long id);
 
-    VasUserModel findByUserName(String user_name);
 }

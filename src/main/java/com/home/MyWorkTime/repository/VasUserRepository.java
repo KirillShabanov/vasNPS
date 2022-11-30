@@ -12,5 +12,4 @@ public interface VasUserRepository extends JpaRepository<VasUserModel, Long> {
     @NotNull
     Optional<VasUserModel> findById (@NotNull Long id);
 
-    VasUserModel findByUserName(String user_name);
 }

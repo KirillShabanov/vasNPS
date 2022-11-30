@@ -33,21 +33,5 @@
         </header>
     </div>
 
-    <div class="container" style="padding: 225px;">
-        <form action="${contextPath}/myWorktime.html" method="post" class="form-signin">
-            <h2 class="form-heading" style="color: aliceblue;">Log in</h2>
-
-            <div class="form-group ${error != null ? 'has-error' : ''}">
-                <span>${message}</span>
-                <input name="username" type="text" class="form-control" placeholder="Username" autofocus="true"/>
-                <input type="password" name="password" class="form-control" placeholder="Password"/>
-                <span>${error}</span>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            </div>
-        </form>
-    </div>
-    
 </body>
 </html>

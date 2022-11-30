@@ -2,8 +2,6 @@ package com.home.MyWorkTime.controller;
 
 
 import com.home.MyWorkTime.entity.VasUserModelDTO;
-import com.home.MyWorkTime.exception.UserValidator;
-import com.home.MyWorkTime.service.SecurityService;
 import com.home.MyWorkTime.service.VasUserConverter;
 import com.home.MyWorkTime.service.VasUserService;
 import lombok.extern.java.Log;
@@ -22,14 +20,12 @@ public class VasUserController {
 
     private final VasUserService vasUserService;
     private final VasUserConverter vasUserConverter;
-    private final SecurityService securityService;
-    private final UserValidator userValidator;
 
-    public VasUserController(VasUserService vasUserService, VasUserConverter vasUserConverter, SecurityService securityService, UserValidator userValidator) {
+
+    public VasUserController(VasUserService vasUserService, VasUserConverter vasUserConverter) {
         this.vasUserService = vasUserService;
         this.vasUserConverter = vasUserConverter;
-        this.securityService = securityService;
-        this.userValidator = userValidator;
+
     }
 
     @GetMapping("/findAll")

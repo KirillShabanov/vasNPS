@@ -1,15 +1,10 @@
 package com.home.MyWorkTime.service;
 
 
-import com.home.MyWorkTime.entity.VasRoles;
 import com.home.MyWorkTime.entity.VasUserModel;
 import com.home.MyWorkTime.entity.VasUserModelDTO;
 import com.home.MyWorkTime.exception.ValidationException;
-import com.home.MyWorkTime.repository.VasRolesDaoRepository;
 import com.home.MyWorkTime.repository.VasUserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,24 +15,19 @@ import static java.util.Objects.isNull;
 
 @Service
 public class DefaultVasUserService implements VasUserService {
+
     private final VasUserRepository vasUserRepository;
     private final VasUserConverter vasUserConverter;
-    private final VasRolesDaoRepository vasRolesDaoRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public DefaultVasUserService(VasUserRepository vasUserRepository, VasUserConverter vasUserConverter, VasRolesDaoRepository vasRolesDaoRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+
+    public DefaultVasUserService(VasUserRepository vasUserRepository, VasUserConverter vasUserConverter) {
         this.vasUserRepository = vasUserRepository;
         this.vasUserConverter = vasUserConverter;
-        this.vasRolesDaoRepository = vasRolesDaoRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
     @Override
     public VasUserModelDTO saveUser(VasUserModelDTO vasUserModelDTO) throws ValidationException {
-
-       vasUserModelDTO.setUser_password(bCryptPasswordEncoder.encode(vasUserModelDTO.getUser_password()));
-
         validateUsersModelDTO(vasUserModelDTO);
         VasUserModel savedUser = vasUserRepository.save(vasUserConverter.fromVasUserModelDTOToVasUsersModel(vasUserModelDTO));
         return vasUserConverter.fromVasUserModelToVasUserModelDTO(savedUser);
@@ -67,8 +57,4 @@ public class DefaultVasUserService implements VasUserService {
         return vasUserRepository.findById(id);
     }
 
-
-    public VasUserModel findByUserName(String user_name) {
-        return vasUserRepository.findByUserName(user_name);
-    }
 }
