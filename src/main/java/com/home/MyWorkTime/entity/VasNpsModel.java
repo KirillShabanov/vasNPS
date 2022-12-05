@@ -1,11 +1,11 @@
 package com.home.MyWorkTime.entity;
 
 
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
@@ -46,6 +46,8 @@ public class VasNpsModel {
     @Column
     private String num_order;
     @Column
+    private Long mileage;
+    @Column
     private String organisation;
     @Column
     private String department;
@@ -67,6 +69,8 @@ public class VasNpsModel {
     private String admin_name;
     @Column
     private String admin_comment;
+    @Column
+    private String calendar_client;
 
 
     public Date getDate_order() {

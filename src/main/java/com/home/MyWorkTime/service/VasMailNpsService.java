@@ -4,6 +4,7 @@ import com.home.MyWorkTime.entity.VasMailNpsModel;
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasMailNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
@@ -487,7 +489,7 @@ public class VasMailNpsService {
 
         try {
             FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentWeekNPS.xlsx");
-            //  "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentWeekNPS.xlsx"
+            //  "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\reports\\currentWeekNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 
@@ -760,7 +762,7 @@ public class VasMailNpsService {
 
         try {
             FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentMonthNPS.xlsx");
-            // "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\templates\\currentMonthNPS.xlsx"
+            // "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\reports\\currentMonthNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 

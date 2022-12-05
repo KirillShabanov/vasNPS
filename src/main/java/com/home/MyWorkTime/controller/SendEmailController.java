@@ -2,12 +2,12 @@ package com.home.MyWorkTime.controller;
 
 import com.home.MyWorkTime.entity.SendEmailModel;
 import com.home.MyWorkTime.service.SendEmailService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import javax.mail.MessagingException;
 import java.io.FileInputStream;

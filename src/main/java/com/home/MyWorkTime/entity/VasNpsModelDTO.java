@@ -20,12 +20,14 @@ public class VasNpsModelDTO {
     private String yearRelease;
     private String dateOrderClose;
     private String numOrder;
+    private Long mileage;
     private String category;
     private String masterName;
     private String callDate;
     private String adminName;
     private String adminComment;
     private int nps;
+    private String calendar_client;
 
     public String getDateOrderClose() {
         return dateOrderClose.formatted(DateTimeFormatter.ofPattern("dd.MM.yyyy"));

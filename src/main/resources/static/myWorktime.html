@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
@@ -15,10 +15,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/popupUsers.css">
-    <link rel="stylesheet" href="css/popupTools.css">
-    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="css/style.css" >
+    <link rel="stylesheet" href="css/popupUsers.css" >
+    <link rel="stylesheet" href="css/popupTools.css" >
+    <script src="js/jquery.js" ></script>
     <title>MyWorkTime</title>
 </head>
 
@@ -39,7 +39,7 @@
                     <a href="" class="header__nav popup-link">
                         О программе
                     </a>
-                    <a href="authorizationVas.html" class="header__nav">
+                    <a href="" class="header__nav">
                         Выход
                     </a>
                 </nav>
@@ -50,7 +50,7 @@
         <header id="header__tools" class="header__tools lock-padding">
             <div class="header__container__tools _container">
                 <nav id="button_navigationS" class="button_navigation">
-                    <a href="vasNps.html" class="header__nav_tools popup-link">
+                    <a href="vasNps.html" class="header__nav_tools">
                         NPS
                     </a>
                 </nav>
@@ -66,7 +66,7 @@
                 <div class="popup__addUser header__nav popup-link" href="">
                     <button id="" type="button">
                             <i class="fa fa-plus">
-                                <i class="fa fa-user">   
+                                <i class="fa fa-user">
                                 </i></i>
                     </button>
                 </div>
@@ -106,10 +106,10 @@
                             <label for="floatingLevelAccess"></label>
                         </div>
                         <button onclick="createUser()" class="btn_user" type="submit">Добавить</button>
-                    </div>  
+                    </div>
                 </div>
             </div>
-    </div>    
+    </div>
 
     <div id="popup_updateUsers" class="popup">
             <div class="popup__body">
@@ -140,15 +140,12 @@
                             <label for="floatingLevelAccess"></label>
                         </div>
                         <button id="button_updateUsers" class="btn_user" type="submit">Сохранить</button>
-                    </div>  
+                    </div>
                 </div>
             </div>
-    </div>      
-    
+    </div>
+
     <script src="js/showUser.js"></script>
-    <script src="js/updateUser.js"></script>
-    <script src="js/deleteUser.js"></script>
-    <script src="js/createUser.js"></script>
     <script src="js/popupUsers.js"></script>
 </body>
 </html>

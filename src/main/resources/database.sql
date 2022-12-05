@@ -1,38 +1,77 @@
--- Table: vas_user
-create table vas_users (
-    id int auto_increment primary key ,
-    user_name varchar(50) not null,
-    user_surname varchar(50) not null,
-    user_patronymic varchar(50) not null,
-    user_login varchar(50) not null,
-    user_password varchar(255) not null,
-    user_mail varchar(50) not null
+-- Table: vas_nps
+CREATE TABLE vas_nps (
+                         id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                         client_surname VARCHAR(255),
+                         client_name VARCHAR(255),
+                         phone_1 VARCHAR(255),
+                         phone_2 VARCHAR(255),
+                         vehicle_identification_number VARCHAR(17),
+                         reg_num VARCHAR(10),
+                         brand VARCHAR(20),
+                         model VARCHAR(150),
+                         year_release VARCHAR(10),
+                         date_order DATETIME,
+                         num_order VARCHAR(10) UNIQUE,
+                         mileage longtext,
+                         organisation VARCHAR(50),
+                         department VARCHAR(50),
+                         category varchar(50),
+                         master_name VARCHAR(100),
+                         nps integer,
+                         mail_date DATE,
+                         call_status varchar(15),
+                         outgoing_call_date DATE,
+                         admin_name VARCHAR(100),
+                         admin_comment VARCHAR(500),
+                         calendar_client VARCHAR(50)
 )
     ENGINE = InnoDB;
 
--- Table: vas_roles
-CREATE TABLE vas_roles (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_level_access INT NOT NULL
+-- Table: gee_nps
+CREATE TABLE gee_nps (
+                         id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                         client_surname VARCHAR(255),
+                         client_name VARCHAR(255),
+                         phone_1 VARCHAR(255),
+                         phone_2 VARCHAR(255),
+                         vehicle_identification_number VARCHAR(17),
+                         reg_num VARCHAR(10),
+                         brand VARCHAR(20),
+                         model VARCHAR(150),
+                         year_release VARCHAR(10),
+                         date_order DATETIME,
+                         num_order VARCHAR(10) UNIQUE,
+                         mileage longtext,
+                         organisation VARCHAR(50),
+                         department VARCHAR(50),
+                         category varchar(50),
+                         master_name VARCHAR(100),
+                         nps integer,
+                         mail_date DATE,
+                         call_status varchar(15),
+                         outgoing_call_date DATE,
+                         admin_name VARCHAR(100),
+                         admin_comment VARCHAR(500),
+                         calendar_client VARCHAR(50)
 )
     ENGINE = InnoDB;
 
--- Table for mapping vas_user and vas_roles: vas_user_roles
-CREATE TABLE vas_users_roles (
-    vas_users_id INT NOT NULL,
-    vas_roles_id INT NOT NULL,
+-- Delete Row from vas_nps WHERE organisation = Джи-Морорс
+DELETE FROM `vas_nps` WHERE `vas_nps`.`organisation` = 'Джи-Моторс';
 
-    FOREIGN KEY (vas_users_id) REFERENCES vas_users (id),
-    FOREIGN KEY (vas_roles_id) REFERENCES vas_roles (id),
-
-    UNIQUE (vas_users_id, vas_roles_id)
+-- Таблица с ненужными категориями
+CREATE TABLE null_category
+(
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(255)
 )
     ENGINE = InnoDB;
 
--- Insert data
-INSERT INTO vas_users (user_name, user_surname, user_patronymic, user_login, user_password, user_mail)
-VALUES ('Кирилл', 'Шабанов', 'Владимирович', 'Shabanov', 'Vas20042018!!))', 'k.shabanov@vitautocity.by');
-INSERT INTO vas_roles VALUES (1, 1);
-INSERT INTO vas_roles VALUES (2, 2);
-
-INSERT INTO vas_users_roles VALUES (1, 1);
+-- Таблица с ненужными префиксами по модели и бренду
+CREATE TABLE fix_brand_model
+(
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fix_key VARCHAR(255),
+    fix_value VARCHAR(255)
+)
+    ENGINE = InnoDB;

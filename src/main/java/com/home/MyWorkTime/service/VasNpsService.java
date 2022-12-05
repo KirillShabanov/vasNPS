@@ -1,9 +1,9 @@
 package com.home.MyWorkTime.service;
 
+import com.home.MyWorkTime.entity.GeeNpsModel;
 import com.home.MyWorkTime.entity.VasNpsModel;
 import com.home.MyWorkTime.entity.VasNpsModelDTO;
-import com.home.MyWorkTime.repository.VasManagerNpsRepository;
-import com.home.MyWorkTime.repository.VasNpsRepository;
+import com.home.MyWorkTime.repository.*;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
@@ -23,20 +23,37 @@ import java.util.*;
 public class VasNpsService {
 
     private VasNpsRepository vasNpsRepository;
+    private GeeNpsRepository geeNpsRepository;
     private VasManagerNpsRepository vasManagerNpsRepository;
+    private NullCategoryRepository nullCategoryRepository;
+    private FixBrandModelRepository fixBrandModelRepository;
+
     private static final Logger LOGGER = Logger.getLogger(VasNpsService.class.getName());
 
-
     @Autowired
-    public VasNpsService(VasNpsRepository vasNpsRepository, VasManagerNpsRepository vasManagerNpsRepository) {
+    public VasNpsService(VasNpsRepository vasNpsRepository,
+                         GeeNpsRepository geeNpsRepository,
+                         VasManagerNpsRepository vasManagerNpsRepository,
+                         NullCategoryRepository nullCategoryRepository,
+                         FixBrandModelRepository fixBrandModelRepository) {
         this.vasNpsRepository = vasNpsRepository;
+        this.geeNpsRepository = geeNpsRepository;
         this.vasManagerNpsRepository = vasManagerNpsRepository;
+        this.nullCategoryRepository = nullCategoryRepository;
+        this.fixBrandModelRepository = fixBrandModelRepository;
     }
 
     public VasNpsModel saveOrder(VasNpsModelDTO vasNpsModelDTO) {
 
-        VasNpsModel vasNpsModel = new VasNpsModel();
+        String[] notBase = nullCategoryRepository.nullCategoryFromBase();
+        String checkedCategory = vasNpsModelDTO.getCategory();
+        for (String s : notBase) {
+            if (checkedCategory.equals(s)) {
+                return null;
+            }
+        }
 
+        VasNpsModel vasNpsModel = new VasNpsModel();
 
         try  {
             // Достал Фамилию и Имя
@@ -126,6 +143,15 @@ public class VasNpsService {
             //Обработка Бренда и Модели из модели (Приоритет Kia и Skoda)
             String checkedModel = vasNpsModelDTO.getModel();
             String checkedModelWithOutSpace = checkedModel.trim();
+
+            String[] forHash = fixBrandModelRepository.tableFix();
+
+            HashMap<String,String> forFix = new HashMap<>();
+            for (String hash : forHash) {
+                String[] gg = hash.split(",");
+                forFix.put(gg[0], gg[1]);
+            }
+
             String[] checkedArrAuto = new String[]{"а/м", "автомобиль",
                     "легковой", "автобус", "киа",
                     "шкода", "суперб", "рапид",
@@ -139,7 +165,8 @@ public class VasNpsService {
                     "альфа", "ромео", "ваз",
                     "калина", "соренто", "пиканто",
                     "специальнный", "кia", "категории",
-                    "m1", "марки", "модели"};
+                    "m1", "марки", "модели",
+                    "n1g"};
 
             String checkedModelWithReplaces = checkedModelWithOutSpace
                     .replace("Š", "S")
@@ -185,6 +212,7 @@ public class VasNpsService {
                     .replace(checkedArrAuto[38],"")
                     .replace(checkedArrAuto[39],"")
                     .replace(checkedArrAuto[40],"")
+                    .replace(checkedArrAuto[41],"")
                     .replace("  "," ")
                     .replaceAll("[а-я]","")
                     .trim();
@@ -245,26 +273,45 @@ public class VasNpsService {
             String masterName = vasNpsModelDTO.getMasterName().replaceAll("[a-zA-Z,-/0-9]","").trim();
             vasNpsModel.setMaster_name(masterName); //Приемщик для модели
 
-            String organisation = null;
+            String organisation;
             String department = null;
 
-            String[] nameFromOrganisation = vasManagerNpsRepository.organisationName();
-            for (String value : nameFromOrganisation) {
-                if (masterName.equals(value)) {
-                    organisation = "ВитебскАвтоСити";
+            //Обработка номера заказ-наряда
+            String numOrderChecked = vasNpsModelDTO.getNumOrder();
+            String orderCheck = numOrderChecked.toUpperCase()
+                    .replaceAll("[А-Я]", "")
+                    .replace("-", "");
+            int arrayLength;
+            char[] array = orderCheck.toCharArray();
+            arrayLength = array.length;
+            int firstNonZeroAt = 0;
+            for(int i=0; i<array.length; i++) {
+                if(!String.valueOf(array[i]).equalsIgnoreCase("0")) {
+                    firstNonZeroAt = i;
                     break;
-                } else {
-                    organisation = "Джи-Моторс";
                 }
             }
+            char [] newArray = Arrays.copyOfRange(array, firstNonZeroAt,arrayLength);
+            String numOrder = new String(newArray);
+            vasNpsModel.setNum_order(numOrder); //Номер заказ-наряда для модели
 
+            //Определение организации
+            String orderCheckForOrganisation = numOrderChecked.toLowerCase(Locale.ROOT)
+                    .replaceAll("[0-9]", "")
+                    .replace("-", "");
+
+            if (orderCheckForOrganisation.equals("да")){
+                organisation = "ВитебскАвтоСити";
+            } else {
+                organisation = "Джи-Моторс";
+            }
+
+            //Разделение по департаментам
             String[] nameFromDepartmentTechnical = vasManagerNpsRepository.gradeNpsNameTech();
             for (String s : nameFromDepartmentTechnical) {
                 if (masterName.equals(s)) {
                     department = "OTOA";
                     break;
-                } else {
-                    department = "Джи-Моторс";
                 }
             }
 
@@ -289,25 +336,6 @@ public class VasNpsService {
             }
             vasNpsModel.setYear_release(yearRelease); //Год выпуска для модели
 
-            //Обработка номера заказ-наряда
-            String numOrderChecked = vasNpsModelDTO.getNumOrder();
-            String orderCheck = numOrderChecked.toUpperCase()
-                    .replaceAll("[А-Я]", "")
-                    .replace("-", "");
-            int arrayLength;
-            char[] array = orderCheck.toCharArray();
-            arrayLength = array.length;
-            int firstNonZeroAt = 0;
-            for(int i=0; i<array.length; i++) {
-                if(!String.valueOf(array[i]).equalsIgnoreCase("0")) {
-                    firstNonZeroAt = i;
-                    break;
-                }
-            }
-            char [] newArray = Arrays.copyOfRange(array, firstNonZeroAt,arrayLength);
-            String numOrder = new String(newArray);
-            vasNpsModel.setNum_order(numOrder); //Номер заказ-наряда для модели
-
             //Категория заказ-наряда
             String category = vasNpsModelDTO.getCategory();
             vasNpsModel.setCategory(category); //Категория для модели
@@ -319,9 +347,10 @@ public class VasNpsService {
 
             vasNpsModel.setDate_order(dateOrder); //Дата закрытия заказ-наряда для модели
 
-            } catch (java.text.ParseException e) {
+            } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
         Date dateOrder = vasNpsModel.getDate_order();
         Date dateCall = new Date();
@@ -333,16 +362,60 @@ public class VasNpsService {
         vasNpsModel.setCall_status(call);
         String numOrder = vasNpsModel.getNum_order();
         String checkNumOrder = vasManagerNpsRepository.checkedNumOrder(numOrder);
-        if (checkNumOrder == null){
-            System.out.println("Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
-            LOGGER.log(Level.INFO, "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
-            VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
-            return VasNpsRepository.saveOrder(savedOrder);
+        if (vasNpsModel.getOrganisation().equals("ВитебскАвтоСити")) {
+            if (checkNumOrder == null){
+                System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
+                LOGGER.log(Level.INFO, "Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
+                VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
+                return VasNpsRepository.saveOrder(savedOrder);
+            } else {
+                System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+                LOGGER.log(Level.INFO, "Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+            }
         } else {
-            System.out.println("Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
-            LOGGER.log(Level.INFO, "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+            saveOrderGee(vasNpsModel);
         }
         return null;
+    }
+
+    public void saveOrderGee(VasNpsModel vasNpsModel) {
+
+        GeeNpsModel geeNpsModel = new GeeNpsModel();
+        geeNpsModel.setClient_name(vasNpsModel.getClient_name());
+        geeNpsModel.setClient_surname(vasNpsModel.getClient_surname());
+        geeNpsModel.setPhone_1(vasNpsModel.getPhone_1());
+        geeNpsModel.setPhone_2(vasNpsModel.getPhone_2());
+        geeNpsModel.setVehicle_identification_number(vasNpsModel.getVehicle_identification_number());
+        geeNpsModel.setReg_num(vasNpsModel.getReg_num());
+        geeNpsModel.setBrand(vasNpsModel.getBrand());
+        geeNpsModel.setModel(vasNpsModel.getModel());
+        geeNpsModel.setYear_release(vasNpsModel.getYear_release());
+        geeNpsModel.setNum_order(vasNpsModel.getNum_order());
+        geeNpsModel.setOrganisation(vasNpsModel.getOrganisation());
+        geeNpsModel.setDepartment(vasNpsModel.getDepartment());
+        geeNpsModel.setCategory(vasNpsModel.getCategory());
+        geeNpsModel.setMaster_name(vasNpsModel.getMaster_name());
+        geeNpsModel.setNps(vasNpsModel.getNps());
+        geeNpsModel.setMail_date(vasNpsModel.getMail_date());
+        geeNpsModel.setCall_status(vasNpsModel.getCall_status());
+        geeNpsModel.setOutgoing_call_date(vasNpsModel.getOutgoing_call_date());
+        geeNpsModel.setAdmin_name(vasNpsModel.getAdmin_name());
+        geeNpsModel.setAdmin_comment(vasNpsModel.getAdmin_comment());
+        geeNpsModel.setMileage(vasNpsModel.getMileage());
+        geeNpsModel.setCalendar_client(vasNpsModel.getCalendar_client());
+        geeNpsModel.setDate_order(vasNpsModel.getDate_order());
+
+        String numOrderGee = geeNpsModel.getNum_order();
+
+        String checkNumOrderGee = geeNpsRepository.checkedNumOrderGee(numOrderGee);
+        if (checkNumOrderGee == null) {
+            System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
+            LOGGER.log(Level.INFO, "Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
+            geeNpsRepository.save(geeNpsModel);
+        } else {
+            System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
+            LOGGER.log(Level.INFO, "Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
+        }
     }
 
     public VasNpsModel updateCallDate(VasNpsModelDTO vasNpsModelDTO) {
@@ -383,10 +456,22 @@ public class VasNpsService {
 
         String adminName = vasNpsModelDTO.getAdminName();
 
-        vasNpsRepository.updateCallDate(numOrder, mailDate, adminName);
+        //Определение организации
+        String organisation;
+        String orderCheckForOrganisation = numOrderChecked.toLowerCase(Locale.ROOT)
+                .replaceAll("[0-9]", "")
+                .replace("-", "");
 
-        System.out.println("Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
-        LOGGER.log(Level.INFO, "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
+        if (orderCheckForOrganisation.equals("да")){
+            organisation = "ВитебскАвтоСити";
+            vasNpsRepository.updateCallDate(numOrder, mailDate, adminName);
+        } else {
+            organisation = "Джи-Моторс";
+            geeNpsRepository.updateCallDateGee(numOrder, mailDate, adminName);
+        }
+
+        System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
+        LOGGER.log(Level.INFO, "Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
         return null;
     }
 
@@ -415,10 +500,23 @@ public class VasNpsService {
         String adminName = vasNpsModelDTO.getAdminName();
         String callStatus = "call";
         Date outgoingCallDate = new Date();
-        vasNpsRepository.outgoingCall(numOrder, nps, adminComment, adminName, callStatus, outgoingCallDate);
 
-        System.out.println("Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
-        LOGGER.log(Level.INFO, "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+
+        //Определение организации
+        String organisation;
+        String orderCheckForOrganisation = numOrderChecked.toLowerCase(Locale.ROOT)
+                .replaceAll("[0-9]", "")
+                .replace("-", "");
+        if (orderCheckForOrganisation.equals("да")){
+            organisation = "ВитебскАвтоСити";
+            vasNpsRepository.outgoingCall(numOrder, nps, adminComment, adminName, callStatus, outgoingCallDate);
+        } else {
+            organisation = "Джи-Моторс";
+            geeNpsRepository.outgoingCallGee(numOrder, nps, adminComment, adminName, callStatus, outgoingCallDate);
+        }
+
+        System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+        LOGGER.log(Level.INFO, "Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
 
         return null;
     }

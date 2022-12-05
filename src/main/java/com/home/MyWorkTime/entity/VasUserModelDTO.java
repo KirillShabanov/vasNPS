@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+
 @Data
 @Builder
 @ToString
@@ -16,4 +17,5 @@ public class VasUserModelDTO {
     private String user_login;
     private String user_password;
     private String user_mail;
+
 }

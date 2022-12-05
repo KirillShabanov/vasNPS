@@ -1,10 +1,10 @@
 package com.home.MyWorkTime.service;
 
-
 import com.home.MyWorkTime.entity.VasUserModel;
 import com.home.MyWorkTime.entity.VasUserModelDTO;
 import com.home.MyWorkTime.exception.ValidationException;
 import com.home.MyWorkTime.repository.VasUserRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +29,7 @@ public class DefaultVasUserService implements VasUserService {
     @Override
     public VasUserModelDTO saveUser(VasUserModelDTO vasUserModelDTO) throws ValidationException {
         validateUsersModelDTO(vasUserModelDTO);
+
         VasUserModel savedUser = vasUserRepository.save(vasUserConverter.fromVasUserModelDTOToVasUsersModel(vasUserModelDTO));
         return vasUserConverter.fromVasUserModelToVasUserModelDTO(savedUser);
     }

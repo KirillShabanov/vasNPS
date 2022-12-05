@@ -16,5 +16,4 @@ public interface VasUserService {
     List<VasUserModelDTO> findAll();
 
     void deleteUser(Long id);
-
 }
