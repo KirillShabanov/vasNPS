@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/popupUsers.css">
     <link rel="stylesheet" href="css/popupTools.css">
     <script src="js/jquery.js"></script>
+    <script src="js/nps.js"></script>
     <title>vasNps</title>
 </head>
 
@@ -47,32 +48,1197 @@
         <header id="header__tools" class="header__tools lock-padding">
             <div class="header__container__tools _container">
                 <nav id="button_navigation" class="button_navigation">
+                    <a href="#full_list_kia" class="header__nav_tools popup-link">
+                        Расширенный лист KIA
+                    </a>
                     <a href="#" class="header__nav_tools popup-link">
                         Администрирование
                     </a>
                 </nav>
             </div>
         </header>
-        </div>
-    <div id="popup_users" class="popup">
+    </div>
+
+    <div id="full_list_kia" class="popup">
         <div class="popup__body">
             <div class="popup__content">
                 <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
-                <div class="popup__title">Администрирование</div>
-                <div class="popup__addUser header__nav popup-link" href="">
-                    <button id="" type="button">
-                            <i class="fa fa-plus">
-                                <i class="fa fa-user">   
-                                </i></i>
-                    </button>
+                <div class="popup__title">Расширенный лист KIA</div>
+                <div>
+                    Количество проведенных опросов в текущем месяце составляет: <label id="countReports" style="font-size: 24px;"> </label>
                 </div>
+                <div>
+                    Введите номер заказ-наряда:
+                    <input id="numOrder" type="text" style="margin-left: 10px; width: 70px; background-color: grey;">
+                    <button onclick="showOrderKia()" class="btn_user" type="submit">Загрузить</button>
+                </div>
+                <div>Данные по заказ-наряду:</div>
                 <div class="popup__table">
-                    <table id="usersList" class="table table-striped">
+                    <table id="reportsList" class="table table-striped">
                     </table>
                 </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th scope="col">SE200 Основные вопросы</th>
+                        </tr>
+                      </thead>
+                </table>
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Вопрос</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">BQ010</th>
+                        <td>Как бы Вы оценили уровень сервисного обслуживания в целом?
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ010" id="10_BQ010" value="10">
+                                <label class="form-check-label" for="10_BQ010">
+                                10
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="9_BQ010" value="9">
+                                <label class="form-check-label" for="9_BQ010">
+                                9
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="8_BQ010" value="8">
+                                <label class="form-check-label" for="8_BQ010">
+                                  8
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="7_BQ010" value="7">
+                                <label class="form-check-label" for="7_BQ010">
+                                7
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="6_BQ010" value="6">
+                                <label class="form-check-label" for="6_BQ010">
+                                6
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="5_BQ010" value="5">
+                                <label class="form-check-label" for="5_BQ010">
+                                5
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="4_BQ010" value="4">
+                                <label class="form-check-label" for="4_BQ010">
+                                4
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="3_BQ010" value="3">
+                                <label class="form-check-label" for="3_BQ010">
+                                3
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="2_BQ010" value="2">
+                                <label class="form-check-label" for="2_BQ010">
+                                2
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ010" id="1_BQ010" value="1">
+                                <label class="form-check-label" for="1_BQ010">
+                                1
+                                </label>
+                                <label id="answerBQ010" name="answerBQ010" style="display: none;"> </label>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">BQ020</th>
+                        <td>Была ли выполнена работа с первого раза?
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ020" id="1_BQ020" value="1">
+                                <label class="form-check-label" for="1_BQ020">
+                                1. Да
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ020" id="2_BQ020" value="2">
+                                <label class="form-check-label" for="2_BQ020">
+                                2. Нет
+                                </label>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr id="bq030" style="display: none;">
+                        <th scope="row">BQ030</th>
+                        <td>Почему Вам пришлось вернуться обратно?
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="1_BQ030" value="1">
+                                <label class="form-check-label" for="1_BQ030">
+                                1. Не было запчастей
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="2_BQ030" value="2">
+                                <label class="form-check-label" for="2_BQ030">
+                                2. Сервис был занят
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="3_BQ030" value="3">
+                                <label class="form-check-label" for="3_BQ030">
+                                3. Не смогли найти дефект
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="4_BQ030" value="4">
+                                <label class="form-check-label" for="4_BQ030">
+                                4. После ремонта возникли проблемы
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="5_BQ030" value="5">
+                                <label class="form-check-label" for="5_BQ030">
+                                5. Диагностика оказалась ошибочной
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ030" id="6_BQ030" value="6">
+                                <label class="form-check-label" for="6_BQ030">
+                                6. Другое (Пожалуйста уточните и запишите в отчетный файл)
+                                </label>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr id="bq030_comment" style="display: none;">
+                        <th scope="row">Комментарий</th>
+                        <td>
+                            <input id="bq030comment">
+                        </td>
+                      </tr>
+                      <tr id="bq040" style="display: none;">
+                        <th scope="row">BQ040</th>
+                        <td>Каковаа вероятность, что Вы порекомендуете данный автоцентр другим??
+                            <div>
+                                <input class="form-check-input" type="radio" name="BQ040" id="10_BQ040" value="10">
+                                <label class="form-check-label" for="10_BQ040">
+                                10
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="9_BQ040" value="9">
+                                <label class="form-check-label" for="9_BQ040">
+                                9
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="8_BQ040" value="8">
+                                <label class="form-check-label" for="8_BQ040">
+                                  8
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="7_BQ040" value="7">
+                                <label class="form-check-label" for="7_BQ040">
+                                7
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="6_BQ040" value="6">
+                                <label class="form-check-label" for="6_BQ040">
+                                6
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="5_BQ040" value="5">
+                                <label class="form-check-label" for="5_BQ040">
+                                5
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="4_BQ040" value="4">
+                                <label class="form-check-label" for="4_BQ040">
+                                4
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="3_BQ040" value="3">
+                                <label class="form-check-label" for="3_BQ040">
+                                3
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="2_BQ040" value="2">
+                                <label class="form-check-label" for="2_BQ040">
+                                2
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="1_BQ040" value="1">
+                                <label class="form-check-label" for="1_BQ040">
+                                1
+                                </label>
+                                <input class="form-check-input" type="radio" name="BQ040" id="0_BQ040" value="0">
+                                <label class="form-check-label" for="0_BQ040">
+                                0
+                                </label>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr id="bq050" style="display: none;">
+                        <th scope="row">BQ050</th>
+                        <td>Возникли ли у Вас какие-либо проблемы или неудобства во время обслуживания?
+                        </td>
+                      </tr>
+                        <tr id="bq050_1" style="display: none;">
+                            <th scope="row">BQ050</th>
+                                <td>До сервисного обслуживания
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_1_3" id="1_BQ050" value="1">
+                                        <label class="form-check-label" for="1_BQ050">
+                                        1. Трудно записаться на сервис
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_1_3" id="2_BQ050" value="2">
+                                        <label class="form-check-label" for="2_BQ050">
+                                        2. Неудобный график или длительное время ожидания для передачи авто
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_1_3" id="3_BQ050" value="3">
+                                        <label class="form-check-label" for="3_BQ050">
+                                        3. Другая проблема до фактического начала обслуживания
+                                        </label>
+                                    </div>
+                                    <tr id="bq050_comment_1_3" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq050comment1_3">
+                                        </td>
+                                    </tr>
+                                </td>
+                        </tr>
+                        <tr id="bq050_2" style="display: none;">
+                            <th scope="row">BQ050</th>
+                            <td>Сервис-консультант
+                                <div>
+                                    <input class="form-check-input" type="radio" name="BQ050_4_8" id="4_BQ050" value="4">
+                                    <label class="form-check-label" for="4_BQ050">
+                                    4. Не достаточно внимания от сервис-консультанта
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="BQ050_4_8" id="5_BQ050" value="5">
+                                    <label class="form-check-label" for="5_BQ050">
+                                    5. Сервис-консультант казался некомпетентным
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="BQ050_4_8" id="6_BQ050" value="6">
+                                    <label class="form-check-label" for="6_BQ050">
+                                    6. Недостаточно объяснений о необходимых для выполнения работ
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="BQ050_4_8" id="7_BQ050" value="7">
+                                    <label class="form-check-label" for="7_BQ050">
+                                    7. Стоимость работ были неясными или показались завышенными
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="BQ050_4_8" id="8_BQ050" value="8">
+                                    <label class="form-check-label" for="8_BQ050">
+                                    8. Другое
+                                    </label>
+                                </div>
+                                <tr id="bq050_comment_4_8" style="display: none;">
+                                    <th scope="row">Комментарий</th>
+                                    <td>
+                                        <input id="bq050comment4_8">
+                                    </td>
+                                </tr>
+                                </td>
+                            </th>
+                        </tr>
+                        <tr id="bq050_3" style="display: none;">
+                            <th scope="row">BQ050</th>
+                                <td>Выдача автомобиля
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_9_13" id="9_BQ050" value="9">
+                                        <label class="form-check-label" for="9_BQ050">
+                                        9. Не достаточно внимания от сервис-консультанта
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_9_13" id="10_BQ050" value="10">
+                                        <label class="form-check-label" for="10_BQ050">
+                                        10. Сервис-консультант казался некомпетентным
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_9_13" id="11_BQ050" value="11">
+                                        <label class="form-check-label" for="11_BQ050">
+                                        11. Недостаточно объяснений о необходимых для выполнения работ
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_9_13" id="12_BQ050" value="12">
+                                        <label class="form-check-label" for="12_BQ050">
+                                        12. Стоимость работ были неясными или показались завышенными
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_9_13" id="13_BQ050" value="13">
+                                        <label class="form-check-label" for="13_BQ050">
+                                        13. Другое
+                                        </label>
+                                    </div>
+                                    <tr id="bq050_comment_9_13" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq050comment9_13">
+                                        </td>
+                                    </tr>
+                                </td>
+
+                        </tr>
+                        <tr id="bq050_4" style="display: none;">
+                            <th scope="row">BQ050</th>
+                                <td>Сервисный центр
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_14_17" id="14_BQ050" value="14">
+                                        <label class="form-check-label" for="14_BQ050">
+                                        14. Неудобные часы работы
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_14_17" id="15_BQ050" value="15">
+                                        <label class="form-check-label" for="15_BQ050">
+                                        15. Зона ожидания не была чистой, не была удобной
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_14_17" id="16_BQ050" value="16">
+                                        <label class="form-check-label" for="16_BQ050">
+                                        16. Не хватает оборудования
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_14_17" id="17_BQ050" value="17">
+                                        <label class="form-check-label" for="17_BQ050">
+                                        17. Другое
+                                        </label>
+                                    </div>
+                                    <tr id="bq050_comment_14_17" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq050comment14_17">
+                                        </td>
+                                    </tr>
+                                </td>
+
+                        </tr>
+                        <tr id="bq050_5" style="display: none;">
+                            <th scope="row">BQ050</th>
+                                <td>Качество обслуживания
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_18_21" id="18_BQ050" value="18">
+                                        <label class="form-check-label" for="18_BQ050">
+                                        18. Качество выполненных работ неудовлетворительное
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_18_21" id="19_BQ050" value="19">
+                                        <label class="form-check-label" for="19_BQ050">
+                                        19. Не устраивает состояние или чистота автомобиля
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_18_21" id="20_BQ050" value="20">
+                                        <label class="form-check-label" for="20_BQ050">
+                                        20. Общее время ожидания слишком долгое
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_18_21" id="21_BQ050" value="21">
+                                        <label class="form-check-label" for="21_BQ050">
+                                        21. Другое
+                                        </label>
+                                    </div>
+                                    <tr id="bq050_comment_18_21" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq050comment18_21">
+                                        </td>
+                                    </tr>
+                                </td>
+
+                        </tr>
+                        <tr id="bq050_6" style="display: none;">
+                            <th scope="row">BQ050</th>
+                                <td>Другое
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_98_99" id="98_BQ050" value="98">
+                                        <label class="form-check-label" for="98_BQ050">
+                                        98. Не было проблем
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ050_98_99" id="99_BQ050" value="99">
+                                        <label class="form-check-label" for="99_BQ050">
+                                        99. Другое
+                                        </label>
+                                    </div>
+                                    <tr id="bq050_comment_98_99" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq050comment98_99">
+                                        </td>
+                                    </tr>
+                                </td>
+
+                        </tr>
+                        <tr id="bq060" style="display: none;">
+                            <th scope="row">BQ060</th>
+                                <td>Хотели ли бы Вы, чтобы Ваш отзыв был передан руководству и они с Вами связались?
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ060" id="1_BQ060" value="1">
+                                        <label class="form-check-label" for="1_BQ060">
+                                        1. Да
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ060" id="2_BQ060" value="2">
+                                        <label class="form-check-label" for="2_BQ060">
+                                        2. Нет
+                                        </label>
+                                    </div>
+                                </td>
+
+                        </tr>
+                        <tr id="bq070" style="display: none;">
+                            <th scope="row">BQ070</th>
+                                <td>Будете ли Вы посещать наш автоцентр снова?
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ070" id="10_BQ070" value="10">
+                                        <label class="form-check-label" for="10_BQ070">
+                                        10
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="9_BQ070" value="9">
+                                        <label class="form-check-label" for="9_BQ070">
+                                        9
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="8_BQ070" value="8">
+                                        <label class="form-check-label" for="8_BQ070">
+                                        8
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="7_BQ070" value="7">
+                                        <label class="form-check-label" for="7_BQ070">
+                                        7
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="6_BQ070" value="6">
+                                        <label class="form-check-label" for="6_BQ070">
+                                        6
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="5_BQ070" value="5">
+                                        <label class="form-check-label" for="5_BQ070">
+                                        5
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="4_BQ070" value="4">
+                                        <label class="form-check-label" for="4_BQ070">
+                                        4
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="3_BQ070" value="3">
+                                        <label class="form-check-label" for="3_BQ070">
+                                        3
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="2_BQ070" value="2">
+                                        <label class="form-check-label" for="2_BQ070">
+                                        2
+                                        </label>
+                                    
+                                        <input class="form-check-input" type="radio" name="BQ070" id="1_BQ070" value="1">
+                                        <label class="form-check-label" for="1_BQ070">
+                                        1
+                                        </label>
+                                    </div>
+                                </td>
+
+                        </tr>
+                        <tr id="bq080" style="display: none;">
+                            <th scope="row">BQ080</th>
+                                <td>Пожалуйста, опишите, почему Вы не уверены, что будите посещать наш автоцентр снова?
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ080" id="1_BQ080" value="1">
+                                        <label class="form-check-label" for="1_BQ080">
+                                        1. У меня есть автоцентр ближе к дому/работе
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ080" id="2_BQ080" value="2">
+                                        <label class="form-check-label" for="2_BQ080">
+                                        2. Я знаю о более лучшем автоцентре
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ080" id="3_BQ080" value="3">
+                                        <label class="form-check-label" for="3_BQ080">
+                                        3. Сервис слишком дорогой
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ080" id="4_BQ080" value="4">
+                                        <label class="form-check-label" for="4_BQ080">
+                                        4. Мне не понравилось
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="BQ080" id="5_BQ080" value="5">
+                                        <label class="form-check-label" for="5_BQ080">
+                                        5. Другая причина
+                                        </label>
+                                    </div>
+                                    <tr id="bq080_comment" style="display: none;">
+                                        <th scope="row">Комментарий</th>
+                                        <td>
+                                            <input id="bq080comment">
+                                        </td>
+                                    </tr>
+                                </td>
+
+                        </tr>
+                    </tbody>
+                  </table>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">SE300 Дополнительные вопросы</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-hover" id="se300" style="display: none;">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Вопрос</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">SQ020</th>
+                            <td>Как Вы оцениваете запись на сервисное обслуживание?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="10_SQ020" value="10">
+                                    <label class="form-check-label" for="10_SQ020">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="9_SQ020" value="9">
+                                    <label class="form-check-label" for="9_SQ020">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="8_SQ020" value="8">
+                                    <label class="form-check-label" for="8_SQ020">
+                                      8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="7_SQ020" value="7">
+                                    <label class="form-check-label" for="7_SQ020">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="6_SQ020" value="6">
+                                    <label class="form-check-label" for="6_SQ020">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="5_SQ020" value="5">
+                                    <label class="form-check-label" for="5_SQ020">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="4_SQ020" value="4">
+                                    <label class="form-check-label" for="4_SQ020">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="3_SQ020" value="3">
+                                    <label class="form-check-label" for="3_SQ020">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="2_SQ020" value="2">
+                                    <label class="form-check-label" for="2_SQ020">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="1_SQ020" value="1">
+                                    <label class="form-check-label" for="1_SQ020">
+                                    1
+                                    </label>
+                                    <div>
+                                    <input class="form-check-input" type="radio" name="SQ020" id="99_SQ020" value="99">
+                                    <label class="form-check-label" for="99_SQ020">
+                                    99. Если клиент приехал без записи
+                                    </label>
+                                    </div>
+                                </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">SQ030</th>
+                            <td>Как Вы оцениваете выполнение работ в обозначенный срок?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="10_SQ030" value="10">
+                                    <label class="form-check-label" for="10_SQ030">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="9_SQ030" value="9">
+                                    <label class="form-check-label" for="9_SQ030">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="8_SQ030" value="8">
+                                    <label class="form-check-label" for="8_SQ030">
+                                      8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="7_SQ030" value="7">
+                                    <label class="form-check-label" for="7_SQ030">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="6_SQ030" value="6">
+                                    <label class="form-check-label" for="6_SQ030">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="5_SQ030" value="5">
+                                    <label class="form-check-label" for="5_SQ030">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="4_SQ030" value="4">
+                                    <label class="form-check-label" for="4_SQ030">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="3_SQ030" value="3">
+                                    <label class="form-check-label" for="3_SQ030">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="2_SQ030" value="2">
+                                    <label class="form-check-label" for="2_SQ030">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ030" id="1_SQ030" value="1">
+                                    <label class="form-check-label" for="1_SQ030">
+                                    1
+                                    </label>
+                                </div>
+                            </td>
+                          </tr>
+                            <tr>
+                                <th scope="row">SQ040</th>
+                                <td>Как Вы оцениваете понимание сервис-консультантом Вашиз потребностей?
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="10_SQ040" value="10">
+                                        <label class="form-check-label" for="10_SQ040">
+                                        10
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="9_SQ040" value="9">
+                                        <label class="form-check-label" for="9_SQ040">
+                                        9
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="8_SQ040" value="8">
+                                        <label class="form-check-label" for="8_SQ040">
+                                        8
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="7_SQ040" value="7">
+                                        <label class="form-check-label" for="7_SQ040">
+                                        7
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="6_SQ040" value="6">
+                                        <label class="form-check-label" for="6_SQ040">
+                                        6
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="5_SQ040" value="5">
+                                        <label class="form-check-label" for="5_SQ040">
+                                        5
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="4_SQ040" value="4">
+                                        <label class="form-check-label" for="4_SQ040">
+                                        4
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="3_SQ040" value="3">
+                                        <label class="form-check-label" for="3_SQ040">
+                                        3
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="2_SQ040" value="2">
+                                        <label class="form-check-label" for="2_SQ040">
+                                        2
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="SQ040" id="1_SQ040" value="1">
+                                        <label class="form-check-label" for="1_SQ040">
+                                        1
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                          <tr>
+                            <th scope="row">SQ050</th>
+                            <td>Осматривали ли Ваш автомобиль перед приёмом в работу?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ050" id="1_SQ050" value="1">
+                                    <label class="form-check-label" for="1_SQ050">
+                                    1. Да
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ050" id="2_SQ050" value="2">
+                                    <label class="form-check-label" for="2_SQ050">
+                                    2. Нет
+                                    </label>
+                                </div>
+                            </td>
+                          </tr>
+                        <tr>
+                            <th scope="row">SQ060</th>
+                            <td>Насколько Вы удовлетворены объяснением деталей работы?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="10_SQ060" value="10">
+                                    <label class="form-check-label" for="10_SQ060">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="9_SQ060" value="9">
+                                    <label class="form-check-label" for="9_SQ060">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="8_SQ060" value="8">
+                                    <label class="form-check-label" for="8_SQ060">
+                                    8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="7_SQ060" value="7">
+                                    <label class="form-check-label" for="7_SQ060">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="6_SQ060" value="6">
+                                    <label class="form-check-label" for="6_SQ060">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="5_SQ060" value="5">
+                                    <label class="form-check-label" for="5_SQ060">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="4_SQ060" value="4">
+                                    <label class="form-check-label" for="4_SQ060">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="3_SQ060" value="3">
+                                    <label class="form-check-label" for="3_SQ060">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="2_SQ060" value="2">
+                                    <label class="form-check-label" for="2_SQ060">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ060" id="1_SQ060" value="1">
+                                    <label class="form-check-label" for="1_SQ060">
+                                    1
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">SQ070</th>
+                            <td>Предлагали ли Вам когда-либо подменный автомобиль, пока Ваш автомобиль находился в длительном ремонте?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ070" id="1_SQ070" value="1">
+                                    <label class="form-check-label" for="1_SQ070">
+                                    1. Да
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ070" id="2_SQ070" value="2">
+                                    <label class="form-check-label" for="2_SQ070">
+                                    2. Нет
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">SQ080</th>
+                            <td>Насколько Вы были удовлетворены своевременностью готовности Вашего автомобиля согласно обещанию?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="10_SQ080" value="10">
+                                    <label class="form-check-label" for="10_SQ080">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="9_SQ080" value="9">
+                                    <label class="form-check-label" for="9_SQ080">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="8_SQ080" value="8">
+                                    <label class="form-check-label" for="8_SQ080">
+                                    8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="7_SQ080" value="7">
+                                    <label class="form-check-label" for="7_SQ080">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="6_SQ080" value="6">
+                                    <label class="form-check-label" for="6_SQ080">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="5_SQ080" value="5">
+                                    <label class="form-check-label" for="5_SQ080">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="4_SQ080" value="4">
+                                    <label class="form-check-label" for="4_SQ080">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="3_SQ080" value="3">
+                                    <label class="form-check-label" for="3_SQ080">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="2_SQ080" value="2">
+                                    <label class="form-check-label" for="2_SQ080">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ080" id="1_SQ080" value="1">
+                                    <label class="form-check-label" for="1_SQ080">
+                                    1
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">SQ090</th>
+                            <td>Был ли Ваш автомобиль чистым при получении после проведения обслуживания?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="10_SQ090" value="10">
+                                    <label class="form-check-label" for="10_SQ090">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="9_SQ090" value="9">
+                                    <label class="form-check-label" for="9_SQ090">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="8_SQ090" value="8">
+                                    <label class="form-check-label" for="8_SQ090">
+                                    8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="7_SQ090" value="7">
+                                    <label class="form-check-label" for="7_SQ090">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="6_SQ090" value="6">
+                                    <label class="form-check-label" for="6_SQ090">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="5_SQ090" value="5">
+                                    <label class="form-check-label" for="5_SQ090">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="4_SQ090" value="4">
+                                    <label class="form-check-label" for="4_SQ090">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="3_SQ090" value="3">
+                                    <label class="form-check-label" for="3_SQ090">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="2_SQ090" value="2">
+                                    <label class="form-check-label" for="2_SQ090">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ090" id="1_SQ090" value="1">
+                                    <label class="form-check-label" for="1_SQ090">
+                                    1
+                                    </label>
+                                </div>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th scope="row">SQ110</th>
+                            <td>Насколько стоимость услуг показалась Вам справедливой?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="10_SQ110" value="10">
+                                    <label class="form-check-label" for="10_SQ110">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="9_SQ110" value="9">
+                                    <label class="form-check-label" for="9_SQ110">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="8_SQ110" value="8">
+                                    <label class="form-check-label" for="8_SQ110">
+                                      8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="7_SQ110" value="7">
+                                    <label class="form-check-label" for="7_SQ110">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="6_SQ110" value="6">
+                                    <label class="form-check-label" for="6_SQ110">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="5_SQ110" value="5">
+                                    <label class="form-check-label" for="5_SQ110">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="4_SQ110" value="4">
+                                    <label class="form-check-label" for="4_SQ110">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="3_SQ110" value="3">
+                                    <label class="form-check-label" for="3_SQ110">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="2_SQ110" value="2">
+                                    <label class="form-check-label" for="2_SQ110">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="1_SQ110" value="1">
+                                    <label class="form-check-label" for="1_SQ110">
+                                    1
+                                    </label>
+                                    <div>
+                                    <input class="form-check-input" type="radio" name="SQ110" id="99_SQ110" value="99">
+                                    <label class="form-check-label" for="99_SQ110">
+                                    99. Работы выполнялись по гарантии
+                                    </label>
+                                    </div>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <th scope="row">SQ120</th>
+                            <td>Насколько Вы удовлетворены качеством выполненных работ?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="10_SQ120" value="10">
+                                    <label class="form-check-label" for="10_SQ120">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="9_SQ120" value="9">
+                                    <label class="form-check-label" for="9_SQ120">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="8_SQ120" value="8">
+                                    <label class="form-check-label" for="8_SQ120">
+                                    8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="7_SQ120" value="7">
+                                    <label class="form-check-label" for="7_SQ120">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="6_SQ120" value="6">
+                                    <label class="form-check-label" for="6_SQ120">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="5_SQ120" value="5">
+                                    <label class="form-check-label" for="5_SQ120">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="4_SQ120" value="4">
+                                    <label class="form-check-label" for="4_SQ120">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="3_SQ120" value="3">
+                                    <label class="form-check-label" for="3_SQ120">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="2_SQ120" value="2">
+                                    <label class="form-check-label" for="2_SQ120">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ120" id="1_SQ120" value="1">
+                                    <label class="form-check-label" for="1_SQ120">
+                                    1
+                                    </label>
+                                </div>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th scope="row">SQ130</th>
+                            <td>Насколько Вам понравилась зона ожидания для клиентов, включая удобства?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="10_SQ130" value="10">
+                                    <label class="form-check-label" for="10_SQ130">
+                                    10
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="9_SQ130" value="9">
+                                    <label class="form-check-label" for="9_SQ130">
+                                    9
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="8_SQ130" value="8">
+                                    <label class="form-check-label" for="8_SQ130">
+                                      8
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="7_SQ130" value="7">
+                                    <label class="form-check-label" for="7_SQ130">
+                                    7
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="6_SQ130" value="6">
+                                    <label class="form-check-label" for="6_SQ130">
+                                    6
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="5_SQ130" value="5">
+                                    <label class="form-check-label" for="5_SQ130">
+                                    5
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="4_SQ130" value="4">
+                                    <label class="form-check-label" for="4_SQ130">
+                                    4
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="3_SQ130" value="3">
+                                    <label class="form-check-label" for="3_SQ130">
+                                    3
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="2_SQ130" value="2">
+                                    <label class="form-check-label" for="2_SQ130">
+                                    2
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="1_SQ130" value="1">
+                                    <label class="form-check-label" for="1_SQ130">
+                                    1
+                                    </label>
+                                    <div>
+                                    <input class="form-check-input" type="radio" name="SQ130" id="99_SQ130" value="99">
+                                    <label class="form-check-label" for="99_SQ130">
+                                    99. Клиент не ждал завершения работ по автомобилю - просто ушёл
+                                    </label>
+                                    </div>
+                                </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">SQ140</th>
+                            <td>Связывались ли с Вами после обслуживания?
+                                <div>
+                                    <input class="form-check-input" type="radio" name="SQ140" id="1_SQ140" value="1">
+                                    <label class="form-check-label" for="1_SQ140">
+                                    1. Да
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="SQ140" id="2_SQ140" value="2">
+                                    <label class="form-check-label" for="2_SQ140">
+                                    2. Нет
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>   
+                        </tbody>
+                    </table>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">SE500 Демографические данные</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Вопрос</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">DQ010</th>
+                                <td>Пол
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ010" id="1_DQ010" value="1">
+                                        <label class="form-check-label" for="1_DQ010">
+                                        1. Мужской
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ010" id="2_DQ010" value="2">
+                                        <label class="form-check-label" for="2_DQ010">
+                                        2. Женский
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ010" id="3_DQ010" value="3">
+                                        <label class="form-check-label" for="3_DQ010">
+                                        3. Не определено
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">DQ020</th>
+                                <td>Возраст
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="1_DQ020" value="1">
+                                        <label class="form-check-label" for="1_DQ020">
+                                        1. -20
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="2_DQ020" value="2">
+                                        <label class="form-check-label" for="2_DQ020">
+                                        2. 20-29
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="3_DQ020" value="3">
+                                        <label class="form-check-label" for="3_DQ020">
+                                        3. 30-39
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="4_DQ020" value="4">
+                                        <label class="form-check-label" for="4_DQ020">
+                                        4. 40-49
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="5_DQ020" value="5">
+                                        <label class="form-check-label" for="5_DQ020">
+                                        5. 50-59
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="6_DQ020" value="6">
+                                        <label class="form-check-label" for="6_DQ020">
+                                        6. 60-
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="DQ020" id="7_DQ020" value="7">
+                                        <label class="form-check-label" for="7_DQ020">
+                                        7. Не определено
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">DQ030</th>
+                                <td>Пробег автомобиля
+                                    <div>
+                                        <label id="mileageDQ030" name="mileageDQ030">
+                                        
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">DQ040</th>
+                                <td>Тип обслуживания
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ040" id="1_DQ040" value="1">
+                                        <label class="form-check-label" for="1_DQ040">
+                                        1. Сервисное обслуживание / ремонт
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ040" id="2_DQ040" value="2">
+                                        <label class="form-check-label" for="2_DQ040">
+                                        2. Гарантийные работы
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ040" id="3_DQ040" value="3">
+                                        <label class="form-check-label" for="3_DQ040">
+                                        3. Обслуживание по договору (безналичный расчёт)
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="DQ040" id="4_DQ040" value="4">
+                                        <label class="form-check-label" for="4_DQ040">
+                                        4. Гарантийные работы с частичной оплатой клиентом
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <label>Благодарим Вас за участие в этом опросе и выбор автомобиля KIA. Спасибо. Хорошего Вам дня.</label>
+                    <button id="saveReportKia_btn" onclick="saveReportKia()" class="btn_user" type="submit" style="margin-left: 550px; display: none;">Сохранить опрос</button>
             </div>
         </div>
     </div>
+    <div style="display: none;">
+        <label id="vin"></label>
+        <label id="idClient"></label>
+        <label id="bQ010"></label>
+        <label id="bQ020"></label>
+        <label id="bQ030"></label>
+        <label id="bQ040"></label>
+        <label id="bQ050_1_3"></label>
+        <label id="bQ050_4_8"></label>
+        <label id="bQ050_9_13"></label>
+        <label id="bQ050_14_17"></label>
+        <label id="bQ050_18_21"></label>
+        <label id="bQ050_98_99"></label>
+        <label id="bQ060"></label>
+        <label id="bQ070"></label>
+        <label id="bQ080"></label>
+        <label id="sQ020"></label>
+        <label id="sQ030"></label>
+        <label id="sQ040"></label>
+        <label id="sQ050"></label>
+        <label id="sQ060"></label>
+        <label id="sQ070"></label>
+        <label id="sQ080"></label>
+        <label id="sQ090"></label>
+        <label id="sQ110"></label>
+        <label id="sQ120"></label>
+        <label id="sQ130"></label>
+        <label id="sQ140"></label>
+        <label id="dQ010"></label>
+        <label id="dQ020"></label>
+        <label id="dQ030"></label>
+        <label id="dQ040"></label>
+    </div>
     
+    <script src="js/popupUsers.js"></script>
+    <script src="js/nps.js"></script>
 </body>
 </html>

@@ -30,7 +30,6 @@ public class VasUserController {
 
     @GetMapping("/findAll")
     public List<VasUserModelDTO> findAllUsers(){
-        log.info("Handling find all users request");
         return vasUserService.findAll();
     }
 }

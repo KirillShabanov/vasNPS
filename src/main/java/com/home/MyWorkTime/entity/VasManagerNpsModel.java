@@ -17,28 +17,32 @@ public class VasManagerNpsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "manager_name")
     private String manager_name;
-    @Column
+    @Column(name = "manager_email")
     private String manager_email;
-    @Column
+    @Column(name = "position_call_nps")
     private String position_call_nps;
-    @Column
+    @Column(name = "position_call_nps_copy")
     private String position_call_nps_copy;
-    @Column
+    @Column(name = "position_department")
     private String position_department;
-    @Column
+    @Column(name = "position_mail_nps_week")
     private String position_mail_nps_week;
-    @Column
+    @Column(name = "position_mail_nps_week_copy")
     private String position_mail_nps_week_copy;
-    @Column
+    @Column(name = "brand")
     private String brand;
-    @Column
+    @Column(name = "organisation")
     private String organisation;
-    @Column
+    @Column(name = "position_mail_nps_month")
     private String position_mail_nps_month;
-    @Column
+    @Column(name = "position_mail_nps_month_copy")
     private String position_mail_nps_month_copy;
+    @Column(name = "position_report_satisfaction_kia")
+    private String position_report_satisfaction_kia;
+    @Column(name = "position_report_satisfaction_kia_copy")
+    private String position_report_satisfaction_kia_copy;
 
     @Override
     public boolean equals(Object o) {

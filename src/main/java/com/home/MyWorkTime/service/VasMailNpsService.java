@@ -1,7 +1,9 @@
 package com.home.MyWorkTime.service;
 
+import com.home.MyWorkTime.entity.VasFullReportNpsModel;
 import com.home.MyWorkTime.entity.VasMailNpsModel;
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
+import com.home.MyWorkTime.repository.VasFullReportNpsRepository;
 import com.home.MyWorkTime.repository.VasMailNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 
@@ -9,8 +11,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.CellCopyPolicy;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.FileSystemResource;
@@ -20,7 +23,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
@@ -39,17 +41,21 @@ public class VasMailNpsService {
     private final VasMailNpsRepository vasMailNpsRepository;
     private final JavaMailSender javaMailSender;
     private final VasManagerNpsRepository vasManagerNpsRepository;
+    private final VasFullReportNpsRepository vasFullReportNpsRepository;
     private final HashMap<String, Double> npsReportWeek = new HashMap<>();
     private final HashMap<String, Double> npsReportMonth = new HashMap<>();
     private final HashMap<String, Double> npsReportingMonth = new HashMap<>();
 
     public VasMailNpsService(VasMailNpsRepository vasMailNpsRepository,
                              JavaMailSender javaMailSender,
-                             VasManagerNpsRepository vasManagerNpsRepository) {
+                             VasManagerNpsRepository vasManagerNpsRepository,
+                             VasFullReportNpsRepository vasFullReportNpsRepository) {
         this.vasMailNpsRepository = vasMailNpsRepository;
         this.javaMailSender = javaMailSender;
         this.vasManagerNpsRepository = vasManagerNpsRepository;
+        this.vasFullReportNpsRepository = vasFullReportNpsRepository;
     }
+
 
     @SneakyThrows
     @Scheduled(cron = "1 00 16 * * *")
@@ -87,9 +93,6 @@ public class VasMailNpsService {
         String setTo;
         String setCc;
 
-        HSSFWorkbook workbookNPSCall; // книга
-        HSSFSheet sheetNPSCall;
-        HSSFRow rowHeadNPSCall;
 
         String replace = addressListCopy.toString().replace("[", "").replace("]", ",");//Волшебная подсказка!!!!
 
@@ -158,85 +161,50 @@ public class VasMailNpsService {
         }
 
         if (!(listSkoda.isEmpty())){
-            String file = "NPSskoda.xls";
-            String npsSheet = "NPS_SKODA";
 
-            workbookNPSCall = new HSSFWorkbook(); // книга
-            sheetNPSCall = workbookNPSCall.createSheet(npsSheet); // лист
-            rowHeadNPSCall = sheetNPSCall.createRow((short)0); // строка
+            FileInputStream templateSkoda = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\templateSkoda.xlsx");
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\temlpateSkoda.xlsx"
+            XSSFWorkbook reportSkoda = new XSSFWorkbook(templateSkoda);
+            XSSFSheet listReportSkoda = reportSkoda.getSheetAt(0);
 
-            rowHeadNPSCall.createCell(0).setCellValue("Обращение");
-            rowHeadNPSCall.createCell(1).setCellValue("Фамилия");
-            rowHeadNPSCall.createCell(2).setCellValue("Имя");
-            rowHeadNPSCall.createCell(3).setCellValue("Телефон 1");
-            rowHeadNPSCall.createCell(4).setCellValue("Телефон 2");
-            rowHeadNPSCall.createCell(5).setCellValue("Компания");
-            rowHeadNPSCall.createCell(6).setCellValue("Предпочитаемый способ связи");
-            rowHeadNPSCall.createCell(7).setCellValue("Номер шасси");
-            rowHeadNPSCall.createCell(8).setCellValue("Гос.номер");
-            rowHeadNPSCall.createCell(9).setCellValue("Марка");
-            rowHeadNPSCall.createCell(10).setCellValue("Модель");
-            rowHeadNPSCall.createCell(11).setCellValue("Год модели");
-            rowHeadNPSCall.createCell(12).setCellValue("Срок мастерской");
-            rowHeadNPSCall.createCell(13).setCellValue("Тип задания");
-            rowHeadNPSCall.createCell(14).setCellValue("Номер З/Н");
-            rowHeadNPSCall.createCell(15).setCellValue("Язык общения");
-            rowHeadNPSCall.createCell(16).setCellValue("ID сервисного консультанта");
-            rowHeadNPSCall.createCell(17).setCellValue("Номер импортёра");
-            rowHeadNPSCall.createCell(18).setCellValue("Номер дилера");
-            rowHeadNPSCall.createCell(19).setCellValue("");
-
-            for (int i=0; i< listSkoda.size(); i++) {
-                HSSFRow rowNpsCall = sheetNPSCall.createRow((short) i+1);
-                rowNpsCall.createCell(0).setCellValue("");
-                rowNpsCall.createCell(1).setCellValue(listSkoda.get(i).getClient_surname());
-                rowNpsCall.createCell(2).setCellValue(listSkoda.get(i).getClient_name());
-                rowNpsCall.createCell(3).setCellValue(listSkoda.get(i).getPhone_1());
+            for (int i = 0; i < listSkoda.size(); i++) {
+                XSSFRow rowCall = listReportSkoda.getRow(i+1);
+                rowCall.createCell(0).setCellValue("");
+                rowCall.createCell(1).setCellValue(listSkoda.get(i).getClient_surname());
+                rowCall.createCell(2).setCellValue(listSkoda.get(i).getClient_name());
+                rowCall.createCell(3).setCellValue(listSkoda.get(i).getPhone_1());
                 if (listSkoda.get(i).getPhone_2() != null) {
-                    rowNpsCall.createCell(4).setCellValue(listSkoda.get(i).getPhone_2());
+                    rowCall.createCell(4).setCellValue(listSkoda.get(i).getPhone_2());
                 } else {
-                    rowNpsCall.createCell(4).setCellValue("");
+                    rowCall.createCell(4).setCellValue("");
                 }
-                rowNpsCall.createCell(5).setCellValue("VitebskAutoCity");
-                rowNpsCall.createCell(6).setCellValue("");
-                rowNpsCall.createCell(7).setCellValue(listSkoda.get(i).getVehicle_identification_number());
-                rowNpsCall.createCell(8).setCellValue(listSkoda.get(i).getReg_num());
-                rowNpsCall.createCell(9).setCellValue(listSkoda.get(i).getBrand());
-                rowNpsCall.createCell(10).setCellValue(listSkoda.get(i).getModel());
-                rowNpsCall.createCell(11).setCellValue(listSkoda.get(i).getYear_release());
-                rowNpsCall.createCell(12).setCellValue(formatDate.format(listSkoda.get(i).getDate_order()));
-                rowNpsCall.createCell(13).setCellValue("N");
-                rowNpsCall.createCell(14).setCellValue(listSkoda.get(i).getNum_order());
-                rowNpsCall.createCell(15).setCellValue("ru");
-                rowNpsCall.createCell(16).setCellValue("N");
-                rowNpsCall.createCell(17).setCellValue("000059");
-                rowNpsCall.createCell(18).setCellValue("296");
-                rowNpsCall.createCell(19).setCellValue("41007");
-                sheetNPSCall.autoSizeColumn(0);
-                sheetNPSCall.autoSizeColumn(1);
-                sheetNPSCall.autoSizeColumn(2);
-                sheetNPSCall.autoSizeColumn(3);
-                sheetNPSCall.autoSizeColumn(4);
-                sheetNPSCall.autoSizeColumn(5);
-                sheetNPSCall.autoSizeColumn(6);
-                sheetNPSCall.autoSizeColumn(7);
-                sheetNPSCall.autoSizeColumn(8);
-                sheetNPSCall.autoSizeColumn(9);
-                sheetNPSCall.autoSizeColumn(10);
-                sheetNPSCall.autoSizeColumn(11);
-                sheetNPSCall.autoSizeColumn(12);
-                sheetNPSCall.autoSizeColumn(13);
-                sheetNPSCall.autoSizeColumn(14);
-                sheetNPSCall.autoSizeColumn(15);
-                sheetNPSCall.autoSizeColumn(16);
-                sheetNPSCall.autoSizeColumn(17);
-                sheetNPSCall.autoSizeColumn(18);
-                sheetNPSCall.autoSizeColumn(19);
-
+                rowCall.createCell(5).setCellValue("VitebskAutoCity");
+                rowCall.createCell(6).setCellValue("");
+                rowCall.createCell(7).setCellValue(listSkoda.get(i).getVehicle_identification_number());
+                rowCall.createCell(8).setCellValue(listSkoda.get(i).getReg_num());
+                rowCall.createCell(9).setCellValue(listSkoda.get(i).getBrand());
+                rowCall.createCell(10).setCellValue(listSkoda.get(i).getModel());
+                rowCall.createCell(11).setCellValue(listSkoda.get(i).getYear_release());
+                rowCall.createCell(12).setCellValue(formatDate.format(listSkoda.get(i).getDate_order()));
+                rowCall.createCell(13).setCellValue("N");
+                rowCall.createCell(14).setCellValue(listSkoda.get(i).getNum_order());
+                rowCall.createCell(15).setCellValue("ru");
+                rowCall.createCell(16).setCellValue("N");
+                rowCall.createCell(17).setCellValue("000059");
+                rowCall.createCell(18).setCellValue("296");
+                rowCall.createCell(19).setCellValue("41007");
             }
-            FileOutputStream fileOut = new FileOutputStream(file);
-            workbookNPSCall.write(fileOut);
-            fileOut.close();
+
+            SimpleDateFormat dateReport = new SimpleDateFormat("dd.MM.yyyy");
+            String date = dateReport.format(new Date());
+
+            String newFile = ""+ date + "- Skoda.xlsx";
+            FileOutputStream fileOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\" + newFile);
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\"
+            reportSkoda.write(fileOuts);
+            fileOuts.close();
+
+
 
             setTo = addressListSkoda.toString().replace("[","").replace("]","");
             setCc = replace;
@@ -260,8 +228,9 @@ public class VasMailNpsService {
                 P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
                 P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
 
-            FileSystemResource npsCall = new FileSystemResource(new File(file));
-            helper.addAttachment(file, npsCall);
+            FileSystemResource reportsSkoda = new FileSystemResource(new File( "C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\" + newFile));
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\"
+            helper.addAttachment(newFile, reportsSkoda);
             javaMailSender.send(messageVasNpsMail);
 
             LOGGER.log(Level.INFO, "Список SKODA сформирован и отправлен.");
@@ -629,7 +598,7 @@ public class VasMailNpsService {
                 }
             }
             String file = ""+ date + "- currentWeekNPS.xlsx";
-            FileOutputStream fileOut = new FileOutputStream(file);
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Week reports\\" + file);
             report.write(fileOut);
             fileOut.close();
 
@@ -882,7 +851,7 @@ public class VasMailNpsService {
   
                 К письму прикреплен отчёт по показателю NPS.""");
 
-            FileSystemResource currentWeekNpsReport = new FileSystemResource(new File(file));
+            FileSystemResource currentWeekNpsReport = new FileSystemResource(new File("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Month reports\\" + file));
             helper.addAttachment(file, currentWeekNpsReport);
             javaMailSender.send(messageVasNpsMail);
 
@@ -893,6 +862,209 @@ public class VasMailNpsService {
             e.printStackTrace();
             System.out.println("Отчёт NPS за отчётный месяц не сформирован, данных нет.");
             LOGGER.log(Level.INFO, "Отчёт NPS за отчётный месяц не сформирован, данных нет." + " Описание ошибки: ", e);
+        }
+    }
+
+    @SneakyThrows
+    @Scheduled(cron = "0 0 09 25 * *")
+    private void customerSatisfactionReport(){
+        List<VasFullReportNpsModel> listFullReportKia = vasFullReportNpsRepository.fullReportKiaForThisMonth();
+        List<VasManagerNpsModel> addressFullReportKiaForThisMonth = vasManagerNpsRepository.forFullReportKiaForThisMonth();
+        List<VasManagerNpsModel> addressFullReportKiaForThisCopy = vasManagerNpsRepository.forFullReportKiaForThisMonthCopy();
+
+        ArrayList<String> addressFullReportKiaForMonth = new ArrayList<>();
+        ArrayList<String> addressFullReportKiaForMonthCopy = new ArrayList<>();
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd"); //Для формата вывода даты в excel
+
+        for (VasManagerNpsModel vasManagerNpsModel : addressFullReportKiaForThisMonth){
+            addressFullReportKiaForMonth.add(vasManagerNpsModel.getManager_email());
+        }
+        for (VasManagerNpsModel vasManagerNpsModel : addressFullReportKiaForThisCopy){
+            addressFullReportKiaForMonthCopy.add(vasManagerNpsModel.getManager_email());
+        }
+
+        //Ниже код для адресата отправки
+        String setTo;
+        String setCc;
+
+        String replace = addressFullReportKiaForMonthCopy.toString().replace("[", "").replace("]", ",");//Волшебная подсказка!!!!
+
+        if (!(listFullReportKia.isEmpty())){
+
+            FileInputStream templateSatisfactionKia = null;
+            try {
+                templateSatisfactionKia = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\customerSatisfactionReport.xlsx");
+                // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\customerSatisfactionReport.xlsx"
+            } catch (FileNotFoundException e) {
+                System.out.println("Ошибка: " + e);
+                LOGGER.log(Level.INFO, "Ошибка: " + e);
+            }
+            XSSFWorkbook reportSatisfactionKia = null;
+            try {
+                assert templateSatisfactionKia != null;
+                reportSatisfactionKia = new XSSFWorkbook(templateSatisfactionKia);
+            } catch (IOException e) {
+                System.out.println("Ошибка: " + e);
+                LOGGER.log(Level.INFO, "Ошибка: " + e);
+            }
+            assert reportSatisfactionKia != null;
+
+            XSSFSheet listreportSatisfactionKia = reportSatisfactionKia.getSheetAt(0);
+
+            // Количество отчётов
+            int countReport = Math.toIntExact(vasFullReportNpsRepository.countReport());
+
+            if (countReport >= 8 && countReport % 2 == 0) {
+                for (int j = 1; j <= countReport - j - 2; j++) {
+                    for (int i = 1; i < 25; i++) {
+                        //Берем строку из отчета
+                        XSSFRow mainRow = listreportSatisfactionKia.getRow(i);
+                        //Копируем строку в отчёт
+                        XSSFRow newRow = listreportSatisfactionKia.createRow(i + 48 * j); //this works
+                        newRow.copyRowFrom(mainRow, new CellCopyPolicy());
+                    }
+                    for (int i = 25; i < 49; i++) {
+                        //Берем строку из отчета
+                        XSSFRow mainRow = listreportSatisfactionKia.getRow(i);
+                        //Копируем строку в отчёт
+                        XSSFRow newRow = listreportSatisfactionKia.createRow(i + 48 * j); //this works
+                        newRow.copyRowFrom(mainRow, new CellCopyPolicy());
+                    }
+                }
+            } else {
+                for (int j = 1; j <= countReport - j; j++) {
+                    for (int i = 1; i < 25; i++) {
+                        //Берем строку из отчета
+                        XSSFRow mainRow = listreportSatisfactionKia.getRow(i);
+                        //Копируем строку в отчёт
+                        XSSFRow newRow = listreportSatisfactionKia.createRow(i + 48 * j); //this works
+                        newRow.copyRowFrom(mainRow, new CellCopyPolicy());
+                    }
+                    for (int i = 25; i < 49; i++) {
+                        //Берем строку из отчета
+                        XSSFRow mainRow = listreportSatisfactionKia.getRow(i);
+                        //Копируем строку в отчёт
+                        XSSFRow newRow = listreportSatisfactionKia.createRow(i + 48 * j); //this works
+                        newRow.copyRowFrom(mainRow, new CellCopyPolicy());
+                    }
+                }
+            }
+
+            if (countReport % 2 != 0) {
+                int lastRow = listreportSatisfactionKia.getLastRowNum();
+                for (int i = lastRow; i < lastRow + 25; i++) {
+                    //Берем строку из отчета
+                    XSSFRow mainRow = listreportSatisfactionKia.getRow(i + 1);
+                    //Копируем строку в отчёт
+                    XSSFRow newRow = listreportSatisfactionKia.createRow((i - 23)); //this works
+                    newRow.copyRowFrom(mainRow, new CellCopyPolicy());
+                }
+            }
+
+            // Заполняем отчет исхлодя из количеста репортов
+            for (int i = 0; i < countReport; i++) {
+                int z = 24 * i; // Это коэффицент изменения количества опрашиваемых людей
+                for (int j = z; j < 24 + z; j++) {
+                    listreportSatisfactionKia.getRow(j + 1).getCell(1).setCellValue(formatDate.format(listFullReportKia.get(i).getOutgoingCallDate()));
+                    listreportSatisfactionKia.getRow(j + 1).getCell(7).setCellValue(listFullReportKia.get(i).getVin());
+                    listreportSatisfactionKia.getRow(j + 1).getCell(13).setCellValue(listFullReportKia.get(i).getIdClient());
+
+                    String c2 = String.valueOf(listreportSatisfactionKia.getRow(j + 1).getCell(2));
+                    String d2 = String.valueOf(listreportSatisfactionKia.getRow(j + 1).getCell(3));
+
+                    listreportSatisfactionKia.getRow(j + 1)
+                            .getCell(6)
+                            .setCellValue(c2 +
+                                    d2 +
+                                    formatDate.format(listFullReportKia.get(i).getOutgoingCallDate()) +
+                                    listFullReportKia.get(i).getIdClient());
+
+                }
+                listreportSatisfactionKia.getRow(z + 1).getCell(10).setCellValue(listFullReportKia.get(i).getBq010());
+                listreportSatisfactionKia.getRow(z + 2).getCell(10).setCellValue(listFullReportKia.get(i).getBq020());
+                listreportSatisfactionKia.getRow(z + 3).getCell(10).setCellValue(listFullReportKia.get(i).getBq030());
+                listreportSatisfactionKia.getRow(z + 3).getCell(11).setCellValue(listFullReportKia.get(i).getBq030Comment());
+                listreportSatisfactionKia.getRow(z + 4).getCell(10).setCellValue(listFullReportKia.get(i).getBq040());
+                listreportSatisfactionKia.getRow(z + 5).getCell(10).setCellValue(listFullReportKia.get(i).getBq050());
+                listreportSatisfactionKia.getRow(z + 5).getCell(11).setCellValue(listFullReportKia.get(i).getBq050Comment());
+                listreportSatisfactionKia.getRow(z + 6).getCell(10).setCellValue(listFullReportKia.get(i).getBq060());
+                listreportSatisfactionKia.getRow(z + 7).getCell(10).setCellValue(listFullReportKia.get(i).getBq070());
+                listreportSatisfactionKia.getRow(z + 8).getCell(10).setCellValue(listFullReportKia.get(i).getBq080());
+                listreportSatisfactionKia.getRow(z + 8).getCell(11).setCellValue(listFullReportKia.get(i).getBq080Comment());
+                listreportSatisfactionKia.getRow(z + 9).getCell(10).setCellValue(listFullReportKia.get(i).getSq010());
+                listreportSatisfactionKia.getRow(z + 10).getCell(10).setCellValue(listFullReportKia.get(i).getSq020());
+                listreportSatisfactionKia.getRow(z + 11).getCell(10).setCellValue(listFullReportKia.get(i).getSq030());
+                listreportSatisfactionKia.getRow(z + 12).getCell(10).setCellValue(listFullReportKia.get(i).getSq040());
+                listreportSatisfactionKia.getRow(z + 13).getCell(10).setCellValue(listFullReportKia.get(i).getSq050());
+                listreportSatisfactionKia.getRow(z + 14).getCell(10).setCellValue(listFullReportKia.get(i).getSq060());
+                listreportSatisfactionKia.getRow(z + 15).getCell(10).setCellValue(listFullReportKia.get(i).getSq080());
+                listreportSatisfactionKia.getRow(z + 16).getCell(10).setCellValue(listFullReportKia.get(i).getSq090());
+                listreportSatisfactionKia.getRow(z + 17).getCell(10).setCellValue(listFullReportKia.get(i).getSq110());
+                listreportSatisfactionKia.getRow(z + 18).getCell(10).setCellValue(listFullReportKia.get(i).getSq120());
+                listreportSatisfactionKia.getRow(z + 19).getCell(10).setCellValue(listFullReportKia.get(i).getSq130());
+                listreportSatisfactionKia.getRow(z + 20).getCell(10).setCellValue(listFullReportKia.get(i).getSq140());
+                listreportSatisfactionKia.getRow(z + 21).getCell(10).setCellValue(listFullReportKia.get(i).getDq010());
+                listreportSatisfactionKia.getRow(z + 22).getCell(10).setCellValue(listFullReportKia.get(i).getDq020());
+                listreportSatisfactionKia.getRow(z + 23).getCell(10).setCellValue(listFullReportKia.get(i).getDq030());
+                listreportSatisfactionKia.getRow(z + 24).getCell(10).setCellValue(listFullReportKia.get(i).getDq040());
+            }
+
+
+
+            SimpleDateFormat dateReport = new SimpleDateFormat("MMM yyyy");
+            String date = dateReport.format(new Date());
+
+            String newFile = date + ".xlsx";
+            FileOutputStream fileOuts = null;
+            try {
+                fileOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile);
+                //   "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\SatisfactionReport\\"
+            } catch (FileNotFoundException e) {
+                System.out.println("Ошибка: " + e);
+                LOGGER.log(Level.INFO, "Ошибка: " + e);
+            }
+
+            try {
+                reportSatisfactionKia.write(fileOuts);
+            } catch (IOException e) {
+                System.out.println("Ошибка: " + e);
+                LOGGER.log(Level.INFO, "Ошибка: " + e);
+            }
+            try {
+                assert fileOuts != null;
+                fileOuts.close();
+            } catch (IOException e) {
+                System.out.println("Ошибка: " + e);
+                LOGGER.log(Level.INFO, "Ошибка: " + e);
+            }
+
+
+            setTo = addressFullReportKiaForMonth.toString().replace("[","").replace("]","");
+            setCc = replace;
+            InternetAddress[] setCopy = InternetAddress.parse(setCc);
+
+            MimeMessage messageVasNpsMail = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(messageVasNpsMail, true, "UTF-8");
+            helper.setFrom("info@vitautocity.by");
+            helper.setTo(setTo);  //-получатель
+            helper.setCc(setCopy); //-копия
+            helper.setSubject("Отчёт по обратной связи с клиентами KIA");
+            helper.setText("""
+                Добрый день! \s
+  
+                Отчёт по обратной связи с клиентами находится во вложенном файле.""");
+
+            FileSystemResource reportSatisfaction = new FileSystemResource(new File("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile));
+            //  "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\SatisfactionReport\\"
+            helper.addAttachment(newFile, reportSatisfaction);
+            javaMailSender.send(messageVasNpsMail);
+
+            LOGGER.log(Level.INFO, "Отчёт по удовлетворенности клиентов KIA сформирован и отправлен.");
+            System.out.println("Отчёт по удовлетворенности клиентов KIA сформирован и отправлен.");
+        } else {
+            System.out.println("Отчёт по удовлетворенности клиентов KIA не сформирован.");
+            LOGGER.log(Level.INFO, "Отчёт по удовлетворенности клиентов KIA.");
         }
     }
 

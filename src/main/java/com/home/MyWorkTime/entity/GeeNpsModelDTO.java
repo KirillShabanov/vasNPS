@@ -27,7 +27,8 @@ public class GeeNpsModelDTO {
     private String adminName;
     private String adminComment;
     private int nps;
-    private String calendar_client;
+    private String calendarClient;
+    private String idClient;
 
     public String getDateOrderClose() {
         return dateOrderClose.formatted(DateTimeFormatter.ofPattern("dd.MM.yyyy"));

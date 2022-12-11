@@ -11,12 +11,12 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "null_category")
-public class NullCategory {
+public class NullCategoryModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "category")
     private String category;
 
 }

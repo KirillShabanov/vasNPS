@@ -19,9 +19,9 @@ public class VasProcessEngineerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "manager_name")
     private String manager_name;
-    @Column
+    @Column(name = "department")
     private String department;
 
     @Override

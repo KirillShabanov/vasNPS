@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-
+import java.util.List;
 
 
 public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
@@ -34,4 +34,9 @@ public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
                       @Param("callStatus") String callStatus,
                       @Param("outgoingCallDate") Date outgoingCallDate);
 
+
+    @Query(value = "SELECT * FROM vas_nps WHERE num_order = :numOrder " +
+            "AND brand LIKE 'Kia' ", nativeQuery = true)
+    List<VasNpsModel> searchReport(@Param("numOrder") String numOrder);
 }
+

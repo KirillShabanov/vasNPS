@@ -1,0 +1,16 @@
+Create path
+C:\Users\Shabanov\Desktop\Shabanov\Output reports\Month reports\
+C:\Users\Shabanov\Desktop\Shabanov\Output reports\Week reports\
+C:\Users\Shabanov\Desktop\Shabanov\Output reports\NPS Skoda\
+C:\Users\Shabanov\Desktop\Shabanov\Output reports\Kia reports\Feedback\
+
+Add template
+templateSkoda.xlsx (src/main/resources/reports/temlpateSkoda.xlsx) in C:\Users\Shabanov\Desktop\Shabanov\ReportTemplates\
+customerSatisfactionReport.xlsx (src/main/resources/reports/customerSatisfactionReport.xlsx) in C:\Users\Shabanov\Desktop\Shabanov\ReportTemplates\
+
+-- Table vas_users (database.sql)
+-- Add column in tables vas_nps and gee_nps (database.sql)
+-- Table VasFullReportNPS (database.sql)
+-- Alter table vas_manager (database.sql)
+-- Insert into table vas_manager (database.sql)
+-- Update table vas_manager (database.sql)

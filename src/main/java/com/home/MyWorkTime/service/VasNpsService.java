@@ -144,75 +144,46 @@ public class VasNpsService {
             String checkedModel = vasNpsModelDTO.getModel();
             String checkedModelWithOutSpace = checkedModel.trim();
 
-            String[] forHash = fixBrandModelRepository.tableFix();
 
-            HashMap<String,String> forFix = new HashMap<>();
-            for (String hash : forHash) {
-                String[] gg = hash.split(",");
-                forFix.put(gg[0], gg[1]);
+            HashMap<Integer, String> wordInBaseKey = new HashMap<>();
+            HashMap<Integer, String> wordInBaseValue = new HashMap<>();
+
+            String[] key = fixBrandModelRepository.keyFix();
+            for (int i = 0; i < key.length; i++) {
+                wordInBaseKey.put(i, key[i]);
+            }
+            String[] value = fixBrandModelRepository.valueFix();
+            for (int i = 0; i < value.length; i++) {
+                wordInBaseValue.put(i, value[i]);
             }
 
-            String[] checkedArrAuto = new String[]{"а/м", "автомобиль",
-                    "легковой", "автобус", "киа",
-                    "шкода", "суперб", "рапид",
-                    "октавия", "шевроле", "kиa",
-                    "чери", "тигго", "хонда",
-                    "форд", "транзит", "фольксваген",
-                    "wv", "wolkswagen", "vw",
-                    "фиат", "брава", "уаз",
-                    "спортейдж", "сид", "самара",
-                    "саманд", "cheri", "специальный",
-                    "альфа", "ромео", "ваз",
-                    "калина", "соренто", "пиканто",
-                    "специальнный", "кia", "категории",
-                    "m1", "марки", "модели",
-                    "n1g"};
+            HashMap<Integer, String> badBrand = new HashMap<>();
+            String[] inputBrand = checkedModelWithOutSpace.toLowerCase(Locale.ROOT).split(" ");
+            for (int i = 0; i < inputBrand.length; i++) {
+                badBrand.put(i, inputBrand[i]);
+            }
+
+            StringBuilder sbTest = new StringBuilder();
+            for (int i = 0; i < badBrand.size(); i++) {
+                for (int j = 0; j < wordInBaseKey.size(); j++) {
+                    if (badBrand.get(i).equals(wordInBaseKey.get(j))){
+                        badBrand.replace(i,wordInBaseValue.get(j));
+                    }
+                }
+                if (!(badBrand.get(i).trim().equals(""))) {
+                    sbTest.append(badBrand.get(i).trim()).append(" ");
+                } else {
+                    sbTest.append(badBrand.get(i).trim());
+                }
+            }
+
+            checkedModelWithOutSpace = sbTest.toString();
 
             String checkedModelWithReplaces = checkedModelWithOutSpace
+                    .toUpperCase(Locale.ROOT)
                     .replace("Š", "S")
                     .toLowerCase()
-                    .replace(checkedArrAuto[0],"")
-                    .replace(checkedArrAuto[1], "")
-                    .replace(checkedArrAuto[2],"")
-                    .replace(checkedArrAuto[3],"")
-                    .replace(checkedArrAuto[4],"kia")
-                    .replace(checkedArrAuto[5],"skoda")
-                    .replace(checkedArrAuto[6],"superb")
-                    .replace(checkedArrAuto[7],"rapid")
-                    .replace(checkedArrAuto[8],"octavia")
-                    .replace(checkedArrAuto[9],"chevrolet")
-                    .replace(checkedArrAuto[10],"kia")
-                    .replace(checkedArrAuto[11],"chery")
-                    .replace(checkedArrAuto[12],"tiggo")
-                    .replace(checkedArrAuto[13],"honda")
-                    .replace(checkedArrAuto[14],"ford")
-                    .replace(checkedArrAuto[15],"transit")
-                    .replace(checkedArrAuto[16],"volkswagen")
-                    .replace(checkedArrAuto[17],"volkswagen")
-                    .replace(checkedArrAuto[18],"volkswagen")
-                    .replace(checkedArrAuto[19],"volkswagen")
-                    .replace(checkedArrAuto[20],"fiat")
-                    .replace(checkedArrAuto[21],"brava")
-                    .replace(checkedArrAuto[22],"uaz")
-                    .replace(checkedArrAuto[23],"sportage")
-                    .replace(checkedArrAuto[24],"ceed")
-                    .replace(checkedArrAuto[25],"samara")
-                    .replace(checkedArrAuto[26],"samand")
-                    .replace(checkedArrAuto[27],"chery")
-                    .replace(checkedArrAuto[28],"")
-                    .replace(checkedArrAuto[29],"alfa")
-                    .replace(checkedArrAuto[30],"romeo")
-                    .replace(checkedArrAuto[31],"vaz")
-                    .replace(checkedArrAuto[32],"kalina")
-                    .replace(checkedArrAuto[33],"sorento")
-                    .replace(checkedArrAuto[34],"picanto")
-                    .replace(checkedArrAuto[35],"")
-                    .replace(checkedArrAuto[36],"kia")
-                    .replace(checkedArrAuto[37],"")
-                    .replace(checkedArrAuto[38],"")
-                    .replace(checkedArrAuto[39],"")
-                    .replace(checkedArrAuto[40],"")
-                    .replace(checkedArrAuto[41],"")
+                    .replace("_"," ")
                     .replace("  "," ")
                     .replaceAll("[а-я]","")
                     .trim();
@@ -325,6 +296,22 @@ public class VasNpsService {
             vasNpsModel.setOrganisation(organisation); //Название организации для модели
             vasNpsModel.setDepartment(department); //Департамент для модели
 
+            //Пробег авто
+            Long mileage = vasNpsModelDTO.getMileage();
+            vasNpsModel.setMileage(mileage); //Пробег авто
+
+            //ID Клиента
+            String idClientWrong = vasNpsModelDTO.getIdClient();
+            String idClientWithOutSpace = idClientWrong
+                    .trim();
+            String idClient = idClientWithOutSpace.substring(idClientWithOutSpace.length() - 6);
+            vasNpsModel.setIdClient(idClient); //ID Клиента для модели
+
+            //Календарь клиента - ДОБАВИТЬ МЕТОДЫ РАБОТЫ С КАЛЕНДАРЕМ КЛИЕНТА
+            String calendarClient = vasNpsModelDTO.getCalendarClient();
+            System.out.println(VasNpsService.class.getName() + "- Строка: №311, работа с ключом календаря клиента.");
+            vasNpsModel.setCalendarClient(calendarClient); //Ключ календаря клиента для модели
+
             //Обработка года выпуска
             String yearRelease;
             String year = vasNpsModelDTO.getYearRelease();
@@ -402,8 +389,9 @@ public class VasNpsService {
         geeNpsModel.setAdmin_name(vasNpsModel.getAdmin_name());
         geeNpsModel.setAdmin_comment(vasNpsModel.getAdmin_comment());
         geeNpsModel.setMileage(vasNpsModel.getMileage());
-        geeNpsModel.setCalendar_client(vasNpsModel.getCalendar_client());
+        geeNpsModel.setCalendarClient(vasNpsModel.getCalendarClient());
         geeNpsModel.setDate_order(vasNpsModel.getDate_order());
+        geeNpsModel.setIdClient(vasNpsModel.getIdClient());
 
         String numOrderGee = geeNpsModel.getNum_order();
 

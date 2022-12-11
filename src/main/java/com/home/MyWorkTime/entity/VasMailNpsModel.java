@@ -18,49 +18,49 @@ public class VasMailNpsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "client_surname")
     private String client_surname;
-    @Column
+    @Column(name = "client_name")
     private String client_name;
-    @Column
+    @Column(name = "phone_1")
     private String phone_1;
-    @Column
+    @Column(name = "phone_2")
     private String phone_2;
-    @Column
+    @Column(name = "vehicle_identification_number")
     private String vehicle_identification_number;
-    @Column
+    @Column(name = "reg_num")
     private String reg_num;
-    @Column
+    @Column(name = "brand")
     private String brand;
-    @Column
+    @Column(name = "model")
     private String model;
-    @Column
+    @Column(name = "year_release")
     private String year_release;
-    @Column
+    @Column(name = "date_order")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_order;
-    @Column
+    @Column(name = "num_order")
     private String num_order;
-    @Column
+    @Column(name = "organisation")
     private String organisation;
-    @Column
+    @Column(name = "department")
     private String department;
-    @Column
+    @Column(name = "category")
     private String category;
-    @Column
+    @Column(name = "master_name")
     private String master_name;
-    @Column
+    @Column(name = "nps")
     private Integer nps;
-    @Column
+    @Column(name = "mail_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date mail_date;
-    @Column
+    @Column(name = "call_status")
     private String call_status;
-    @Column
+    @Column(name = "outgoing_call_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date outgoing_call_date;
-    @Column
+    @Column(name = "admin_name")
     private String admin_name;
-    @Column
+    @Column(name = "admin_comment")
     private String admin_comment;
 }
