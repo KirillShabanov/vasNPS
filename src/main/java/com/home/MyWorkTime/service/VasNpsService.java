@@ -6,14 +6,15 @@ import com.home.MyWorkTime.entity.VasNpsModelDTO;
 import com.home.MyWorkTime.repository.*;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 
 
@@ -297,7 +298,8 @@ public class VasNpsService {
             vasNpsModel.setDepartment(department); //Департамент для модели
 
             //Пробег авто
-            Long mileage = vasNpsModelDTO.getMileage();
+            String promMileage = vasNpsModelDTO.getMileage();
+            Long mileage = Long.parseLong(promMileage);
             vasNpsModel.setMileage(mileage); //Пробег авто
 
             //ID Клиента
@@ -352,12 +354,12 @@ public class VasNpsService {
         if (vasNpsModel.getOrganisation().equals("ВитебскАвтоСити")) {
             if (checkNumOrder == null){
                 System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
-                LOGGER.log(Level.INFO, "Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
+                LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
                 VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
                 return VasNpsRepository.saveOrder(savedOrder);
             } else {
                 System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
-                LOGGER.log(Level.INFO, "Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+                LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
             }
         } else {
             saveOrderGee(vasNpsModel);
@@ -398,11 +400,11 @@ public class VasNpsService {
         String checkNumOrderGee = geeNpsRepository.checkedNumOrderGee(numOrderGee);
         if (checkNumOrderGee == null) {
             System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
-            LOGGER.log(Level.INFO, "Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
+            LOGGER.log(Level.INFO,"Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
             geeNpsRepository.save(geeNpsModel);
         } else {
             System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
-            LOGGER.log(Level.INFO, "Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
+            LOGGER.log(Level.INFO,"Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
         }
     }
 
@@ -459,7 +461,7 @@ public class VasNpsService {
         }
 
         System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
-        LOGGER.log(Level.INFO, "Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
+        LOGGER.log(Level.INFO,"Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
         return null;
     }
 
@@ -504,7 +506,7 @@ public class VasNpsService {
         }
 
         System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
-        LOGGER.log(Level.INFO, "Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+        LOGGER.log(Level.INFO,"Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
 
         return null;
     }

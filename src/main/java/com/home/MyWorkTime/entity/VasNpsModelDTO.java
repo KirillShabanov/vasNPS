@@ -20,7 +20,7 @@ public class VasNpsModelDTO {
     private String yearRelease;
     private String dateOrderClose;
     private String numOrder;
-    private Long mileage;
+    private String mileage;
     private String category;
     private String masterName;
     private String callDate;
