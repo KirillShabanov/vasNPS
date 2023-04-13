@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <style type="text/css"></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/popupUsers.css">
+    <link rel="stylesheet" href="css/popupTools.css">
+    <link rel="stylesheet" href="css/tabs.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/showTemporaryCheckList.js"></script>
+    <script src="js/tabsJs.js"></script>
+    <script src="js/checkListKiaEngineer.js"></script>
+    <script src="js/openTemporaryCheckReportEngineerKia.js"></script>
+    <script src="js/checkListKiaMechanical.js"></script>
+    <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
+    <title>checkListKia</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header id="header" class="header lock-padding">
+            <div class="header__container _container">
+                <a href="myWorktime.html" class="header__logo">
+                    <span class="logo_img"></span>
+                </a>
+                <nav id="button_navigation" class="button_navigation">
+                    <a href="" class="header__nav popup-link">
+                        Помощь
+                    </a>
+                    <a href="" class="header__nav popup-link">
+                        О программе
+                    </a>
+                    <a href="myWorktime.html" class="header__nav">
+                        Назад
+                    </a>
+                </nav>
+            </div>
+        </header>
+    </div>
+    <div class="wrapper__tools">
+        <header id="header__tools" class="header__tools lock-padding">
+            <div class="header__container__tools _container">
+                <nav id="button_navigation" class="button_navigation">
+                    <a href="#chechListEngineerKia" class="header__nav_tools popup-link">
+                        Чек-лист ИТ KIA
+                    </a>
+                    <a href="#chechListCarRepearKia" class="header__nav_tools popup-link">
+                        Чек-лист ОТОА KIA
+                    </a>
+                    <a href="#" class="header__nav_tools popup-link">
+                        Отчёты
+                    </a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <div id="chechListEngineerKia" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Чек-лист ИТ KIA</div>
+                
+                <!-- Данные по сотруднику и автомобилю  -->
+                <div>
+                    Введите номер З/Н:
+                    <input id="numOrderCheckKia" type="text" style="margin-left: 27px; width: 70px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                    <!--Кнопки-->
+                    <button onclick="openTemporaryCheckReportEngineerKia()" class="btn_user" type="submit">Загрузить</button>
+                    <!--Кнопки-->
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    Введите фамилию ИТ:
+                    <input id="surnameEngineerKia" type="text" style="margin-left: 10px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                </div>
+                
+                <!-- Ссылки вкладки -->
+                <div class="tab">
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'carReception')">Приём авто</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'carInspection')">Осмотр авто</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'carWaiting')">Ожидание авто</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'issuingCar')">Выдача авто</button>
+                </div>
+  
+                <!-- Содержимое вкладки -->
+                <div id="carReception" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>При условии приезда строго к назначенному времени записи, ожидание ИТ составило менее 5 мин?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion1" id="carReceptionQuestion_1_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_1_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion1" id="carReceptionQuestion_1_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_1_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion1" id="carReceptionQuestion_1_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carReceptionQuestion_1_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion1" id="carReceptionQuestion_1_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ поприветствовал доброжелательно, улыбнулся?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion2" id="carReceptionQuestion_2_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_2_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion2" id="carReceptionQuestion_2_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_2_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion2" id="carReceptionQuestion_2_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->                
+                            <tr>
+                                <td>ИТ одет в специальную в специальную униформу?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion3" id="carReceptionQuestion_3_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_3_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion3" id="carReceptionQuestion_3_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_3_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion3" id="carReceptionQuestion_3_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>У ИТ присутствует бейдж?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion4" id="carReceptionQuestion_4_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_4_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion4" id="carReceptionQuestion_4_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_4_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion4" id="carReceptionQuestion_4_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ встал, предложил Клиенту присесть в кресло, после этого сел за свое рабочее место?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion5" id="carReceptionQuestion_5_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_5_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion5" id="carReceptionQuestion_5_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_5_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion5" id="carReceptionQuestion_5_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ представился?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion6" id="carReceptionQuestion_6_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_6_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion6" id="carReceptionQuestion_6_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_6_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion6" id="carReceptionQuestion_6_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_6_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ обращался к Клиенту по имени?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion7" id="carReceptionQuestion_7_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_7_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion7" id="carReceptionQuestion_7_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_7_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion7" id="carReceptionQuestion_7_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_7_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ попросил свидетельство о регистрации автомобиля?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion8" id="carReceptionQuestion_8_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_8_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion8" id="carReceptionQuestion_8_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_8_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion8" id="carReceptionQuestion_8_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_8_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ попросил сервисную книгу?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion9" id="carReceptionQuestion_9_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_9_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion9" id="carReceptionQuestion_9_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_9_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion9" id="carReceptionQuestion_9_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_9_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ уточнил детали записи (объём работ, дополнительные замечания\пожелания)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion10" id="carReceptionQuestion_10_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_10_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion10" id="carReceptionQuestion_10_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_10_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion10" id="carReceptionQuestion_10_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_10_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ внес все необходимые данные о Клиенте и причине обращения, запасные части и работы в заказ-наряд?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion11" id="carReceptionQuestion_11_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_11_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion11" id="carReceptionQuestion_11_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_11_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion11" id="carReceptionQuestion_11_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_11_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ инициативно по порядку рассказывает Клиенту о предстоящих работах по ТОиР, ориентировочную стоимость предстоящих работ и расчетное время исполнения?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion12" id="carReceptionQuestion_12_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_12_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion12" id="carReceptionQuestion_12_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_12_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion12" id="carReceptionQuestion_12_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_12_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>Клиенту предложили оставить замененные запасные части в ДЦ для дальнейшей утилизации?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion13" id="carReceptionQuestion_13_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_13_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion13" id="carReceptionQuestion_13_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_13_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion13" id="carReceptionQuestion_13_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_13_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ согласовал с Клиентом под подпись окончательный объём работ?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion14" id="carReceptionQuestion_14_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_14_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion14" id="carReceptionQuestion_14_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_14_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion14" id="carReceptionQuestion_14_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_14_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ установил защитные чехлы при Клиенте (чехолы органов управления, чехол сиденья, ножного коврика)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion15" id="carReceptionQuestion_15_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_15_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion15" id="carReceptionQuestion_15_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_15_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion15" id="carReceptionQuestion_15_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_15_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr> 
+                                <td>ИТ подвел итог и резюмировал договорённости?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion16" id="carReceptionQuestion_16_yes" value="YES">
+                                        <label class="form-check-label" for="carReceptionQuestion_16_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion16" id="carReceptionQuestion_16_no" value="NO">
+                                        <label class="form-check-label" for="carReceptionQuestion_16_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carReceptionQuestion16" id="carReceptionQuestion_16_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carReceptionQuestion_16_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="carInspection" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ пригласил Клиента осмотреть автомобиль?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion1" id="carInspectionQuestion_1_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_1_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion1" id="carInspectionQuestion_1_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_1_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion1" id="carInspectionQuestion1_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ произвел внешний осмотр автомобиля при Клиенте?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion2" id="carInspectionQuestion_2_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_2_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion2" id="carInspectionQuestion_2_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_2_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion2" id="carInspectionQuestion_2_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carInspectionQuestion_2_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion2" id="carInspectionQuestion2_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ предложил Клиенту мойку автомобиля (если автомобиль загразнен)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion3" id="carInspectionQuestion_3_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_3_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion3" id="carInspectionQuestion_3_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_3_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion3" id="carInspectionQuestion_3_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carInspectionQuestion_3_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion3" id="carInspectionQuestion3_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ делал пометки в процессе общения с Клиентом?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion4" id="carInspectionQuestion_4_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_4_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion4" id="carInspectionQuestion_4_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_4_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion4" id="carInspectionQuestion4_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ предложил Клиенту провести совместную тестовую поездку (при необходимости)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion5" id="carInspectionQuestion_5_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_5_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion5" id="carInspectionQuestion_5_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_5_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion5" id="carInspectionQuestion_5_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carInspectionQuestion_5_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion5" id="carInspectionQuestion5_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ предложил Клиенту дополнительное оборудование или услуги?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion6" id="carInspectionQuestion_6_yes" value="YES">
+                                        <label class="form-check-label" for="carInspectionQuestion_6_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion6" id="carInspectionQuestion_6_no" value="NO">
+                                        <label class="form-check-label" for="carInspectionQuestion_6_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carInspectionQuestion6" id="carInspectionQuestion6_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carInspectionQuestion6_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="carWaiting" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Уточнили ли у Клиента, хочет ли он ожидать автомобиль в ДЦ или уехать? Если Клиент решил остаться, рассказали ли ему, где он может это сделать?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion1" id="carWaitingQuestion_1_yes" value="YES">
+                                        <label class="form-check-label" for="carWaitingQuestion_1_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion1" id="carWaitingQuestion_1_no" value="NO">
+                                        <label class="form-check-label" for="carWaitingQuestion_1_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion1" id="carWaitingQuestion1_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carWaitingQuestion1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ проинформировал Клиента о том, что ДЦ бесплатно предоставляет чай\кофе, о Wi-Fi в зоне ожидания?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion2" id="carWaitingQuestion_2_yes" value="YES">
+                                        <label class="form-check-label" for="carWaitingQuestion_2_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion2" id="carWaitingQuestion_2_no" value="NO">
+                                        <label class="form-check-label" for="carWaitingQuestion_2_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion2" id="carWaitingQuestion_2_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carWaitingQuestion_2_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion2" id="carWaitingQuestion2_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carWaitingQuestion2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ИТ предложил провести тест драйв нового автомобиля KIA (дата покупки которых была более года назад)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion3" id="carWaitingQuestion_3_yes" value="YES">
+                                        <label class="form-check-label" for="carWaitingQuestion_3_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion3" id="carWaitingQuestion_3_no" value="NO">
+                                        <label class="form-check-label" for="carWaitingQuestion_3_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion3" id="carWaitingQuestion_3_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="carWaitingQuestion_3_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="carWaitingQuestion3" id="carWaitingQuestion3_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="carWaitingQuestion3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="issuingCar" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Работы были сделаны вовремя?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion1" id="issuingCarQuestion_1_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_1_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion1" id="issuingCarQuestion_1_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_1_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion1" id="issuingCarQuestion1_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Клиента проводили к автомобилю и продемонстрировали итоги выполненных работ?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion2" id="issuingCarQuestion_2_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_2_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion2" id="issuingCarQuestion_2_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_2_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion2" id="issuingCarQuestion2_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Клиенту продемонстрировали заменённые запасные части, если ранее был согласован их возврат?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion3" id="issuingCarQuestion_3_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_3_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion3" id="issuingCarQuestion_3_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_3_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion3" id="issuingCarQuestion_3_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="issuingCarQuestion_3_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion3" id="issuingCarQuestion3_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>При необходимости ИТ провел тестовую поездку с Клиентом?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion4" id="issuingCarQuestion_4_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_4_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion4" id="issuingCarQuestion_4_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_4_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion4" id="issuingCarQuestion_4_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="issuingCarQuestion_4_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion4" id="issuingCarQuestion4_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Клиента проводили к кассе для проведения оплаты?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion5" id="issuingCarQuestion_5_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_5_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion5" id="issuingCarQuestion_5_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_5_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion5" id="issuingCarQuestion5_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>После проведения оплаты документы были переданы Клиенту в брендированном конверте?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion6" id="issuingCarQuestion_6_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_6_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion6" id="issuingCarQuestion_6_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_6_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion6" id="issuingCarQuestion6_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion6_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Клиента проводили к автомобилю, поблагодарили и напомнили о необходимости проверить индивидуальные настройки автомобиля?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion7" id="issuingCarQuestion_7_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_7_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion7" id="issuingCarQuestion_7_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_7_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion7" id="issuingCarQuestion7_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion7_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Защитные чехлы были сняты при Клиенте?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion8" id="issuingCarQuestion_8_yes" value="YES">
+                                        <label class="form-check-label" for="issuingCarQuestion_8_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion8" id="issuingCarQuestion_8_no" value="NO">
+                                        <label class="form-check-label" for="issuingCarQuestion_8_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="issuingCarQuestion8" id="issuingCarQuestion8_not_processed" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="issuingCarQuestion8_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+                <!--Кнопки-->
+                <div>
+                    <button id="saveCheckReportEngineerKia" onclick="saveCheckReportEngineerKia()" class="btn_user" type="submit">Сохранить</button>
+                </div>
+                <div>
+                    <button id="updateCheckReportEngineerKia" onclick="updateCheckReportEngineerKia()" style="display: none" class="btn_user" type="submit">Сохранить</button>
+                </div>
+                <!--Кнопки-->
+                <!--Таблица-->
+                <div class="popup__table">
+                <table id="temporaryCheckList" class="table table-striped"> 
+                </table>
+                </div>
+                <!--Таблица-->
+            </div>
+        </div>
+    </div>
+    <!-- Второй чек лист -->
+    <div id="chechListCarRepearKia" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Чек-лист ОТОА KIA</div>
+
+                <!-- Данные по сотруднику и автомобилю  -->
+                <div>
+                    Введите номер З/Н:
+                    <input id="numOrderCheckKiaRepair" type="text" style="margin-left: 27px; width: 70px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                    <!--Кнопки-->
+                    <button onclick="openTemporaryCheckReportMechanicalKia()" class="btn_user" type="submit">Загрузить</button>
+                    <!--Кнопки-->
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    Введите фамилию механика:
+                    <input id="surnameMechanicalKia" type="text" style="margin-left: 10px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    Введите VIN:
+                    <input id="mechanicalKiaVin" type="text" style="margin-left: 10px; width: 180px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                </div>
+
+                <!-- Ссылки вкладки -->
+                <div class="tab">
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'repairQualityControl')">Контроль ремонта</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'parkingLotCheck')">Проверка на стоянке</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'checkInMotion')">Проверка в движении</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'qualityControl')">Контроль качества</button>
+                </div>
+
+                <div id="repairQualityControl" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Наличие элементов защиты</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl1" id="repairQualityControl_1_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_1_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl1" id="repairQualityControl_1_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_1_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl1" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Проведение тест драйва</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl2" id="repairQualityControl_2_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_2_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl2" id="repairQualityControl_2_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_2_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl2" id="repairQualityControl_2_not_evaluated" value="NA">
+                                        <label class="form-check-label" for="repairQualityControl_2_not_evaluated">
+                                            Не оценивается
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl2" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Внешние проверки, проведённые при приёме автомобиля</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl3" id="repairQualityControl_3_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_3_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl3" id="repairQualityControl_3_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_3_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl3" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Чистота автомобиля внутри</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl4" id="repairQualityControl_4_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_4_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl4" id="repairQualityControl_4_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_4_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl4" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Чистота автомобиля снаружи</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl5" id="repairQualityControl_5_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_5_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl5" id="repairQualityControl_5_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_5_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl5" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Проведены все работы, заявленные Заказчиком?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl6" id="repairQualityControl_6_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_6_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl6" id="repairQualityControl_6_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_6_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl6" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl6_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Работы выполненны правильно (провести проверку до 4-х пунктов)?</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl7" id="repairQualityControl_7_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_7_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl7" id="repairQualityControl_7_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_7_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl7" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl7_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Проверка момента затяжки колёсных гаек</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl8" id="repairQualityControl_8_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_8_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl8" id="repairQualityControl_8_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_8_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl8" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Проверка уровня рабочих жидкостей</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl9" id="repairQualityControl_9_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_9_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl9" id="repairQualityControl_9_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_9_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl9" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl9_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Проверка состояния тормозных колодок</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="repairQualityControl10" id="repairQualityControl_10_yes" value="YES">
+                                        <label class="form-check-label" for="repairQualityControl_10_yes">
+                                            Да
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl10" id="repairQualityControl_10_no" value="NO">
+                                        <label class="form-check-label" for="repairQualityControl_10_no">
+                                            Нет
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="repairQualityControl10" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="repairQualityControl10_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="parkingLotCheck" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Габаритные огни</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck1" id="parkingLotCheck_1_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_1_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck1" id="parkingLotCheck_1_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_1_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck1" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Ближний свет - Дальний свет</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck2" id="parkingLotCheck_2_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_2_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck2" id="parkingLotCheck_2_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_2_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck2" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Указатель поворота</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck3" id="parkingLotCheck_3_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_3_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck3" id="parkingLotCheck_3_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_3_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck3" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Стоп-сигнал</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck4" id="parkingLotCheck_4_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_4_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck4" id="parkingLotCheck_4_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_4_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck4" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Фонарь заднего хода - Подсветка номерного знака</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck5" id="parkingLotCheck_5_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_5_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck5" id="parkingLotCheck_5_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_5_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck5" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>ПТФ и ЗТФ</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck6" id="parkingLotCheck_6_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_6_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck6" id="parkingLotCheck_6_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_6_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck6" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck6_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Внутреннее освещение</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck7" id="parkingLotCheck_7_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_7_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck7" id="parkingLotCheck_7_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_7_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck7" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck7_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Сигнальные лампы (бортовая индикация)</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck8" id="parkingLotCheck_8_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_8_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck8" id="parkingLotCheck_8_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_8_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck8" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Часы (установка времени)</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck9" id="parkingLotCheck_9_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_9_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck9" id="parkingLotCheck_9_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_9_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck9" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck9_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Звуковой сигнал</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck10" id="parkingLotCheck_10_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_10_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck10" id="parkingLotCheck_10_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_10_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck10" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck10_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Работа стеклоочистителей/уровень овывающей жидкости</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck11" id="parkingLotCheck_11_yes" value="YES">
+                                        <label class="form-check-label" for="parkingLotCheck_11_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck11" id="parkingLotCheck_11_no" value="NO">
+                                        <label class="form-check-label" for="parkingLotCheck_11_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="parkingLotCheck11" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="parkingLotCheck11_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="checkInMotion" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Переключение передач</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="checkInMotion1" id="checkInMotion_1_yes" value="YES">
+                                        <label class="form-check-label" for="checkInMotion_1_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion1" id="checkInMotion_1_no" value="NO">
+                                        <label class="form-check-label" for="checkInMotion_1_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion1" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="checkInMotion1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Сохранение курса при прямолинейном движении</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="checkInMotion2" id="checkInMotion_2_yes" value="YES">
+                                        <label class="form-check-label" for="checkInMotion_2_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion2" id="checkInMotion_2_no" value="NO">
+                                        <label class="form-check-label" for="checkInMotion_2_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion2" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="checkInMotion2_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Сохранение курса при торможении</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="checkInMotion3" id="checkInMotion_3_yes" value="YES">
+                                        <label class="form-check-label" for="checkInMotion_3_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion3" id="checkInMotion_3_no" value="NO">
+                                        <label class="form-check-label" for="checkInMotion_3_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion3" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="checkInMotion3_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Работа двигателя</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="checkInMotion4" id="checkInMotion_4_yes" value="YES">
+                                        <label class="form-check-label" for="checkInMotion_4_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion4" id="checkInMotion_4_no" value="NO">
+                                        <label class="form-check-label" for="checkInMotion_4_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="checkInMotion4" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="checkInMotion4_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="qualityControl" class="tabcontent">
+                    <table class="table table-hover">
+                        <tbody>
+                            <!-- Разделение полей для видимости -->
+                            <tr>
+                                <td>Автомобиль при первой проверке качества</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="radio" name="qualityControl1" id="qualityControl_1_yes" value="YES">
+                                        <label class="form-check-label" for="qualityControl_1_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="qualityControl1" id="qualityControl_1_no" value="NO" oninput="showFullReport()">
+                                        <label class="form-check-label" for="qualityControl_1_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="qualityControl1" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="qualityControl1_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr id="dop" style="display: none;">
+                                <td>Примечания по первой проверке качества:</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="text" style="margin-left: 27px; width: 270px; height: 25px; max-width: max-content; background-color: rgb(177, 177, 177); padding-left: 5px;" name="qualityControl2" id="notesMaster" value="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr id="dop1" style="display: none;">
+                                <td>Описание дополнительных работ:</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="text" style="margin-left: 27px; width: 270px; height: 25px; max-width: max-content; background-color: rgb(177, 177, 177); padding-left: 5px;" name="qualityControl3" id="notesWork" value="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr id="dop2" style="display: none;">
+                                <td>Объяснение работ:</td>
+                                <td>
+                                    <div style="width:max-content">
+                                        <input class="form-check-input" type="text" style="margin-left: 27px; width: 270px; height: 25px; max-width: max-content; background-color: rgb(177, 177, 177); padding-left: 5px;" name="qualityControl4" id="explanationsWork" value="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                            <tr id="dop3" style="display: none;">
+                                <td>Автомобиль при второй проверке качества</td>
+                                <td>
+                                    <div style="width:max-content;">
+                                        <input class="form-check-input" type="radio" name="qualityControl5" id="qualityControl_5_yes" value="YES">
+                                        <label class="form-check-label" for="qualityControl_5_yes">
+                                            Норм.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="qualityControl5" id="qualityControl_5_no" value="NO">
+                                        <label class="form-check-label" for="qualityControl_5_no">
+                                            Деф.
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="qualityControl5" id="" value="NP" checked="checked" style="display: none;">
+                                        <label class="form-check-label" style="display: none;" for="qualityControl5_not_processed">
+                                            NP
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Разделение полей для видимости -->
+                        </tbody>
+                    </table>
+                </div>
+                    <!--Кнопки-->
+                    <div>
+                        <button onclick="saveCheckReportMechanicalKia()" class="btn_user" type="submit">Сохранить</button>
+                    </div>
+                    <!--Кнопки-->
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/showTemporaryCheckList.js"></script>
+    <script src="js/popupUsers.js"></script>
+    <script src="js/checkListKiaEngineer.js"></script>
+    <script src="js/openTemporaryCheckReportEngineerKia.js"></script>
+    <script src="js/checkListKiaMechanical.js"></script>
+    <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
+</body>
+</html>

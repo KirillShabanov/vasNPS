@@ -3,7 +3,6 @@ package com.home.MyWorkTime.service;
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -42,7 +41,7 @@ public class VasMailNpsWeekService {
         this.vasManagerNpsRepository = vasManagerNpsRepository;
     }
 
-    @Scheduled(cron = "1 00 17 * * *")
+    @Scheduled(cron = "1 00 17 * * 1")
     private void startReportNPSWeek(){
         gradeNpsNameTechnicalWeek();
         gradeNpsNameBodyRepairWeek();
@@ -194,7 +193,7 @@ public class VasMailNpsWeekService {
 
         try {
             FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentWeekNPS.xlsx");
-            //  "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\reports\\currentWeekNPS.xlsx"
+            //  "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\currentWeekNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 
@@ -214,8 +213,10 @@ public class VasMailNpsWeekService {
                 String findKey = String.valueOf(cell);
                 if (Double.isNaN(npsReportMonth.get(findKey))) {
                     listNps.getRow(i).getCell(13).setCellValue("-");
+                    listNps.getRow(i).getCell(14).setCellValue("-");
                 } else  {
                     listNps.getRow(i).getCell(13).setCellValue(String.format("%.2f", npsReportMonth.get(findKey)));
+                    listNps.getRow(i).getCell(14).setCellValue(vasManagerNpsRepository.gradeNpsAllMonth(findKey));
                 }
             }
             //Для заполнения информации по ключу Департамент!!! - неделя
@@ -329,12 +330,13 @@ public class VasMailNpsWeekService {
             XSSFSheet listData = report.getSheetAt(1);
             String[][] dataArray = vasManagerNpsRepository.currentMonthAllOrder();
             for (int i = 0; i < dataArray.length; i++){
-                for (int j = 0; j < 4; j++){
-                    listData.getRow(i+2).getCell(j+1).setCellValue(dataArray[i][j]);
+                for (int j = 0; j < 5; j++){
+                    listData.getRow(i + 2).getCell(j+1).setCellValue(dataArray[i][j]);
                 }
             }
-            String file = ""+ date + "- currentWeekNPS.xlsx";
+            String file = ""+ date + "- Еженедельный отчёт NPS.xlsx";
             FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Week NPS reports\\" + file);
+            //  "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\currentWeekNPS\\"
             report.write(fileOut);
             fileOut.close();
 

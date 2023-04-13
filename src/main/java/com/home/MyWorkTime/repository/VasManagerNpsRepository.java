@@ -69,25 +69,22 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
     @Query(value =  "SELECT manager_name FROM vas_manager WHERE position_department = 'BodyRepair' AND organisation = 'VitebskAutoCity' ", nativeQuery = true)
     String[] gradeNpsNameBodyRepair();
 
-    @Query(value =  "SELECT manager_name FROM vas_manager WHERE organisation = 'VitebskAutoCity' ", nativeQuery = true)
-    String[] organisationName();
-
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps > 8 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsPromoterWeek(String nameN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps < 7 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps >= (1) AND nps <= (6) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsCriticWeek(String nameN);
 
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps > 0 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -99,7 +96,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsPromoterMonth(String nameN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -112,21 +109,21 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
     int gradeNpsAllMonth(String nameN);
 
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps > 8 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsDepartmentPromoterWeek(String departmentN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps < 7 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps >= (1) AND nps <= (6) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsDepartmentCriticWeek(String departmentN);
 
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps > 0 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -138,7 +135,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsDepartmentPromoterMonth(String departmentN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -151,19 +148,19 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
     int gradeNpsDepartmentAllMonth(String departmentN);
 
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps > 8 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationPromoterWeek(String organisationN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps < 7 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps >= (1) AND nps <= (6) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationCriticWeek(String organisationN);
 
     @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps > 0 " +
-            "AND WEEK(date_order) = WEEK(NOW(),1) " +
+            "AND WEEK(date_order) = WEEK(NOW()) -1 " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationAllWeek(String organisationN);
@@ -173,7 +170,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationPromoterMonth(String organisationN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(date_order) = MONTH(NOW()) " +
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationCriticMonth(String organisationN);
@@ -227,7 +224,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND call_status = 'call' ", nativeQuery = true)
     float countCurrentMonthCloseMultibrandOrder();
 
-    @Query(value = "SELECT num_order, date_order, master_name, nps FROM vas_nps WHERE organisation = 'ВитебскАвтоСити' " +
+    @Query(value = "SELECT num_order, date_order, master_name, nps, admin_comment FROM vas_nps WHERE organisation = 'ВитебскАвтоСити' " +
             "AND MONTH(date_order) = MONTH(NOW()) ", nativeQuery = true)
     String[][] currentMonthAllOrder();
 
@@ -240,7 +237,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsPromoterMonthReporting(String nameN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE master_name =:nameN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(CURDATE()) - MONTH(date_order) = 1 " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -258,7 +255,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
     int gradeNpsDepartmentPromoterMonthReporting(String departmentN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE department =:departmentN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(CURDATE()) - MONTH(date_order) = 1 " +
             "AND YEAR(date_order) = YEAR(NOW()) " +
             "AND organisation = 'ВитебскАвтоСити' ", nativeQuery = true)
@@ -275,7 +272,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationPromoterMonthReporting(String organisationN);
 
-    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps < 7 " +
+    @Query(value = "SELECT COUNT(id) FROM vas_nps WHERE organisation =:organisationN AND nps >= (1) AND nps <= (6) " +
             "AND MONTH(CURDATE()) - MONTH(date_order) = 1 " +
             "AND YEAR(date_order) = YEAR(NOW()) ", nativeQuery = true)
     int gradeNpsOrganisationCriticMonthReporting(String organisationN);
@@ -329,7 +326,7 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
             "AND call_status = 'call' ", nativeQuery = true)
     float countCurrentMonthCloseMultibrandOrderReporting();
 
-    @Query(value = "SELECT num_order, date_order, master_name, nps FROM vas_nps WHERE organisation = 'ВитебскАвтоСити' " +
+    @Query(value = "SELECT num_order, date_order, master_name, nps, admin_comment FROM vas_nps WHERE organisation = 'ВитебскАвтоСити' " +
             "AND MONTH(CURDATE()) - MONTH(date_order) = 1 ", nativeQuery = true)
     String[][] currentMonthAllOrderReporting();
 

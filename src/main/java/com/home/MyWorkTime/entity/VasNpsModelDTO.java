@@ -3,6 +3,7 @@ package com.home.MyWorkTime.entity;
 import lombok.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 
 @Getter
@@ -29,6 +30,7 @@ public class VasNpsModelDTO {
     private int nps;
     private String calendarClient;
     private String idClient;
+    private String dateSale;
 
     public String getDateOrderClose() {
         return dateOrderClose.formatted(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
@@ -36,6 +38,10 @@ public class VasNpsModelDTO {
 
     public String getCallDate() {
         return callDate.formatted(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    public String getDateSale() {
+        return dateSale.formatted(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
 }

@@ -174,7 +174,7 @@ public class VasMailSatisfactionReportService {
             SimpleDateFormat dateReport = new SimpleDateFormat("MMM yyyy");
             String date = dateReport.format(new Date());
 
-            String newFile = date + ".xlsx";
+            String newFile = "" + date + ".xlsx";
             FileOutputStream fileOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile);
 
             reportSatisfactionKia.write(fileOuts);

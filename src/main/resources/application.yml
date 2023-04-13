@@ -5,7 +5,7 @@ spring:
     port: 587
     username: info@vitautocity.by
     password: "E7LK-uuj2!"
-    test-connection: true
+    test-connection: false
     properties:
       mail:
         smtp:

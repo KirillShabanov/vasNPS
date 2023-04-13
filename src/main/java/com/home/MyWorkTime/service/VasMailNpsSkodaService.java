@@ -7,7 +7,6 @@ import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,7 +19,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -48,8 +46,8 @@ public class VasMailNpsSkodaService {
 
 
     @SneakyThrows
-    @Scheduled(cron = "1 35 00 * * 1-5")
-    @Scheduled(cron = "1 00 16 * * 6-7")
+    @Scheduled(cron = "1 01 19 * * 1-5")
+    @Scheduled(cron = "1 01 16 * * 6-7")
     private void SendVasNpsMail() {
         List<VasMailNpsModel> listSkoda = vasMailNpsRepository.npsListSkoda();
         List<VasManagerNpsModel> addressManagerSkoda = vasManagerNpsRepository.forMailSkoda();
@@ -75,8 +73,8 @@ public class VasMailNpsSkodaService {
 
         if (!(listSkoda.isEmpty())) {
 
-            FileInputStream templateSkoda = new FileInputStream("C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\temlpateSkoda.xlsx");
-            // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\templateSkoda.xlsx"
+            FileInputStream templateSkoda = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\temlpateSkoda.xlsx");
+            //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\temlpateSkoda.xlsx"
             XSSFWorkbook reportSkoda = new XSSFWorkbook(templateSkoda);
             XSSFSheet listReportSkoda = reportSkoda.getSheetAt(0);
 
@@ -112,8 +110,8 @@ public class VasMailNpsSkodaService {
             String date = dateReport.format(new Date());
 
             String newFile = "" + date + "- Skoda.xlsx";
-            FileOutputStream fileOuts = new FileOutputStream("C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\" + newFile);
-            // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\"
+            FileOutputStream fileOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\" + newFile);
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\"
             reportSkoda.write(fileOuts);
             fileOuts.close();
 
@@ -140,8 +138,8 @@ public class VasMailNpsSkodaService {
                     P.S. При наличие негативного отзыва, прошу заполнять поле "Коментарий". \s
                     P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
 
-            FileSystemResource reportsSkoda = new FileSystemResource(new File("C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\" + newFile));
-            // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\"
+            FileSystemResource reportsSkoda = new FileSystemResource("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\NPS Skoda\\" + newFile);
+            //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\NPS Skoda\\"
             helper.addAttachment(newFile, reportsSkoda);
             javaMailSender.send(messageVasNpsMail);
 

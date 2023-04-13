@@ -3,7 +3,6 @@ package com.home.MyWorkTime.service;
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -138,7 +137,7 @@ public class VasMailNpsMonthService {
 
         try {
             FileInputStream npsReport = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\currentMonthNPS.xlsx");
-            // "C:\\Users\\User\\Desktop\\VAS-NPS\\src\\main\\resources\\reports\\currentMonthNPS.xlsx"
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\currentMonthNPS.xlsx"
             XSSFWorkbook report = new XSSFWorkbook(npsReport);
             XSSFSheet listNps = report.getSheetAt(0);
 
@@ -150,6 +149,7 @@ public class VasMailNpsMonthService {
                     listNps.getRow(i).getCell(9).setCellValue("-");
                 } else  {
                     listNps.getRow(i).getCell(9).setCellValue(String.format("%.2f", npsReportingMonth.get(findKey)));
+                    listNps.getRow(i).getCell(10).setCellValue(vasManagerNpsRepository.gradeNpsAllMonthReporting(findKey));
                 }
             }
             //Для заполнения информации по ключу Департамент!!! - месяц
@@ -227,13 +227,14 @@ public class VasMailNpsMonthService {
             XSSFSheet listData = report.getSheetAt(1);
             String[][] dataArray = vasManagerNpsRepository.currentMonthAllOrderReporting();
             for (int i = 0; i < dataArray.length; i++){
-                for (int j = 0; j < 4; j++){
+                for (int j = 0; j < 5; j++){
                     listData.getRow(i+2).getCell(j+1).setCellValue(dataArray[i][j]);
                 }
             }
 
-            String file = "" + dateReportMonth + "- currentMonthNPS.xlsx";
+            String file = "" + dateReportMonth + "- Ежемесячный отчёт NPS.xlsx";
             FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Month NPS reports\\" + file);
+            // "C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\outputReports\\currentMonthNPS\\"
             report.write(fileOut);
             fileOut.close();
 

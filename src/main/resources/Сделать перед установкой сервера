@@ -1,16 +1,44 @@
-Create path
-C:\Users\Shabanov\Desktop\Shabanov\Output reports\Month NPS reports\
-C:\Users\Shabanov\Desktop\Shabanov\Output reports\Week NPS reports\
-C:\Users\Shabanov\Desktop\Shabanov\Output reports\NPS Skoda\
-C:\Users\Shabanov\Desktop\Shabanov\Output reports\Kia reports\Feedback\
 
-Add template
-templateSkoda.xlsx (src/main/resources/reports/temlpateSkoda.xlsx) in C:\Users\Shabanov\Desktop\Shabanov\ReportTemplates\
-customerSatisfactionReport.xlsx (src/main/resources/reports/customerSatisfactionReport.xlsx) in C:\Users\Shabanov\Desktop\Shabanov\ReportTemplates\
-
--- Table vas_users (database.sql)
--- Add column in tables vas_nps and gee_nps (database.sql)
--- Table VasFullReportNPS (database.sql)
--- Alter table vas_manager (database.sql)
--- Insert into table vas_manager (database.sql)
--- Update table vas_manager (database.sql)
+12.04.2023
+CREATE TABLE vas_check_list_engineer_kia
+(
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    num_order_check_kia LONG,
+    surname_engineer_kia VARCHAR(100),
+    date_save_inspection DATETIME,
+    in_work VARCHAR(20),
+    reception_question_1 VARCHAR(20),
+    reception_question_2 VARCHAR(20),
+    reception_question_3 VARCHAR(20),
+    reception_question_4 VARCHAR(20),
+    reception_question_5 VARCHAR(20),
+    reception_question_6 VARCHAR(20),
+    reception_question_7 VARCHAR(20),
+    reception_question_8 VARCHAR(20),
+    reception_question_9 VARCHAR(20),
+    reception_question_10 VARCHAR(20),
+    reception_question_11 VARCHAR(20),
+    reception_question_12 VARCHAR(20),
+    reception_question_13 VARCHAR(20),
+    reception_question_14 VARCHAR(20),
+    reception_question_15 VARCHAR(20),
+    reception_question_16 VARCHAR(20),
+    inspection_question_1 VARCHAR(20),
+    inspection_question_2 VARCHAR(20),
+    inspection_question_3 VARCHAR(20),
+    inspection_question_4 VARCHAR(20),
+    inspection_question_5 VARCHAR(20),
+    inspection_question_6 VARCHAR(20),
+    waiting_question_1 VARCHAR(20),
+    waiting_question_2 VARCHAR(20),
+    waiting_question_3 VARCHAR(20),
+    issuing_question_1 VARCHAR(20),
+    issuing_question_2 VARCHAR(20),
+    issuing_question_3 VARCHAR(20),
+    issuing_question_4 VARCHAR(20),
+    issuing_question_5 VARCHAR(20),
+    issuing_question_6 VARCHAR(20),
+    issuing_question_7 VARCHAR(20),
+    issuing_question_8 VARCHAR(20)
+)
+    ENGINE = InnoDB;

@@ -38,8 +38,8 @@ public class VasMailNpsMultibrandService {
 
 
     @SneakyThrows
-    @Scheduled(cron = "1 00 19 * * 1-5")
-    @Scheduled(cron = "1 00 16 * * 6-7")
+    @Scheduled(cron = "1 02 19 * * 1-5")
+    @Scheduled(cron = "1 02 16 * * 6-7")
     private void SendVasNpsMail() {
         List<VasMailNpsModel> listMultibrand = vasMailNpsRepository.npsListMultibrand();
 

@@ -1,6 +1,7 @@
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.GeeNpsModel;
+import com.home.MyWorkTime.entity.VasCalendarModelDTO;
 import com.home.MyWorkTime.entity.VasNpsModel;
 import com.home.MyWorkTime.entity.VasNpsModelDTO;
 import com.home.MyWorkTime.repository.*;
@@ -11,6 +12,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,6 +30,7 @@ public class VasNpsService {
     private VasManagerNpsRepository vasManagerNpsRepository;
     private NullCategoryRepository nullCategoryRepository;
     private FixBrandModelRepository fixBrandModelRepository;
+    private VasRedirectedCalendarService vasRedirectedCalendarService;
 
     private static final Logger LOGGER = Logger.getLogger(VasNpsService.class.getName());
 
@@ -36,12 +39,14 @@ public class VasNpsService {
                          GeeNpsRepository geeNpsRepository,
                          VasManagerNpsRepository vasManagerNpsRepository,
                          NullCategoryRepository nullCategoryRepository,
-                         FixBrandModelRepository fixBrandModelRepository) {
+                         FixBrandModelRepository fixBrandModelRepository,
+                         VasRedirectedCalendarService vasRedirectedCalendarService) {
         this.vasNpsRepository = vasNpsRepository;
         this.geeNpsRepository = geeNpsRepository;
         this.vasManagerNpsRepository = vasManagerNpsRepository;
         this.nullCategoryRepository = nullCategoryRepository;
         this.fixBrandModelRepository = fixBrandModelRepository;
+        this.vasRedirectedCalendarService = vasRedirectedCalendarService;
     }
 
     public VasNpsModel saveOrder(VasNpsModelDTO vasNpsModelDTO) {
@@ -311,7 +316,6 @@ public class VasNpsService {
 
             //Календарь клиента - ДОБАВИТЬ МЕТОДЫ РАБОТЫ С КАЛЕНДАРЕМ КЛИЕНТА
             String calendarClient = vasNpsModelDTO.getCalendarClient();
-            System.out.println(VasNpsService.class.getName() + "- Строка: №311, работа с ключом календаря клиента.");
             vasNpsModel.setCalendarClient(calendarClient); //Ключ календаря клиента для модели
 
             //Обработка года выпуска
@@ -336,6 +340,29 @@ public class VasNpsService {
 
             vasNpsModel.setDate_order(dateOrder); //Дата закрытия заказ-наряда для модели
 
+            //Направляю в календарь
+            if (calendarClient.equals("selected")){
+                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                Date sale = format.parse(vasNpsModelDTO.getDateSale());
+
+                VasCalendarModelDTO vasCalendarModelDTO = new VasCalendarModelDTO();
+                vasCalendarModelDTO.setNumOrder(numOrder);
+                vasCalendarModelDTO.setOwner(vasNpsModelDTO.getClientFullName());
+                vasCalendarModelDTO.setBrand(brand);
+                vasCalendarModelDTO.setModel(model);
+                vasCalendarModelDTO.setVin(vin1);
+                vasCalendarModelDTO.setYearRelease(yearRelease);
+                vasCalendarModelDTO.setSale(sale);
+
+                vasCalendarModelDTO.setPhone(vasNpsModel.getPhone_1() + " / " + vasNpsModel.getPhone_2());
+                vasCalendarModelDTO.setDateRepair(dateOrder);
+                vasCalendarModelDTO.setMileage(mileage);
+                vasCalendarModelDTO.setMasterName(masterName);
+
+                //vasRedirectedCalendarService.redirectedCalendar(vasCalendarModelDTO);
+            }
+
             } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -358,7 +385,7 @@ public class VasNpsService {
                 VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
                 return VasNpsRepository.saveOrder(savedOrder);
             } else {
-                System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
+                //System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
                 LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
             }
         } else {

@@ -143,3 +143,46 @@ VALUES ('ООО Автопалас-М', 'Артём Хомич', 'artem_homich@a
 UPDATE `vas_manager` SET `vas_manager`.`position_report_satisfaction_kia_copy` = 'checked' WHERE `vas_manager`.`manager_name` = 'Шабанов Кирилл Владимирович';
 UPDATE `vas_manager` SET `vas_manager`.`position_report_satisfaction_kia_copy` = 'checked' WHERE `vas_manager`.`manager_name` = 'Дащёнок Павел Леонидович';
 UPDATE `vas_manager` SET `vas_manager`.`position_report_satisfaction_kia_copy` = 'checked' WHERE `vas_manager`.`manager_name` = 'Бородулина Юлия Юрьевна';
+
+
+-- Table VasCalendarKia
+CREATE TABLE vas_calendar_client_kia
+(
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    owner VARCHAR(255) NULL ,
+    model VARCHAR(255) NULL ,
+    vehicle_identification_number VARCHAR(255) UNIQUE ,
+    year_release VARCHAR(255) NULL ,
+    date_sale DATE NULL ,
+    phone VARCHAR(255) NULL ,
+    planned_date DATE NULL ,
+    add_date Date NULL,
+    update_date Date NULL,
+    activity VARCHAR(255) NULL,
+    date_of_interaction Date NULL,
+    comment VARCHAR(500),
+    to0_date Date NULL ,
+    to0_mileage LONG NULL ,
+    to1_date Date NULL ,
+    to1_mileage LONG NULL ,
+    to2_date Date NULL ,
+    to2_mileage LONG NULL ,
+    to3_date Date NULL ,
+    to3_mileage LONG NULL ,
+    to4_date Date NULL ,
+    to4_mileage LONG NULL ,
+    to5_date Date NULL ,
+    to5_mileage LONG NULL ,
+    to6_date Date NULL ,
+    to6_mileage LONG NULL ,
+    to7_date Date NULL ,
+    to7_mileage LONG NULL ,
+    to8_date Date NULL ,
+    to8_mileage LONG NULL ,
+    to9_date Date NULL ,
+    to9_mileage LONG NULL ,
+    to10_date Date NULL ,
+    to10_mileage LONG NULL,
+    master_name VARCHAR(255) NULL
+)
+    ENGINE = InnoDB;
