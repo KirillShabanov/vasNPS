@@ -100,5 +100,7 @@ public class VasCheckListEngineerKiaModel {
     private String issuingQuestion7;
     @Column(name = "issuing_question_8")
     private String issuingQuestion8;
+    @Column(name = "result")
+    private String result;
 
 }

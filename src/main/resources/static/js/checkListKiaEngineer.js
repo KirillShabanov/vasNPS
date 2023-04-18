@@ -103,8 +103,6 @@ function saveCheckReportEngineerKia(){
 };
 
 
-var restApiAddressNPS = "http://localhost:8080"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
-
 function updateCheckReportEngineerKia(numOrderCheckKia){
     /** Функция перезаписи сохранения Чек-листа аудита ИТ */
 

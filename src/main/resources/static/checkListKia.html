@@ -21,11 +21,14 @@
     <link rel="stylesheet" href="css/tabs.css">
     <script src="js/jquery.js"></script>
     <script src="js/showTemporaryCheckList.js"></script>
+    <script src="js/showTemporaryCheckListMechanical.js"></script>
     <script src="js/tabsJs.js"></script>
     <script src="js/checkListKiaEngineer.js"></script>
     <script src="js/openTemporaryCheckReportEngineerKia.js"></script>
     <script src="js/checkListKiaMechanical.js"></script>
     <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
+    <script src="js/analyticsKiaCheckList.js"></script>
+    <script src="js/callPrint.js"></script>
     <title>checkListKia</title>
 </head>
 
@@ -58,10 +61,10 @@
                         Чек-лист ИТ KIA
                     </a>
                     <a href="#chechListCarRepearKia" class="header__nav_tools popup-link">
-                        Чек-лист ОТОА KIA
+                        Чек-лист рем. зона KIA
                     </a>
-                    <a href="#" class="header__nav_tools popup-link">
-                        Отчёты
+                    <a href="#analyticsCheckListsKia" class="header__nav_tools popup-link">
+                        Аналитика
                     </a>
                 </nav>
             </div>
@@ -841,7 +844,7 @@
         <div class="popup__body">
             <div class="popup__content">
                 <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
-                <div class="popup__title">Чек-лист ОТОА KIA</div>
+                <div class="popup__title">Чек-лист рем. зона KIA</div>
 
                 <!-- Данные по сотруднику и автомобилю  -->
                 <div>
@@ -1472,18 +1475,242 @@
                 </div>
                     <!--Кнопки-->
                     <div>
-                        <button onclick="saveCheckReportMechanicalKia()" class="btn_user" type="submit">Сохранить</button>
+                        <button id="saveCheckReportMechanicalKia" onclick="saveCheckReportMechanicalKia()" class="btn_user" type="submit">Сохранить</button>
+                    </div>
+                    <div>
+                        <button id="updateCheckReportMechanicalKia" onclick="updateCheckReportMechanicalKia()" style="display: none" class="btn_user" type="submit">Сохранить</button>
                     </div>
                     <!--Кнопки-->
+                    <!--Таблица-->
+                    <div class="popup__table">
+                    <table id="temporaryCheckListMechanical" class="table table-striped"> 
+                    </table>
+                    </div>
+                    <!--Таблица-->
             </div>
         </div>
     </div>
-    
+
+    <!-- Аналитика -->
+    <div id="analyticsCheckListsKia" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Аналитика по подразделениям KIA</div>
+
+                <!-- Ссылки вкладки -->
+                <div class="tab">
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'analyticsCheckListsKiaEngineer')">Аналитика ИТ</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'analyticsCheckListsKiaMechanic')">Аналитика рем. зона</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'analyticsCheckListsKiaPreviousPeriod')">Аналитика пред. период</button>
+                </div>
+                
+                <div id="analyticsCheckListsKiaEngineer" class="tabcontent">
+                    <div style="margin-top: 45px;">
+                        Количество завершённых проверок в текущем месяце составляет: <label id="countReportsKiaEngineer" style="font-size: 18px;"> </label>
+                    </div>
+                    <div>
+                        Количество не закрытых проверок в текущем месяце составляет: <label id="countReportsKiaEngineerNotCancel" style="font-size: 18px;"> </label>
+                    </div>
+
+                    <!--Таблица ИТ с общими показателями-->
+                    <div class="popup__table" style="margin-top: 45px;">
+                        <table id="analyticsKiaEngineerGeneral" style="text-align: center;" class="table table-striped">
+                        </table>
+                    </div>
+                    <!--Таблица ИТ с общими показателями-->
+                    <!--Таблица ИТ по всем завершенным проверка-->
+                    <div class="popup__table" style="margin-top: 45px;">
+                        <table id="analyticsKiaEngineer" style="text-align: center;" class="table table-striped">
+                        </table>
+                    </div>
+                    <!--Таблица ИТ по всем завершенным проверка-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="analyticForPrint" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="" class="popup__close close-popup"><i id="closePopupAnalyticForPrint" class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Результаты проверки</div>
+                <div style="margin-top: 25px;">
+                    Номер заказ-наряда: <label id="numOrderKia" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Дата проверки: <label id="dateOrderKia" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Фамилия ИТ: <label id="surnameOrderKia" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Результат: <label id="resultOrderKia" style="font-size: 18px;"> </label>
+                </div>
+                <div style="margin-top: 45px;">
+                    <table class="table table-hover">
+                        <tbody>
+                            <th>Приём авто</th>
+                            <tr>
+                                <td>При условии приезда строго к назначенному времени записи, ожидание ИТ составило менее 5 мин?</td>
+                                <td id="receptionQuestion1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ поприветствовал доброжелательно, улыбнулся?</td>
+                                <td id="receptionQuestion2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr></tr>
+                                <td>ИТ одет в специальную в специальную униформу?</td>
+                                <td id="receptionQuestion3" style="font-size: 20px;"></td>
+                            <tr>
+                                <td>У ИТ присутствует бейдж?</td>
+                                <td id="receptionQuestion4" style="font-size: 20px;"></td>
+                            </tr>    
+                            <tr>
+                                <td>ИТ встал, предложил Клиенту присесть в кресло, после этого сел за свое рабочее место?</td>
+                                <td id="receptionQuestion5" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ представился?</td>
+                                <td id="receptionQuestion6" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ обращался к Клиенту по имени?</td>
+                                <td id="receptionQuestion7" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ попросил свидетельство о регистрации автомобиля?</td>
+                                <td id="receptionQuestion8" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ попросил сервисную книгу?</td>
+                                <td id="receptionQuestion9" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ уточнил детали записи (объём работ, дополнительные замечания\пожелания)?</td>
+                                <td id="receptionQuestion10" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ внес все необходимые данные о Клиенте и причине обращения, запасные части и работы в заказ-наряд?</td>
+                                <td id="receptionQuestion11" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ инициативно по порядку рассказывает Клиенту о предстоящих работах по ТОиР, ориентировочную стоимость предстоящих работ и расчетное время исполнения?</td>
+                                <td id="receptionQuestion12" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Клиенту предложили оставить замененные запасные части в ДЦ для дальнейшей утилизации?</td>
+                                <td id="receptionQuestion13" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ согласовал с Клиентом под подпись окончательный объём работ?</td>
+                                <td id="receptionQuestion14" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ установил защитные чехлы при Клиенте (чехолы органов управления, чехол сиденья, ножного коврика)?</td>
+                                <td id="receptionQuestion15" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ подвел итог и резюмировал договорённости?</td>
+                                <td id="receptionQuestion16" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Осмотр авто</th>
+                            <tr>
+                                <td>ИТ пригласил Клиента осмотреть автомобиль?</td>
+                                <td id="inspectionQuestion1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ произвел внешний осмотр автомобиля при Клиенте?</td>
+                                <td id="inspectionQuestion2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ предложил Клиенту мойку автомобиля (если автомобиль загразнен)?</td>
+                                <td id="inspectionQuestion3" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ делал пометки в процессе общения с Клиентом?</td>
+                                <td id="inspectionQuestion4" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ предложил Клиенту провести совместную тестовую поездку (при необходимости)?</td>
+                                <td id="inspectionQuestion5" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ предложил Клиенту дополнительное оборудование или услуги?</td>
+                                <td id="inspectionQuestion6" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Ожидание авто</th>
+                            <tr>
+                                <td>Уточнили ли у Клиента, хочет ли он ожидать автомобиль в ДЦ или уехать? Если Клиент решил остаться, рассказали ли ему, где он может это сделать?</td>
+                                <td id="waitingQuestion1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ проинформировал Клиента о том, что ДЦ бесплатно предоставляет чай\кофе, о Wi-Fi в зоне ожидания?</td>
+                                <td id="waitingQuestion2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ИТ предложил провести тест драйв нового автомобиля KIA (дата покупки которых была более года назад)?</td>
+                                <td id="waitingQuestion3" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Выдача авто</th>
+                            <tr>
+                                <td>Работы были сделаны вовремя?</td>
+                                <td id="issuingQuestion1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Клиента проводили к автомобилю и продемонстрировали итоги выполненных работ?</td>
+                                <td id="issuingQuestion2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Клиенту продемонстрировали заменённые запасные части, если ранее был согласован их возврат?</td>
+                                <td id="issuingQuestion3" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>При необходимости ИТ провел тестовую поездку с Клиентом?</td>
+                                <td id="issuingQuestion4" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Клиента проводили к кассе для проведения оплаты?</td>
+                                <td id="issuingQuestion5" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>После проведения оплаты документы были переданы Клиенту в брендированном конверте?</td>
+                                <td id="issuingQuestion6" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Клиента проводили к автомобилю, поблагодарили и напомнили о необходимости проверить индивидуальные настройки автомобиля?</td>
+                                <td id="issuingQuestion7" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Защитные чехлы были сняты при Клиенте?</td>
+                                <td id="issuingQuestion8" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--Кнопка-->
+                    <div>
+                        <button onclick="CallPrint('analyticForPrint');" class="btn_user">Распечатать</button>
+                    </div>
+                    <!--Кнопка-->
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/showTemporaryCheckList.js"></script>
+    <script src="js/showTemporaryCheckListMechanical.js"></script>
     <script src="js/popupUsers.js"></script>
     <script src="js/checkListKiaEngineer.js"></script>
     <script src="js/openTemporaryCheckReportEngineerKia.js"></script>
     <script src="js/checkListKiaMechanical.js"></script>
     <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
+    <script src="js/analyticsKiaCheckList.js"></script>
+    <script src="js/callPrint.js"></script>
 </body>
 </html>

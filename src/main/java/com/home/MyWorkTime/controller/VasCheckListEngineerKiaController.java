@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -83,5 +84,30 @@ public class VasCheckListEngineerKiaController {
                     vasCheckListEngineerKiaModel = vasCheckListEngineerKiaService.saveCheckListEngineerKia(vasCheckListEngineerKiaModel);
                     return vasCheckListEngineerKiaModel;
                 });
+    }
+
+    @GetMapping("/countReportAnalyticsCancel")
+    public long analyticsKiaEngineerCountReportCancel(){
+        return vasCheckListEngineerKiaService.analyticsKiaEngineerCountReportCancel();
+    }
+
+    @GetMapping("/countReportAnalyticsNotCancel")
+    public long analyticsKiaEngineerCountReportNotCancel(){
+        return vasCheckListEngineerKiaService.analyticsKiaEngineerCountReportNotCancel();
+    }
+
+    @GetMapping("/analyticsKiaEngineerGeneralIndicator")
+    public HashMap<Object, Object> analyticsKiaEngineerGeneralIndicator(){
+        return vasCheckListEngineerKiaService.analyticsKiaEngineerGeneralIndicator();
+    }
+
+    @GetMapping("/findAllCheckListCancel")
+    public List<VasCheckListEngineerKiaModel> findAllCheckListCancel(){
+        return vasCheckListEngineerKiaService.findAllCheckListCancel();
+    }
+
+    @GetMapping("/findAllCheckListCancelFromNum/{numOrderCheckKia}")
+    public List<VasCheckListEngineerKiaModel> findAllCheckListCancelFromNum(@PathVariable String numOrderCheckKia){
+        return vasCheckListEngineerKiaService.findAllCheckListCancelFromNum(numOrderCheckKia);
     }
 }

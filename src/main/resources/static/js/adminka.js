@@ -1,4 +1,4 @@
-var restApiAddressNPS = "http://localhost:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
+var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
 function showCallManagerTo(){
     var xhttp = new XMLHttpRequest();
