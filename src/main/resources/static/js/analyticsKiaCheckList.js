@@ -1,7 +1,8 @@
-var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
+var restApiAddressNPS = "http://localhost:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
-
+//Аналитика ИТ - начало
 function openTabsAnalyticsKiaEngineer(){
+
     // Количество закрытых проверок в текущий месяц
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
@@ -78,16 +79,7 @@ function openTabsAnalyticsKiaEngineer(){
     xhttp.open("GET", restApiAddressNPS + "vas_check_list_engineer_kia/findAllCheckListCancel", true);
     xhttp.send();
 };
-openTabsAnalyticsKiaEngineer(); 
-
-function openTabsAnalyticsKiaMechanic(){
-    console.log("Mechanical")
-};
-
-function openTabsanalyticsKiaPreviousPeriod(){
-    console.log("Previous period")
-};
-
+ 
 function openCkeckListForPrint(numOrderCheckKia){
     document.getElementById("analyticForPrint").className = "popup open";
     
@@ -392,5 +384,350 @@ function openCkeckListForPrint(numOrderCheckKia){
     xhttp.open("GET", restApiAddressNPS + `vas_check_list_engineer_kia/findAllCheckListCancelFromNum/${numOrderCheckKia}`, true);
     xhttp.send();
 };
+//Аналитика ИТ - конец
 
+//Аналитика РемЗона - начало
+function openTabsAnalyticsKiaMechanic(){
 
+    // Количество закрытых проверок в текущий месяц
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200) {
+            var reports = JSON.parse(this.responseText);
+            document.getElementById("countReportsKiaMechanical").innerHTML = reports;
+        }
+    };
+    xhttp.open("GET", restApiAddressNPS + "vas_check_list_mechanical_kia/countReportAnalyticsCancel", true);
+    xhttp.send();
+
+    // Количество незавершённых проверок в текущий месяц
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200) {
+            var reports = JSON.parse(this.responseText);
+            document.getElementById("countReportsKiaMechanicalNotCancel").innerHTML = reports;
+        }
+    };
+    xhttp.open("GET", restApiAddressNPS + "vas_check_list_mechanical_kia/countReportAnalyticsNotCancel", true);
+    xhttp.send();
+
+    // Средний балл по закрытым заявкам текущего месяца
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200) {
+            var generalIndicators = JSON.parse(this.responseText);
+            var generalIndicatorTable = '<tr>\n' +
+            '<td>Фамилия</td>\n' +
+            '<td>Кол-во завершенных проверок</td>\n' +
+            '<td>Средний балл</td>\n' +
+            '</tr>\n';
+
+            for (let i = 0; i < Object.keys(generalIndicators).length; i++){
+                var generalIndicator = generalIndicators[i];
+                generalIndicatorTable = generalIndicatorTable + '\n' +
+                '<tr><td>' + generalIndicator.surnameReportKia + '</td>\n' +
+                '<td>' + generalIndicator.countReportGeneralIndicator + '</td>\n' +
+                '<td>' + generalIndicator.gpa + '</td></tr>';
+
+                document.getElementById("analyticsKiaMechanicalGeneral").innerHTML = generalIndicatorTable;
+            }
+        }
+    };
+    xhttp.open("GET", restApiAddressNPS + "vas_check_list_mechanical_kia/analyticsKiaMechanicalGeneralIndicator", true);
+    xhttp.send();
+
+    // Список всех закрытых проверок
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200) {
+            var analyticsKiaMechanical = JSON.parse(this.responseText);
+            var analyticsKiaMechanicalTable = '<tr>\n' +
+            '<td>Фамилия</td>\n' +
+            '<td>№ З/Н</td>\n' +
+            '<td>Дата завершения</td>\n' +
+            '<td>VIN</td>\n' +
+            '<td>Результат</td>\n' +
+            '<td>Действия</td>\n' +
+            '</tr>\n';
+
+            for (let i = 0; i < analyticsKiaMechanical.length; i++){
+                var analyticKiaMechanical = analyticsKiaMechanical[i];
+                analyticsKiaMechanicalTable = analyticsKiaMechanicalTable + '\n' +
+                '<tr><td>' + analyticKiaMechanical.surnameMechanicalKia + '</td>\n' +
+                '<td>' + analyticKiaMechanical.numOrderCheckKiaRepair + '</td>\n' +
+                '<td>' + analyticKiaMechanical.dateSaveRepairInspection + '</td>\n' + 
+                '<td>' + analyticKiaMechanical.mechanicalKiaVin + '</td>\n' + 
+                '<td>' + analyticKiaMechanical.result + '</td>\n' + 
+                '<td>'+'<button style="margin: 5px" onclick="openCkeckListForPrintMechanical('+analyticKiaMechanical.numOrderCheckKiaRepair+')" type="button"><i class="fa fa-file"></i></button></td></tr>';
+
+                document.getElementById("analyticsKiaMechanical").innerHTML = analyticsKiaMechanicalTable;
+            }
+        }
+    };
+    xhttp.open("GET", restApiAddressNPS + "vas_check_list_mechanical_kia/findAllCheckListCancel", true);
+    xhttp.send();
+};
+
+function openCkeckListForPrintMechanical(numOrderCheckKiaRepair){
+
+    document.getElementById("analyticForPrintMechanical").className = "popup open";
+    
+    // Количество закрытых проверок в текущий месяц с расшифровкой
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200) {
+            var reports = JSON.parse(this.responseText);
+            
+            for (let i = 0; i < reports.length; i++){
+                var report = reports[i];
+                
+                document.getElementById("numOrderKiaMechanical").innerHTML = report.numOrderCheckKiaRepair;
+                document.getElementById("dateOrderKiaMechanical").innerHTML = report.dateSaveRepairInspection;
+                document.getElementById("surnameOrderKiaMechanical").innerHTML = report.surnameMechanicalKia;
+                document.getElementById("vinOrderKiaMechanical").innerHTML = report.mechanicalKiaVin;
+                document.getElementById("resultOrderKiaMechanical").innerHTML = report.result;
+                
+                // Первый лист - начало
+                var text = "";
+                if (report.repairQualityControl1 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl1 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl1").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl2 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl2 === 'NO'){
+                    text = 'Нет'
+                } else if (report.repairQualityControl2 === 'NA'){
+                    text = 'Не применялось';
+                }
+                document.getElementById("repairQualityControl2").innerHTML = text;
+                
+                var text = "";
+                if (report.repairQualityControl3 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl3 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl3").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl4 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl4 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl4").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl5 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl5 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl5").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl6 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl6 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl6").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl7 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl7 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl7").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl8 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl8 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl8").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl9 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl9 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl9").innerHTML = text;
+
+                var text = "";
+                if (report.repairQualityControl10 === 'YES'){
+                    text = 'Да';
+                } else if (report.repairQualityControl10 === 'NO'){
+                    text = 'Нет'
+                } 
+                document.getElementById("repairQualityControl10").innerHTML = text;
+                // Первый лист - конец
+                // Второй лист - начало
+                var text = "";
+                if (report.parkingLotCheck1 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck1 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck1").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck2 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck2 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck2").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck3 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck3 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck3").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck4 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck4 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck4").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck5 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck5 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck5").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck6 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck6 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck6").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck7 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck7 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck7").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck8 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck8 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck8").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck9 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck9 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck9").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck10 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck10 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck10").innerHTML = text;
+
+                var text = "";
+                if (report.parkingLotCheck11 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.parkingLotCheck11 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("parkingLotCheck1").innerHTML = text;
+                // Второй лист - конец
+                // Третий лист - начало
+                var text = "";
+                if (report.checkInMotion1 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.checkInMotion1 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("checkInMotion1").innerHTML = text;
+
+                var text = "";
+                if (report.checkInMotion2 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.checkInMotion2 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("checkInMotion2").innerHTML = text;
+
+                var text = "";
+                if (report.checkInMotion3 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.checkInMotion3 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("checkInMotion3").innerHTML = text;
+
+                var text = "";
+                if (report.checkInMotion4 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.checkInMotion4 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("checkInMotion4").innerHTML = text;
+                // Третий лист - конец
+                // Четвертый лист - начало
+                var text = "";
+                if (report.qualityControl1 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.qualityControl1 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("qualityControl1").innerHTML = text;
+                              
+                document.getElementById("notesMasterReport").innerHTML = report.notesMaster;
+                document.getElementById("notesWorkReport").innerHTML = report.notesWork;
+                document.getElementById("explanationsWorkReport").innerHTML = report.explanationsWork;
+
+                var text = "";
+                if (report.qualityControl5 === 'YES'){
+                    text = 'Норм.';
+                } else if (report.qualityControl5 === 'NO'){
+                    text = 'Деф.'
+                } 
+                document.getElementById("qualityControl5").innerHTML = text;
+                // Четвертый лист - конец
+            }
+        }
+    };
+    xhttp.open("GET", restApiAddressNPS + `vas_check_list_mechanical_kia/findAllCheckListCancelFromNum/${numOrderCheckKiaRepair}`, true);
+    xhttp.send();
+};
+//Аналитика РемЗона - конец
+
+//Аналитика за период - начало
+function openTabsanalyticsKiaPreviousPeriod(){
+    
+};
+//Аналитика за период - конец
+
+//Запуск функций
+openTabsAnalyticsKiaEngineer();
+openTabsAnalyticsKiaMechanic();
+openTabsanalyticsKiaPreviousPeriod();

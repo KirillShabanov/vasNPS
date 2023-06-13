@@ -15,20 +15,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/popupUsers.css">
     <link rel="stylesheet" href="css/popupTools.css">
     <link rel="stylesheet" href="css/tabs.css">
     <script src="js/jquery.js"></script>
-    <script src="js/showTemporaryCheckList.js"></script>
-    <script src="js/showTemporaryCheckListMechanical.js"></script>
-    <script src="js/tabsJs.js"></script>
-    <script src="js/checkListKiaEngineer.js"></script>
-    <script src="js/openTemporaryCheckReportEngineerKia.js"></script>
-    <script src="js/checkListKiaMechanical.js"></script>
-    <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
-    <script src="js/analyticsKiaCheckList.js"></script>
-    <script src="js/callPrint.js"></script>
+    
     <title>checkListKia</title>
 </head>
 
@@ -1288,7 +1282,7 @@
                             </tr>
                             <!-- Разделение полей для видимости -->
                             <tr>
-                                <td>Работа стеклоочистителей/уровень овывающей жидкости</td>
+                                <td>Работа стеклоочистителей/уровень омывающей жидкости</td>
                                 <td>
                                     <div style="width:max-content">
                                         <input class="form-check-input" type="radio" name="parkingLotCheck11" id="parkingLotCheck_11_yes" value="YES">
@@ -1504,7 +1498,7 @@
                     <button class="tablinks" onclick="openTabsEngineer(event, 'analyticsCheckListsKiaMechanic')">Аналитика рем. зона</button>
                     <button class="tablinks" onclick="openTabsEngineer(event, 'analyticsCheckListsKiaPreviousPeriod')">Аналитика пред. период</button>
                 </div>
-                
+                <!--Аналитака ИТ начало-->
                 <div id="analyticsCheckListsKiaEngineer" class="tabcontent">
                     <div style="margin-top: 45px;">
                         Количество завершённых проверок в текущем месяце составляет: <label id="countReportsKiaEngineer" style="font-size: 18px;"> </label>
@@ -1526,9 +1520,86 @@
                     </div>
                     <!--Таблица ИТ по всем завершенным проверка-->
                 </div>
+                <!--Аналитака ИТ конец-->
+
+                <!--Аналитака РемЗона начало-->
+                <div id="analyticsCheckListsKiaMechanic" class="tabcontent">
+                    <div style="margin-top: 45px;">
+                        Количество завершённых проверок в текущем месяце составляет: <label id="countReportsKiaMechanical" style="font-size: 18px;"> </label>
+                    </div>
+                    <div>
+                        Количество не закрытых проверок в текущем месяце составляет: <label id="countReportsKiaMechanicalNotCancel" style="font-size: 18px;"> </label>
+                    </div>
+
+                    <!--Таблица ИТ с общими показателями-->
+                    <div class="popup__table" style="margin-top: 45px;">
+                        <table id="analyticsKiaMechanicalGeneral" style="text-align: center;" class="table table-striped">
+                        </table>
+                    </div>
+                    <!--Таблица ИТ с общими показателями-->
+                    <!--Таблица ИТ по всем завершенным проверка-->
+                    <div class="popup__table" style="margin-top: 45px;">
+                        <table id="analyticsKiaMechanical" style="text-align: center;" class="table table-striped">
+                        </table>
+                    </div>
+                    <!--Таблица ИТ по всем завершенным проверка-->
+                </div>
+                <!--Аналитака РемЗона конец-->
+
+                <!--Аналитака за период начало-->
+                <div id="analyticsCheckListsKiaPreviousPeriod" class="tabcontent">
+                    <!--ИТ-->
+                    <div id="engineerAnalyticks">
+                        <h6>Анализ по инженерам-технологам за предыдущий период</h6>
+                        <div>
+                            <p>
+                                Введите фамилию инженера-технолога:
+                                <input id="periodCheckListEngineerSurname" type="text" style="width: 150px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                            </p>
+                            <p>
+                                Задайте период: c
+                                <input id="periodCheckListEngineerDateFrom" type="date" style="margin-left: 5px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                                по 
+                                <input id="periodCheckListEngineerDateBy" type="date" style="margin-left: 5px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                            </p>
+                            <!--Кнопки-->
+                            <p>
+                                <button style="margin-left: -3px;" onclick="periodCheckEngineer()" class="btn_user" type="submit">Загрузить</button>
+                            <!--Кнопки-->
+                            </p>
+                            <p>Количество найденных чек-листов: <label id="countReportsKiaEngineerPeriod" style="font-size: 18px;"> </label>
+                                <button id="downaloadReportEngineerKia" style="margin-left: 150px; display: none;" onclick="downaloadReportEngineerKiaButton()" class="btn_user" type="submit">Скачать</button></p>
+                        </div>
+                    </div>
+                    <!--РемЗона-->
+                    <div id="mechanicalAnalyticks">
+                        <h6>Анализ по автомеханикам за предыдущий период</h6>
+                        <div>
+                            <p>
+                                Введите фамилию механика:
+                                <input id="periodCheckListMechanicalSurname" type="text" style="width: 150px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                            </p>
+                            <p>
+                                Задайте период: c
+                                <input id="periodCheckListMechanicalDateFrom" type="date" style="margin-left: 5px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                                по 
+                                <input id="periodCheckListMechanicalDateBy" type="date" style="margin-left: 5px; width: 100px; background-color: rgb(177, 177, 177); padding-left: 5px;">
+                            </p>
+                            <!--Кнопки-->
+                            <p>
+                                <button style="margin-left: -3px;" onclick="periodCheckMechanical()" class="btn_user" type="submit">Загрузить</button>
+                            <!--Кнопки-->
+                            </p>
+                            <p>Количество найденных чек-листов: <label id="countReportsKiaMechanicalPeriod" style="font-size: 18px;"> </label>
+                                <button id="downaloadReportMechanicalKia" style="margin-left: 150px; display: none;" onclick="downaloadReportMechanicalKiaButton()" class="btn_user" type="submit">Скачать</button></p>
+                        </div>
+                    </div>
+                </div>
+                <!--Аналитака за период конец-->
             </div>
         </div>
     </div>
+
     <div id="analyticForPrint" class="popup">
         <div class="popup__body">
             <div class="popup__content">
@@ -1698,11 +1769,174 @@
                     </div>
                     <!--Кнопка-->
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="analyticForPrintMechanical" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="" class="popup__close close-popup"><i id="closePopupAnalyticForPrintMechanical" class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Результаты проверки</div>
+                <div style="margin-top: 25px;">
+                    Номер заказ-наряда: <label id="numOrderKiaMechanical" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Дата проверки: <label id="dateOrderKiaMechanical" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Фамилия ИТ: <label id="surnameOrderKiaMechanical" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    VIN: <label id="vinOrderKiaMechanical" style="font-size: 18px;"> </label>
+                </div>
+                <div>
+                    Результат: <label id="resultOrderKiaMechanical" style="font-size: 18px;"> </label>
+                </div>
+                <div style="margin-top: 45px;">
+                    <table class="table table-hover">
+                        <tbody>
+                            <th>Контроль ремонта</th>
+                            <tr>
+                                <td>Наличие элементов защиты</td>
+                                <td id="repairQualityControl1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Проведение тест драйва</td>
+                                <td id="repairQualityControl2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Внешние проверки, проведённые при приёме автомобиля</td>
+                                <td id="repairQualityControl3" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Чистота автомобиля внутри</td>
+                                <td id="repairQualityControl4" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Чистота автомобиля снаружи</td>
+                                <td id="repairQualityControl5" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Проведены все работы, заявленные Заказчиком?</td>
+                                <td id="repairQualityControl6" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Работы выполненны правильно (провести проверку до 4-х пунктов)?</td>
+                                <td id="repairQualityControl7" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Проверка момента затяжки колёсных гаек</td>
+                                <td id="repairQualityControl8" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Проверка уровня рабочих жидкостей</td>
+                                <td id="repairQualityControl9" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Проверка состояния тормозных колодок</td>
+                                <td id="repairQualityControl10" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Проверка на стоянке</th>
+                            <tr>
+                                <td>Габаритные огни</td>
+                                <td id="parkingLotCheck1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Ближний свет - Дальний свет</td>
+                                <td id="parkingLotCheck2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Указатель поворота</td>
+                                <td id="parkingLotCheck3" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Стоп-сигнал</td>
+                                <td id="parkingLotCheck4" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Фонарь заднего хода - Подсветка номерного знака</td>
+                                <td id="parkingLotCheck5" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>ПТФ и ЗТФ</td>
+                                <td id="parkingLotCheck6" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Внутреннее освещение</td>
+                                <td id="parkingLotCheck7" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Сигнальные лампы (бортовая индикация)</td>
+                                <td id="parkingLotCheck8" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Часы (установка времени)</td>
+                                <td id="parkingLotCheck9" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Звуковой сигнал</td>
+                                <td id="parkingLotCheck10" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Работа стеклоочистителей/уровень омывающей жидкости</td>
+                                <td id="parkingLotCheck11" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Проверка в движении</th>
+                            <tr>
+                                <td>Переключение передач</td>
+                                <td id="checkInMotion1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Сохранение курса при прямолинейном движении</td>
+                                <td id="checkInMotion2" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Сохранение курса при торможении</td>
+                                <td id="checkInMotion3" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Работа двигателя</td>
+                                <td id="checkInMotion4" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <th>Контроль качества</th>
+                            <tr>
+                                <td>Автомобиль при первой проверке качества</td>
+                                <td id="qualityControl1" style="font-size: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Примечания по первой проверке качества:</td>
+                                <td id="notesMasterReport" style="font-size: 20px; width: 75px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Описание дополнительных работ:</td>
+                                <td id="notesWorkReport" style="font-size: 20px; width: 75px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Объяснение работ:</td>
+                                <td id="explanationsWorkReport" style="font-size: 20px; width: 75px;"></td>
+                            </tr>
+                            <tr>
+                                <td>Автомобиль при второй проверке качества</td>
+                                <td id="qualityControl5" style="font-size: 20px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--Кнопка-->
+                    <div>
+                        <button onclick="CallPrint2('analyticForPrintMechanical');" class="btn_user">Распечатать</button>
+                    </div>
+                    <!--Кнопка-->
                 </div>
             </div>
         </div>
     </div>
-
+    
     <script src="js/showTemporaryCheckList.js"></script>
     <script src="js/showTemporaryCheckListMechanical.js"></script>
     <script src="js/popupUsers.js"></script>
@@ -1711,6 +1945,9 @@
     <script src="js/checkListKiaMechanical.js"></script>
     <script src="js/openTemporaryCheckReportMechanicalKia.js"></script>
     <script src="js/analyticsKiaCheckList.js"></script>
+    <script src="js/periodCheckListEngineer.js"></script>
+    <script src="js/periodCheckListMechanical.js"></script>
     <script src="js/callPrint.js"></script>
+    <script src="js/tabsJs.js"></script>
 </body>
 </html>

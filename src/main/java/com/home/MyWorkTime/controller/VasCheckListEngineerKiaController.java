@@ -5,11 +5,16 @@ import com.home.MyWorkTime.entity.VasCheckListEngineerKiaModel;
 import com.home.MyWorkTime.service.VasCheckListEngineerKiaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
+
 
 @RestController
 @RequestMapping("/vas_check_list_engineer_kia")
@@ -110,4 +115,15 @@ public class VasCheckListEngineerKiaController {
     public List<VasCheckListEngineerKiaModel> findAllCheckListCancelFromNum(@PathVariable String numOrderCheckKia){
         return vasCheckListEngineerKiaService.findAllCheckListCancelFromNum(numOrderCheckKia);
     }
+
+    @GetMapping("/countReportsKiaEngineerPeriod/{periodCheckListEngineerSurname}&{periodCheckListEngineerDateFrom}&{periodCheckListEngineerDateBy}")
+    public List<VasCheckListEngineerKiaModel> countReportsKiaEngineerPeriod(@PathVariable String periodCheckListEngineerSurname, @PathVariable String periodCheckListEngineerDateFrom, @PathVariable String periodCheckListEngineerDateBy) throws ParseException{
+        return vasCheckListEngineerKiaService.countReportsKiaEngineerPeriod(periodCheckListEngineerSurname, periodCheckListEngineerDateFrom, periodCheckListEngineerDateBy);                                                                       
+    }
+
+    @GetMapping("/downaloadReportsKiaEngineerPeriod/{periodCheckListEngineerSurname}&{periodCheckListEngineerDateFrom}&{periodCheckListEngineerDateBy}")
+    public FileSystemResource downaloadReportsKiaEngineerPeriod(@PathVariable String periodCheckListEngineerSurname, @PathVariable String periodCheckListEngineerDateFrom, @PathVariable String periodCheckListEngineerDateBy) throws ParseException, IOException{
+        return vasCheckListEngineerKiaService.createReportsKiaEngineerPeriod(periodCheckListEngineerSurname, periodCheckListEngineerDateFrom, periodCheckListEngineerDateBy);                                                                       
+    }
+
 }

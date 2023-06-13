@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface VasCheckListEngineerKiaRepository extends JpaRepository<VasCheckListEngineerKiaModel, Long> {
@@ -66,4 +67,10 @@ public interface VasCheckListEngineerKiaRepository extends JpaRepository<VasChec
             "AND MONTH(date_save_inspection) = MONTH(NOW()) " +
             "AND YEAR(date_save_inspection) = YEAR(NOW()) ", nativeQuery = true)
     List<VasCheckListEngineerKiaModel> findAllCheckListCancelFromNum(@Param("numOrderCheckKia") String numOrderCheckKia);
+
+    @Query(value = "SELECT * FROM vas_check_list_engineer_kia " +
+            "WHERE surname_engineer_kia LIKE :periodCheckListEngineerSurname " +
+            "AND date_save_inspection BETWEEN :periodCheckListEngineerDateFrom AND :periodCheckListEngineerDateBy " +
+            "AND in_work = 'Cancel' ", nativeQuery = true)
+    List<VasCheckListEngineerKiaModel> countReportsKiaEngineerPeriod(String periodCheckListEngineerSurname, String periodCheckListEngineerDateFrom, String periodCheckListEngineerDateBy);
 }

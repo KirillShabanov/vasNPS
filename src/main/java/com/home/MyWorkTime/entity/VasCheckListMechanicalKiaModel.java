@@ -95,4 +95,7 @@ public class VasCheckListMechanicalKiaModel {
     private String explanationsWork;
     @Column(name = "quality_control_5")
     private String qualityControl5;
+
+    @Column(name = "result")
+    private int result;
 }

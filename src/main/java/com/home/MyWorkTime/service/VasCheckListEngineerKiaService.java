@@ -6,14 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.CellCopyPolicy;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-
-import static java.lang.String.valueOf;
 
 @Slf4j
 @Service
@@ -21,8 +29,6 @@ import static java.lang.String.valueOf;
 public class VasCheckListEngineerKiaService {
 
     private VasCheckListEngineerKiaRepository vasCheckListEngineerKiaRepository;
-    private final HashMap<Object, Object> analyticsKiaEngineerGeneralIndicator = new HashMap<>();
-
 
     private static final Logger LOGGER = Logger.getLogger(VasCheckListEngineerKiaService.class.getName());
 
@@ -150,7 +156,7 @@ public class VasCheckListEngineerKiaService {
         int result = rq1 + rq2 + rq3 + rq4 + rq5 + rq6 + rq7 + rq8 + rq9 + rq10 + rq11 + rq12 + rq13 + rq14 + rq15 + rq16 +
                 rq17 + rq18 + rq19 + rq20 + rq21 + rq22 + rq23 + rq24 + rq25 + rq26 + rq27 + rq28 + rq29 + rq30 + rq31 + rq32 + rq33;
 
-        vasCheckListEngineerKiaModel.setResult(valueOf(result));
+        vasCheckListEngineerKiaModel.setResult(result);
         VasCheckListEngineerKiaModel saveCheckListEngineerKia = vasCheckListEngineerKiaRepository.save(vasCheckListEngineerKiaModel);
         LOGGER.log(Level.INFO, "Сохранён чек-лист ИТ KIA: ");
         return VasCheckListEngineerKiaRepository.saveCheckListEngineerKia(saveCheckListEngineerKia);
@@ -161,8 +167,9 @@ public class VasCheckListEngineerKiaService {
 
     public long analyticsKiaEngineerCountReportNotCancel(){return vasCheckListEngineerKiaRepository.analyticsKiaEngineerCountReportNotCancel();}
 
-
     public HashMap<Object, Object> analyticsKiaEngineerGeneralIndicator() {
+
+        HashMap<Object, Object> analyticsKiaEngineerGeneralIndicator = new HashMap<>();
 
         String[] analyticsKiaEngineerGeneralIndicatorSurname = vasCheckListEngineerKiaRepository.analyticsKiaEngineerGeneralIndicatorSurname();
 
@@ -192,4 +199,105 @@ public class VasCheckListEngineerKiaService {
         LOGGER.log(Level.INFO, "Запрос не полный чек-лист ИТ KIA: " + numOrderCheckKia);
         return vasCheckListEngineerKiaRepository.findAllCheckListCancelFromNum(numOrderCheckKia);
     }
+
+    public List<VasCheckListEngineerKiaModel> countReportsKiaEngineerPeriod(String periodCheckListEngineerSurname, String periodCheckListEngineerDateFrom, String periodCheckListEngineerDateBy) throws ParseException{
+
+        if ((periodCheckListEngineerDateFrom).equals("")){
+            periodCheckListEngineerDateFrom = "2023-01-01";
+        }
+
+        if ((periodCheckListEngineerDateBy).equals("")){
+            LocalDate date = LocalDate.now();
+            periodCheckListEngineerDateBy = date.toString();
+        }
+        
+        LOGGER.log(Level.INFO, "Проведен запрос чек-листов по ИТ: " + periodCheckListEngineerSurname + ", период с " + periodCheckListEngineerDateFrom + " по " + periodCheckListEngineerDateBy);
+        return vasCheckListEngineerKiaRepository.countReportsKiaEngineerPeriod(periodCheckListEngineerSurname, periodCheckListEngineerDateFrom, periodCheckListEngineerDateBy);
+    }
+
+    public FileSystemResource createReportsKiaEngineerPeriod(String periodCheckListEngineerSurname,
+            String periodCheckListEngineerDateFrom, String periodCheckListEngineerDateBy) throws IOException {
+                FileInputStream templatePeriodKiaEngineerOrder = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportCheckListEngineer.xlsx");
+                //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\reportCheckListEngineer.xlsx"
+                //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportCheckListMechanical.xlsx"
+                try (XSSFWorkbook report = new XSSFWorkbook(templatePeriodKiaEngineerOrder)) {
+
+                    XSSFSheet checkListEngineer = report.getSheetAt(0);
+
+                    //Запрос полной модели по параметрам
+                    List<VasCheckListEngineerKiaModel> countReportFromPeriod = vasCheckListEngineerKiaRepository.countReportsKiaEngineerPeriod(periodCheckListEngineerSurname, periodCheckListEngineerDateFrom, periodCheckListEngineerDateBy);
+                    // Имя ИТ
+                    checkListEngineer.getRow(1).getCell(3).setCellValue(periodCheckListEngineerSurname);
+                    //Кол-во проверок
+                    int countReport = countReportFromPeriod.size();
+                    checkListEngineer.getRow(2).getCell(3).setCellValue(countReport);
+                    // Дата с
+                    checkListEngineer.getRow(3).getCell(3).setCellValue(periodCheckListEngineerDateFrom);
+                    // Дата по
+                    checkListEngineer.getRow(3).getCell(5).setCellValue(periodCheckListEngineerDateBy);
+                    // Увеличение количества столбцов (ответы)
+                    for(int i = 1; i < countReportFromPeriod.size(); i++){
+                       for(int j = 1; j < 41; j++){
+                           XSSFCell oldCell = checkListEngineer.getRow(j).getCell(11);
+                           XSSFCell newCell = checkListEngineer.getRow(j).createCell(11+i);
+                           newCell.copyCellFrom(oldCell, new CellCopyPolicy());
+                       } 
+                    }
+
+                     // Заполняем отчёт исходя из количества найденных чек-листов
+                     for(int i = 0; i < countReportFromPeriod.size(); i++){
+                        
+                        checkListEngineer.getRow(1).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getDateSaveInspection());
+                        checkListEngineer.getRow(2).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getNumOrderCheckKia());
+                        checkListEngineer.getRow(3).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getResult());
+                        //Результаты по приемке
+                        checkListEngineer.getRow(5).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion1());
+                        checkListEngineer.getRow(6).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion2());
+                        checkListEngineer.getRow(7).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion3());
+                        checkListEngineer.getRow(8).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion4());
+                        checkListEngineer.getRow(9).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion5());
+                        checkListEngineer.getRow(10).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion6());
+                        checkListEngineer.getRow(11).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion7());
+                        checkListEngineer.getRow(12).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion8());
+                        checkListEngineer.getRow(13).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion9());
+                        checkListEngineer.getRow(14).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion10()); 
+                        checkListEngineer.getRow(15).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion11()); 
+                        checkListEngineer.getRow(16).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion12());
+                        checkListEngineer.getRow(17).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion13());
+                        checkListEngineer.getRow(18).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion14());
+                        checkListEngineer.getRow(19).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion15());
+                        checkListEngineer.getRow(20).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getReceptionQuestion16());
+                        //Результаты по осмотру
+                        checkListEngineer.getRow(22).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion1());
+                        checkListEngineer.getRow(23).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion2());
+                        checkListEngineer.getRow(24).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion3());
+                        checkListEngineer.getRow(25).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion4());
+                        checkListEngineer.getRow(26).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion5());
+                        checkListEngineer.getRow(27).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getInspectionQuestion6());
+                        //Результаты по ожиданию
+                        checkListEngineer.getRow(29).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getWaitingQuestion1());
+                        checkListEngineer.getRow(30).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getWaitingQuestion2());
+                        checkListEngineer.getRow(31).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getWaitingQuestion3());
+                        //Результаты по выдаче авто
+                        checkListEngineer.getRow(33).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion1());
+                        checkListEngineer.getRow(34).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion2());
+                        checkListEngineer.getRow(35).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion3());
+                        checkListEngineer.getRow(36).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion4());
+                        checkListEngineer.getRow(37).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion5());
+                        checkListEngineer.getRow(38).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion6());
+                        checkListEngineer.getRow(39).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion7());
+                        checkListEngineer.getRow(40).getCell(11 + i).setCellValue(countReportFromPeriod.get(i).getIssuingQuestion8());
+                        
+                     }
+
+                    String reportName = "Чек-лист ИТ за период.xlsx";
+                    FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\NPS vas Server\\VAS-NPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\reportCheckListEngineer.xlsx" + reportName);
+                    //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\" 
+                    //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\NPS vas Server\\VAS-NPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\reportCheckListEngineer.xlsx"
+                    report.write(fileOut);
+                    fileOut.close();
+
+                    return null;
+                }
+        }
 }

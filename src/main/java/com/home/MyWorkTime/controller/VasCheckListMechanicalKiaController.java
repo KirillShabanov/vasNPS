@@ -4,8 +4,13 @@ import com.home.MyWorkTime.entity.VasCheckListMechanicalKiaModel;
 import com.home.MyWorkTime.service.VasCheckListMechanicalKiaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -81,5 +86,41 @@ public class VasCheckListMechanicalKiaController {
                     vasCheckListMechanicalKiaModel = vasCheckListMechanicalKiaService.saveCheckListMechanicalKia(vasCheckListMechanicalKiaModel);
                     return vasCheckListMechanicalKiaModel;
                 });
+    }
+
+    // Отсюда начал
+    @GetMapping("/countReportAnalyticsCancel")
+    public long analyticsKiaMechanicalCountReportCancel(){
+        return vasCheckListMechanicalKiaService.analyticsKiaMechanicalCountReportCancel();
+    }
+
+    @GetMapping("/countReportAnalyticsNotCancel")
+    public long analyticsKiaMechanicalCountReportNotCancel(){
+        return vasCheckListMechanicalKiaService.analyticsKiaMechanicalCountReportNotCancel();
+    }
+
+    @GetMapping("/analyticsKiaMechanicalGeneralIndicator")
+    public HashMap<Object, Object> analyticsKiaMechanicalGeneralIndicator(){
+        return vasCheckListMechanicalKiaService.analyticsKiaMechanicalGeneralIndicator();
+    }
+
+    @GetMapping("/findAllCheckListCancel")
+    public List<VasCheckListMechanicalKiaModel> findAllCheckListCancel(){
+        return vasCheckListMechanicalKiaService.findAllCheckListCancel();
+    }
+
+    @GetMapping("/findAllCheckListCancelFromNum/{numOrderCheckKia}")
+    public List<VasCheckListMechanicalKiaModel> findAllCheckListCancelFromNum(@PathVariable String numOrderCheckKia){
+        return vasCheckListMechanicalKiaService.findAllCheckListCancelFromNum(numOrderCheckKia);
+    }
+
+    @GetMapping("/countReportsKiaMechanicalPeriod/{periodCheckListMechanicalSurname}&{periodCheckListMechanicalDateFrom}&{periodCheckListMechanicalDateBy}")
+    public List<VasCheckListMechanicalKiaModel> countReportsKiaMechanicalPeriod(@PathVariable String periodCheckListMechanicalSurname, @PathVariable String periodCheckListMechanicalDateFrom, @PathVariable String periodCheckListMechanicalDateBy) throws ParseException{
+        return vasCheckListMechanicalKiaService.countReportsKiaMechanicalPeriod(periodCheckListMechanicalSurname, periodCheckListMechanicalDateFrom, periodCheckListMechanicalDateBy);                                                                       
+    }
+
+    @GetMapping("/downaloadReportsKiaMechanicalPeriod/{periodCheckListMechanicalSurname}&{periodCheckListMechanicalDateFrom}&{periodCheckListMechanicalDateBy}")
+    public FileSystemResource downaloadReportsKiaMechanicalPeriod(@PathVariable String periodCheckListMechanicalSurname, @PathVariable String periodCheckListMechanicalDateFrom, @PathVariable String periodCheckListMechanicalDateBy) throws ParseException, IOException{
+        return vasCheckListMechanicalKiaService.createReportsKiaMechanicalPeriod(periodCheckListMechanicalSurname, periodCheckListMechanicalDateFrom, periodCheckListMechanicalDateBy);                                                                       
     }
 }

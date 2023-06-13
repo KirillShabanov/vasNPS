@@ -101,6 +101,6 @@ public class VasCheckListEngineerKiaModel {
     @Column(name = "issuing_question_8")
     private String issuingQuestion8;
     @Column(name = "result")
-    private String result;
+    private int result;
 
 }

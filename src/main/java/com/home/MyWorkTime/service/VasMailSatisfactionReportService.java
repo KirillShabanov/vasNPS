@@ -171,7 +171,7 @@ public class VasMailSatisfactionReportService {
                 listreportSatisfactionKia.getRow(z + 24).getCell(10).setCellValue(listFullReportKia.get(i).getDq040());
             }
 
-            SimpleDateFormat dateReport = new SimpleDateFormat("MMM yyyy");
+            SimpleDateFormat dateReport = new SimpleDateFormat("MMMM yyyy");
             String date = dateReport.format(new Date());
 
             String newFile = "" + date + ".xlsx";
