@@ -291,7 +291,7 @@ public class VasCheckListEngineerKiaService {
                      }
 
                     String reportName = "Чек-лист ИТ за период.xlsx";
-                    FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\NPS vas Server\\VAS-NPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\reportCheckListEngineer.xlsx" + reportName);
+                    FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\CheckList Kia\\Engineer\\" + reportName);
                     //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\" 
                     //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\NPS vas Server\\VAS-NPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\reportCheckListEngineer.xlsx"
                     report.write(fileOut);
