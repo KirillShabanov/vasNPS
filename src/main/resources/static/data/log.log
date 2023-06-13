@@ -28397,3 +28397,5 @@ java.io.FileNotFoundException: C:\Users\Shabanov\Desktop\Shabanov\ReportTemplate
 2023-06-13 10:11:38 INFO  VasCheckListMechanicalKiaService:41 - Отображён не полный чек-лист механика KIA: 
 2023-06-13 10:44:40 INFO  VasCheckListMechanicalKiaService:41 - Отображён не полный чек-лист механика KIA: 
 2023-06-13 10:44:40 INFO  VasCheckListEngineerKiaService:41 - Отображён не полный чек-лист ИТ KIA: 
+2023-06-13 10:54:52 INFO  VasCheckListEngineerKiaService:41 - Отображён не полный чек-лист ИТ KIA: 
+2023-06-13 10:54:52 INFO  VasCheckListMechanicalKiaService:41 - Отображён не полный чек-лист механика KIA: 
