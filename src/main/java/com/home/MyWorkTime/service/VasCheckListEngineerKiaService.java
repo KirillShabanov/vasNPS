@@ -219,7 +219,7 @@ public class VasCheckListEngineerKiaService {
             String periodCheckListEngineerDateFrom, String periodCheckListEngineerDateBy) throws IOException {
                 FileInputStream templatePeriodKiaEngineerOrder = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportCheckListEngineer.xlsx");
                 //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\reports\\reportCheckListEngineer.xlsx"
-                //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportCheckListMechanical.xlsx"
+                //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportCheckListEngineer.xlsx"
                 try (XSSFWorkbook report = new XSSFWorkbook(templatePeriodKiaEngineerOrder)) {
 
                     XSSFSheet checkListEngineer = report.getSheetAt(0);
@@ -294,10 +294,13 @@ public class VasCheckListEngineerKiaService {
                     FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\CheckList Kia\\Engineer\\" + reportName);
                     //"C:\\Users\\User\\Desktop\\vasNPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\" 
                     //"C:\\Users\\Shabanov\\Desktop\\Shabanov\\NPS vas Server\\VAS-NPS\\src\\main\\resources\\static\\outputReports\\kiaEngineerReport\\reportCheckListEngineer.xlsx"
+                    //C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\CheckList Kia\\Engineer\\
                     report.write(fileOut);
                     fileOut.close();
-
-                    return null;
+                    
+                    FileSystemResource order = new FileSystemResource("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\CheckList Kia\\Engineer\\" + reportName);
+                    
+                    return order;
                 }
         }
 }

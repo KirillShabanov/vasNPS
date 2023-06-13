@@ -285,7 +285,9 @@ public class VasCheckListMechanicalKiaService {
                     report.write(fileOut);
                     fileOut.close();
 
-                    return null;
+                    FileSystemResource order = new FileSystemResource("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\CheckList Kia\\Mechanical\\" + reportName);
+                    
+                    return order;
                 }
         }
 }
