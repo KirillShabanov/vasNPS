@@ -85,3 +85,13 @@ CREATE TABLE vas_check_list_engineer_kia
         result INT
     )
         ENGINE = InnoDB;
+
+
+26.06.2023
+
+CREATE TABLE vas_level_access (
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        level_access INTEGER,
+        description_access VARCHAR(150)
+)
+ENGINE = InnoDB;
