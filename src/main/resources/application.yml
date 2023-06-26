@@ -1,7 +1,7 @@
 spring:
   mail:
     default-encoding: UTF-8
-    host: mail.vitautocity.by
+    host: *.by
     port: 587
     username: *
     password: "*"
