@@ -3,7 +3,6 @@ package com.home.MyWorkTime.controller;
 import com.home.MyWorkTime.entity.VasCheckListMechanicalKiaModel;
 import com.home.MyWorkTime.service.VasCheckListMechanicalKiaService;
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/vas_check_list_mechanical_kia")
-@Log
 @CrossOrigin
 @AllArgsConstructor
 public class VasCheckListMechanicalKiaController {

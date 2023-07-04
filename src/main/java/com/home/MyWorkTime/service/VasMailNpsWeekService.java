@@ -365,12 +365,12 @@ public class VasMailNpsWeekService {
             helper.addAttachment(file, currentWeekNpsReport);
             javaMailSender.send(messageVasNpsMail);
 
-            System.out.println("Отчёт NPS в разрезе неделя/месяц сформирован и отправлен.");
+            //System.out.println("Отчёт NPS в разрезе неделя/месяц сформирован и отправлен.");
             LOGGER.log(Level.INFO, "Отчёт NPS в разрезе неделя/месяц сформирован и отправлен.");
 
         } catch (IOException | MessagingException e) {
             e.printStackTrace();
-            System.out.println("Отчёт NPS в разрезе неделя/месяц не сформирован, данных нет.");
+            //System.out.println("Отчёт NPS в разрезе неделя/месяц не сформирован, данных нет.");
             LOGGER.log(Level.INFO, "Отчёт NPS в разрезе неделя/месяц не сформирован, данных нет." + " Описание ошибки: ", e);
         }
     }

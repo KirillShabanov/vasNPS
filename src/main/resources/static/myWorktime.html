@@ -30,8 +30,8 @@
                     <span class="logo_img"></span>
                 </a>
                 <nav id="button_navigation" class="button_navigation">
-                    <a href="#popup_users" class="header__nav popup-link">
-                        Пользователи
+                    <a href="#popup_employers" class="header__nav popup-link">
+                        Сотрудники
                     </a>
                     <a href="" class="header__nav popup-link">
                         Помощь
@@ -61,12 +61,12 @@
         </header>
         </div>
 
-    <div id="popup_users" class="popup">
+    <div id="popup_employers" class="popup">
         <div class="popup__body">
             <div class="popup__content">
                 <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
-                <div class="popup__title">Пользователи</div>
-                <div class="popup__addUser header__nav popup-link" href="">
+                <div class="popup__title">Сотрудники</div>
+                <div class="popup__addEmployers header__nav popup-link" href="">
                     <button id="" type="button">
                             <i class="fa fa-plus">
                                 <i class="fa fa-user">
@@ -74,20 +74,20 @@
                     </button>
                 </div>
                 <div class="popup__table">
-                    <table id="usersList" class="table table-striped">
+                    <table id="employersList" class="table table-striped">
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="popup_addUsers" class="popup">
+    <div id="popup_addEmployers" class="popup">
             <div class="popup__body">
                 <div class="popup__content">
-                    <a href="#popup_users" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                    <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
                     <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
                     <div class="popup__title">Заполните данные</div>
-                    <div class="popup_addUsers">
+                    <div class="popup_addEmployers">
                         <div class="form-floating">
                             <input type="name" class="form-user" id="floatingName" placeholder="Имя">
                             <label for="floatingName"></label>
@@ -108,19 +108,19 @@
                             <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
                             <label for="floatingLevelAccess"></label>
                         </div>
-                        <button onclick="createUser()" class="btn_user" type="submit">Добавить</button>
+                        <button onclick="createEmployers()" class="btn_user" type="submit">Добавить</button>
                     </div>
                 </div>
             </div>
     </div>
 
-    <div id="popup_updateUsers" class="popup">
+    <div id="popup_updatEmployers" class="popup">
             <div class="popup__body">
                 <div class="popup__content">
-                    <a href="#popup_users" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                    <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
                     <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
                     <div class="popup__title">Измените данные</div>
-                    <div class="popup_updateUsers">
+                    <div class="popup_updateEmployers">
                         <input type="hidden" class="form-user" id="floatingId" placeholder="">
                         <div class="form-floating">
                             <input type="name" class="form-user" id="floatingName" placeholder="Имя">
@@ -142,13 +142,13 @@
                             <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
                             <label for="floatingLevelAccess"></label>
                         </div>
-                        <button id="button_updateUsers" class="btn_user" type="submit">Сохранить</button>
+                        <button id="button_updateEmployers" class="btn_user" type="submit">Сохранить</button>
                     </div>
                 </div>
             </div>
     </div>
 
-    <script src="js/showUser.js"></script>
+    <script src="js/showEmployers.js"></script>
     <script src="js/popupUsers.js"></script>
 </body>
 </html>

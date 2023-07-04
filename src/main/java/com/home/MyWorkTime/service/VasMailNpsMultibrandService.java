@@ -6,7 +6,6 @@ import com.home.MyWorkTime.repository.VasMailNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -118,10 +117,10 @@ public class VasMailNpsMultibrandService {
                             P.S.S. Убедительная просьба! Вносить ту оценку, которую озвучивает Клиент, ни в коем случае не пытаться изменить его мнение!!!""");
             javaMailSender.send(messageVasNpsMail);
 
-            System.out.println("Список Multibrand сформирован и отправлен.");
+            //System.out.println("Список Multibrand сформирован и отправлен.");
             LOGGER.log(Level.INFO, "Список Multibrand сформирован и отправлен.");
         } else {
-            System.out.println("Список Multibrand не сформирован, данных нет.");
+            //System.out.println("Список Multibrand не сформирован, данных нет.");
             LOGGER.log(Level.INFO, "Список Multibrand не сформирован, данных нет.");
         }
     }

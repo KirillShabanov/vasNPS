@@ -38,7 +38,7 @@ public class VasCheckListMechanicalKiaService {
     }
 
     public List<VasCheckListMechanicalKiaModel> findAllCheckListNotCancelMechanical(){
-        LOGGER.log(Level.INFO, "Отображён не полный чек-лист механика KIA: ");
+        //LOGGER.log(Level.INFO, "Отображён не полный чек-лист механика KIA: ");
         return vasCheckListMechanicalKiaRepository.findAllCheckListNotCancelMechanical();
     }
 
@@ -143,7 +143,7 @@ public class VasCheckListMechanicalKiaService {
         vasCheckListMechanicalKiaModel.setResult(result);
 
         VasCheckListMechanicalKiaModel saveCheckListMechanicalKia = vasCheckListMechanicalKiaRepository.save(vasCheckListMechanicalKiaModel);
-        LOGGER.log(Level.INFO, "Сохранён чек-лист механика KIA: ");
+        LOGGER.log(Level.INFO, "Сохранён чек-лист механика KIA: " + vasCheckListMechanicalKiaModel.getNumOrderCheckKiaRepair());
         return VasCheckListMechanicalKiaRepository.saveCheckListMechanicalKia(saveCheckListMechanicalKia);
     }
 
@@ -180,7 +180,7 @@ public class VasCheckListMechanicalKiaService {
     }
 
     public List<VasCheckListMechanicalKiaModel> findAllCheckListCancelFromNum(String numOrderCheckKia) {
-        LOGGER.log(Level.INFO, "Запрос не полный чек-лист ИТ KIA: " + numOrderCheckKia);
+        //LOGGER.log(Level.INFO, "Запрос не полный чек-лист ИТ KIA: " + numOrderCheckKia);
         return vasCheckListMechanicalKiaRepository.findAllCheckListCancelFromNum(numOrderCheckKia);
     }
 

@@ -196,15 +196,15 @@ public class VasMailSatisfactionReportService {
   
                 Отчёт по обратной связи с клиентами находится во вложенном файле.""");
 
-            FileSystemResource reportSatisfaction = new FileSystemResource(new File("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile));
+            FileSystemResource reportSatisfaction = new FileSystemResource("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile);
             //
             helper.addAttachment(newFile, reportSatisfaction);
             javaMailSender.send(messageVasNpsMail);
 
             LOGGER.log(Level.INFO, "Отчёт по удовлетворенности клиентов KIA сформирован и отправлен.");
-            System.out.println("Отчёт по удовлетворенности клиентов KIA сформирован и отправлен.");
+            //System.out.println("Отчёт по удовлетворенности клиентов KIA сформирован и отправлен.");
         } else {
-            System.out.println("Отчёт по удовлетворенности клиентов KIA не сформирован.");
+            //System.out.println("Отчёт по удовлетворенности клиентов KIA не сформирован.");
             LOGGER.log(Level.INFO, "Отчёт по удовлетворенности клиентов KIA.");
         }
     }

@@ -4,8 +4,8 @@ spring:
     host: mail.vitautocity.by
     port: 587
     username: info@vitautocity.by
-    password: "E7LK-uuj2!"
-    test-connection: false
+    password: "site-VAC!2022"
+    test-connection: true
     properties:
       mail:
         smtp:

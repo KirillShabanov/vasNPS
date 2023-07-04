@@ -3,12 +3,10 @@ package com.home.MyWorkTime.controller;
 import com.home.MyWorkTime.entity.VasNpsModel;
 import com.home.MyWorkTime.entity.VasNpsModelDTO;
 import com.home.MyWorkTime.service.VasNpsService;
-import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vas_nps")
-@Log
 @CrossOrigin
 public class VasNpsController {
 

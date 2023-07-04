@@ -1,6 +1,6 @@
 var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
-function showUser(){
+function showEmployers(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200) {

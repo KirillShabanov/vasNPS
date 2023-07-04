@@ -144,9 +144,9 @@ public class VasMailNpsSkodaService {
             javaMailSender.send(messageVasNpsMail);
 
             LOGGER.log(Level.INFO, "Список SKODA сформирован и отправлен.");
-            System.out.println("Список SKODA сформирован и отправлен.");
+            //System.out.println("Список SKODA сформирован и отправлен.");
         } else {
-            System.out.println("Список SKODA не сформирован, данных нет.");
+            //System.out.println("Список SKODA не сформирован, данных нет.");
             LOGGER.log(Level.INFO, "Список SKODA не сформирован, данных нет.");
         }
     }

@@ -1,92 +1,4 @@
 
-13.04.2023
-CREATE TABLE vas_check_list_engineer_kia
-(
-    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    num_order_check_kia LONG,
-    surname_engineer_kia VARCHAR(100),
-    date_save_inspection DATETIME,
-    in_work VARCHAR(20),
-    reception_question_1 VARCHAR(20),
-    reception_question_2 VARCHAR(20),
-    reception_question_3 VARCHAR(20),
-    reception_question_4 VARCHAR(20),
-    reception_question_5 VARCHAR(20),
-    reception_question_6 VARCHAR(20),
-    reception_question_7 VARCHAR(20),
-    reception_question_8 VARCHAR(20),
-    reception_question_9 VARCHAR(20),
-    reception_question_10 VARCHAR(20),
-    reception_question_11 VARCHAR(20),
-    reception_question_12 VARCHAR(20),
-    reception_question_13 VARCHAR(20),
-    reception_question_14 VARCHAR(20),
-    reception_question_15 VARCHAR(20),
-    reception_question_16 VARCHAR(20),
-    inspection_question_1 VARCHAR(20),
-    inspection_question_2 VARCHAR(20),
-    inspection_question_3 VARCHAR(20),
-    inspection_question_4 VARCHAR(20),
-    inspection_question_5 VARCHAR(20),
-    inspection_question_6 VARCHAR(20),
-    waiting_question_1 VARCHAR(20),
-    waiting_question_2 VARCHAR(20),
-    waiting_question_3 VARCHAR(20),
-    issuing_question_1 VARCHAR(20),
-    issuing_question_2 VARCHAR(20),
-    issuing_question_3 VARCHAR(20),
-    issuing_question_4 VARCHAR(20),
-    issuing_question_5 VARCHAR(20),
-    issuing_question_6 VARCHAR(20),
-    issuing_question_7 VARCHAR(20),
-    issuing_question_8 VARCHAR(20),
-    result INT
-)
-    ENGINE = InnoDB;
-
-    CREATE TABLE vas_check_list_mechanical_kia
-    (
-        id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        num_order_check_repair_kia LONG,
-        surname_check_repair_kia VARCHAR(150),
-        vin_check_repair_kia VARCHAR(20),
-        in_work_check_repair_kia VARCHAR(20),
-        date_save_repair_inspection DATETIME,
-        repair_quality_control_1 VARCHAR(3),
-        repair_quality_control_2 VARCHAR(3),
-        repair_quality_control_3 VARCHAR(3),
-        repair_quality_control_4 VARCHAR(3),
-        repair_quality_control_5 VARCHAR(3),
-        repair_quality_control_6 VARCHAR(3),
-        repair_quality_control_7 VARCHAR(3),
-        repair_quality_control_8 VARCHAR(3),
-        repair_quality_control_9 VARCHAR(3),
-        repair_quality_control_10 VARCHAR(3),
-        parking_lot_check_1 VARCHAR(3),
-        parking_lot_check_2 VARCHAR(3),
-        parking_lot_check_3 VARCHAR(3),
-        parking_lot_check_4 VARCHAR(3),
-        parking_lot_check_5 VARCHAR(3),
-        parking_lot_check_6 VARCHAR(3),
-        parking_lot_check_7 VARCHAR(3),
-        parking_lot_check_8 VARCHAR(3),
-        parking_lot_check_9 VARCHAR(3),
-        parking_lot_check_10 VARCHAR(3),
-        parking_lot_check_11 VARCHAR(3),
-        check_in_motion_1 VARCHAR(3),
-        check_in_motion_2 VARCHAR(3),
-        check_in_motion_3 VARCHAR(3),
-        check_in_motion_4 VARCHAR(3),
-        quality_control_1 VARCHAR(3),
-        notes_master VARCHAR(1000),
-        notes_work VARCHAR(1000),
-        explanations_work VARCHAR(1000),
-        quality_control_5 VARCHAR(3),
-        result INT
-    )
-        ENGINE = InnoDB;
-
-
 26.06.2023
 
 CREATE TABLE vas_level_access (
@@ -95,3 +7,35 @@ CREATE TABLE vas_level_access (
         description_access VARCHAR(150)
 )
 ENGINE = InnoDB;
+
+INSERT INTO vas_level_access (level_access, description_access)
+VALUES (1, 'СУРВ, Добавить сотрудника, Провести проверку KIA');
+INSERT INTO vas_level_access (level_access, description_access)
+VALUES (2, 'СУРВ');
+INSERT INTO vas_level_access (level_access, description_access)
+VALUES (3, 'СУРВ');
+INSERT INTO vas_level_access (level_access, description_access)
+VALUES (4, 'СУРВ');
+INSERT INTO vas_level_access (level_access, description_access)
+VALUES (5, 'СУРВ');
+
+
+
+CREATE TABLE vas_employers (
+    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL UNIQUE,
+    subdivision VARCHAR(150) NOT NULL,
+    job_title VARCHAR(250) NOT NULL,
+    schedule VARCHAR(50) NOT NULL,
+    bid INTEGER NOT NULL,
+    code_level_access INTEGER NOT NULL,
+    authorization_code VARCHAR(25) NOT NULL UNIQUE,
+    key_id VARCHAR(50) UNIQUE,
+    status VARCHAR(50) DEFAULT 'active'
+)
+ENGINE = InnoDB;
+
+INSERT INTO vas_employers (full_name, subdivision, job_title, schedule, bid, code_level_access, authorization_code, key_id)
+VALUES ('Шабанов Кирилл Владимирович', 'ОТОА', 'Заместитель директора по развитию сервиса', 'Пятидневный график', 1, 1, '001', 'Нет данных');
+INSERT INTO vas_employers (full_name, subdivision, job_title, schedule, bid, code_level_access, authorization_code, key_id)
+VALUES ('Комлев Илья Юрьевич', 'ОТОА', 'Инженер-технолог', 'Сменный график', 1, 3, '002', 'Нет');

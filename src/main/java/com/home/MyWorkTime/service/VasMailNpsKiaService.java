@@ -119,10 +119,10 @@ public class VasMailNpsKiaService {
             javaMailSender.send(messageVasNpsMail);
 
             LOGGER.log(Level.INFO, "Список KIA сформирован и отправлен.");
-            System.out.println("Список KIA сформирован и отправлен.");
+            //System.out.println("Список KIA сформирован и отправлен.");
         } else {
             System.out.println("Список KIA не сформирован, данных нет.");
-            LOGGER.log(Level.INFO, "Список KIA не сформирован, данных нет.");
+            //LOGGER.log(Level.INFO, "Список KIA не сформирован, данных нет.");
         }
     }
 }

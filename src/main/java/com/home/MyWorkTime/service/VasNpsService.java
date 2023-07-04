@@ -380,7 +380,7 @@ public class VasNpsService {
         String checkNumOrder = vasManagerNpsRepository.checkedNumOrder(numOrder);
         if (vasNpsModel.getOrganisation().equals("ВитебскАвтоСити")) {
             if (checkNumOrder == null){
-                System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
+                //System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
                 LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
                 VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
                 return VasNpsRepository.saveOrder(savedOrder);
@@ -426,11 +426,11 @@ public class VasNpsService {
 
         String checkNumOrderGee = geeNpsRepository.checkedNumOrderGee(numOrderGee);
         if (checkNumOrderGee == null) {
-            System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
+            //System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
             LOGGER.log(Level.INFO,"Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + geeNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + geeNpsModel.getNum_order());
             geeNpsRepository.save(geeNpsModel);
         } else {
-            System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
+            //System.out.println("Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
             LOGGER.log(Level.INFO,"Организация: " + geeNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + geeNpsModel.getNum_order());
         }
     }
@@ -487,7 +487,7 @@ public class VasNpsService {
             geeNpsRepository.updateCallDateGee(numOrder, mailDate, adminName);
         }
 
-        System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
+        //System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
         LOGGER.log(Level.INFO,"Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Изменена дата звонка в з/н: " + numOrder);
         return null;
     }
@@ -532,7 +532,7 @@ public class VasNpsService {
             geeNpsRepository.outgoingCallGee(numOrder, nps, adminComment, adminName, callStatus, outgoingCallDate);
         }
 
-        System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
+        //System.out.println("Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
         LOGGER.log(Level.INFO,"Организация: " + organisation + ". " + "Сотрудник: " + adminName + ". " + "Закрыт NPS по з/н: " + numOrder);
 
         return null;

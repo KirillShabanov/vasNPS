@@ -2,7 +2,6 @@ package com.home.MyWorkTime.controller;
 
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.service.VasManagerNpsService;
-import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vas_manager")
-@Log
 @CrossOrigin
 public class VasManagerNpsController {
 

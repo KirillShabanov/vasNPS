@@ -31,7 +31,7 @@ public class VasFullReportNpsService {
 
     public List<VasNpsModel> searchReport(String numOrder) {
         LOGGER.log(Level.INFO, "Запрос данных для расширенного регламента опроса клиента KIA: " + numOrder);
-        System.out.println("Запрос данных для расширенного регламента опроса клиента KIA: " + numOrder);
+        //System.out.println("Запрос данных для расширенного регламента опроса клиента KIA: " + numOrder);
         return vasNpsRepository.searchReport(numOrder);
     }
 
@@ -45,7 +45,7 @@ public class VasFullReportNpsService {
 
         VasFullReportNpsModel saveReportKia = vasFullReportNpsRepository.save(vasFullReportNpsModel);
         LOGGER.log(Level.INFO, "Закрыт NPS по расширенному регламенту опроса клиента KIA: " + numOrder);
-        System.out.println("Закрыт NPS по расширенному регламенту опроса клиента KIA: " + numOrder);
+        //System.out.println("Закрыт NPS по расширенному регламенту опроса клиента KIA: " + numOrder);
         return VasFullReportNpsRepository.saveReportKia(saveReportKia);
     }
 }
