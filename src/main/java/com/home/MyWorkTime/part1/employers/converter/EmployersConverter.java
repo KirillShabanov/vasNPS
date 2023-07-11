@@ -45,7 +45,7 @@ public class EmployersConverter {
                 .jobTitle(employersModel.getJobTitle())
                 .schedule(employersModel.getSchedule())
                 .bid(employersModel.getBid())
-                .codeLevelAccess(Integer.parseInt("(_I_)"))
+                .codeLevelAccess("(_I_)")
                 .authorizationCode("(_I_)") //employersModel.getSchedule()
                 .keyId("(_I_)")
                 .status(employersModel.getStatus())

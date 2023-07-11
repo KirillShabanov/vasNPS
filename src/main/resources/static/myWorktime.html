@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/style.css" >
     <link rel="stylesheet" href="css/popupUsers.css" >
     <link rel="stylesheet" href="css/popupTools.css" >
+    <link rel="stylesheet" href="css/forms.css" >
     <script src="js/popupUsers.js"></script>
     <script src="js/jquery.js" ></script>
     <title>MyWorkTime</title>
@@ -82,74 +83,9 @@
         </div>
     </div>
 
-    <div id="popup_addEmployers" class="popup">
-            <div class="popup__body">
-                <div class="popup__content">
-                    <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
-                    <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    <div class="popup__title">Заполните данные</div>
-                    <div class="popup_addEmployers">
-                        <div class="form-floating">
-                            <input type="name" class="form-user" id="floatingName" placeholder="Имя">
-                            <label for="floatingName"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="surname" class="form-user" id="floatingSurname" placeholder="Фамилия">
-                            <label for="floatingSurname"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="login" class="form-user" id="floatingLogin" placeholder="Логин">
-                            <label for="floatingLogin"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="pass" class="form-user" id="floatingPass" placeholder="Пароль">
-                            <label for="floatingPass"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
-                            <label for="floatingLevelAccess"></label>
-                        </div>
-                        <button onclick="createEmployers()" class="btn_user" type="submit">Добавить</button>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-    <div id="popup_updatEmployers" class="popup">
-            <div class="popup__body">
-                <div class="popup__content">
-                    <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
-                    <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    <div class="popup__title">Измените данные</div>
-                    <div class="popup_updateEmployers">
-                        <input type="hidden" class="form-user" id="floatingId" placeholder="">
-                        <div class="form-floating">
-                            <input type="name" class="form-user" id="floatingName" placeholder="Имя">
-                            <label for="floatingName"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="surname" class="form-user" id="floatingSurname" placeholder="Фамилия">
-                            <label for="floatingSurname"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="login" class="form-user" id="floatingLogin" placeholder="Логин">
-                            <label for="floatingLogin"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="pass" class="form-user" id="floatingPass" placeholder="Пароль">
-                            <label for="floatingPass"></label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="levelAccess" class="form-user" id="floatingLevelAccess" placeholder="Уровень доступа">
-                            <label for="floatingLevelAccess"></label>
-                        </div>
-                        <button id="button_updateEmployers" class="btn_user" type="submit">Сохранить</button>
-                    </div>
-                </div>
-            </div>
-    </div>
+    
+    
 
     <script src="js/showEmployers.js"></script>
-    <script src="js/popupUsers.js"></script>
 </body>
 </html>

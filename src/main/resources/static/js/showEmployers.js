@@ -11,7 +11,7 @@ function showEmployers(){
             '</tr>\n';
             for (let i=0; i<employers.length; i++){
                 var employer = employers[i];
-                //console.log(user);
+                console.log(employer);
                 employersTable = employersTable + '\n' +
                 '<tr><td>'+employer.fullName+'</td>\n' +
                 '<td><button style="margin: 5px" onclick="updateEmployer('+employers.id+')" type="button" ><i class="fa fa-pencil aria-hidden=true"></i></button>\n' +

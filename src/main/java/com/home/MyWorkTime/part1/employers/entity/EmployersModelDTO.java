@@ -27,7 +27,7 @@ public class EmployersModelDTO {
     private String jobTitle;
     private String schedule;
     private int bid;
-    private int codeLevelAccess;
+    private String codeLevelAccess;
     private String authorizationCode;
     private String keyId;
     private String status;

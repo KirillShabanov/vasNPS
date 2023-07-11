@@ -40,7 +40,7 @@ public class EmployersModel {
     @Column(name = "bid")
     private int bid;
     @Column(name = "code_level_access")
-    private int codeLevelAccess;
+    private String codeLevelAccess;
     @Column(name = "authorization_code")
     private String authorizationCode;
     @Column(name = "key_id")
