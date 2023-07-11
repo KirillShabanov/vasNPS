@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.home.MyWorkTime.part1.employers.validation.ValidationExceptionEmployers;
 import com.home.MyWorkTime.part1.employers.converter.EmployersConverter;
 import com.home.MyWorkTime.part1.employers.entity.EmployersModel;
 import com.home.MyWorkTime.part1.employers.entity.EmployersModelDTO;
 import com.home.MyWorkTime.part1.employers.repository.EmployersRepository;
+import com.home.MyWorkTime.part1.employers.validation.ValidationExceptionEmployers;
 
 @Service
 public class DefaultEmployersService implements EmployersService {

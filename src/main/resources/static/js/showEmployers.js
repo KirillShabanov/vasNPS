@@ -4,36 +4,24 @@ function showEmployers(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200) {
-            var users = JSON.parse(this.responseText);
-            var userTable = '<tr>\n' +
-            '<td>Имя</td>\n' +
-            '<td>Фамилия</td>\n' +
-            
-            '<td>Логин</td>\n' +
-            '<td>Пароль</td>\n' +
-            '<td>Email</td>' +
-            '<td>Доступ</td>' +
+            var employers = JSON.parse(this.responseText);
+            var employersTable = '<tr>\n' +
+            '<td>ФИО</td>\n' +
             '<td>Действия</td>' +
             '</tr>\n';
-            for (let i=0; i<users.length; i++){
-                var user = users[i];
+            for (let i=0; i<employers.length; i++){
+                var employer = employers[i];
                 //console.log(user);
-                userTable = userTable + '\n' +
-                '<tr><td>'+user.user_name+'</td>\n' +
-                '<td>'+user.user_surname+'</td>\n' +
+                employersTable = employersTable + '\n' +
+                '<tr><td>'+employer.fullName+'</td>\n' +
+                '<td><button style="margin: 5px" onclick="updateEmployer('+employers.id+')" type="button" ><i class="fa fa-pencil aria-hidden=true"></i></button>\n' +
                 
-                '<td>'+user.user_login+'</td>\n' +
-                '<td>'+user.user_password+'</td>\n' +
-                '<td>'+user.user_mail+'</td>\n' +
-                '<td>'+user.user_level_access+'</td>' +
-                '<td><button style="margin: 5px" onclick="updateUser('+user.id+')" type="button" ><i class="fa fa-pencil aria-hidden=true"></i></button>\n' +
-                
-                '<button style="margin: 5px" onclick="deleteUser('+user.id+')" type="button"><i class="fa fa-trash"></i></button></td></tr>';
-                document.getElementById("usersList").innerHTML = userTable;
+                '<button style="margin: 5px" onclick="deleteEmployer('+employers.id+')" type="button"><i class="fa fa-trash"></i></button></td></tr>';
+                document.getElementById("employersList").innerHTML = employersTable;
             }
         }
     };
-    xhttp.open("GET", restApiAddressNPS + "vas_users/findAll", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_employers/findAll", true);
     xhttp.send();
 }
-showUser();
+showEmployers();

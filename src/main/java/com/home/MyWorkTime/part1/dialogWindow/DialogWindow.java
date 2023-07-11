@@ -42,7 +42,7 @@ public class DialogWindow {
 					int day = 0;
 
 						public void run() {
-							label.setText("Рабочее время сервера: " + day + " д. " + hour + " ч. " + min + " мин. " + sec + " сек.");
+							label.setText("Время работы сервера: " + day + " д. " + hour + " ч. " + min + " мин. " + sec + " сек.");
 							sec++;
 							if (sec == 60){
 								min++;
