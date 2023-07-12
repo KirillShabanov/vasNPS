@@ -10,7 +10,7 @@
  *  Date of creation: 26/06/2023
  */
 
-package com.home.MyWorkTime.part1.employers.entity;
+package com.home.MyWorkTime.entity;
 
 
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class EmployersModel {
     @Column(name = "bid")
     private int bid;
     @Column(name = "code_level_access")
-    private String codeLevelAccess;
+    private int codeLevelAccess;
     @Column(name = "authorization_code")
     private String authorizationCode;
     @Column(name = "key_id")

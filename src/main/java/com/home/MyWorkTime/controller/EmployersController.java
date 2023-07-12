@@ -10,7 +10,7 @@
  *  Date of creation: 26/06/2023
  */
 
- package com.home.MyWorkTime.part1.employers.controller;
+ package com.home.MyWorkTime.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.home.MyWorkTime.part1.employers.converter.EmployersConverter;
-import com.home.MyWorkTime.part1.employers.entity.EmployersModelDTO;
-import com.home.MyWorkTime.part1.employers.service.EmployersService;
+import com.home.MyWorkTime.converter.EmployersConverter;
+import com.home.MyWorkTime.entity.EmployersModelDTO;
+import com.home.MyWorkTime.service.EmployersService;
 
 import lombok.AllArgsConstructor;
 

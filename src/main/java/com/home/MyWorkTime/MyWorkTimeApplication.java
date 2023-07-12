@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
-import com.home.MyWorkTime.part1.employers.*;
-import com.home.MyWorkTime.part1.levelAccess.*;
 import com.home.MyWorkTime.part1.dialogWindow.DialogWindow;
 
 

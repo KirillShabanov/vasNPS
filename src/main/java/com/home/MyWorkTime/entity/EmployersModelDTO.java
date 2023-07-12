@@ -10,7 +10,7 @@
  *  Date of creation: 29/06/2023
  */
 
-package com.home.MyWorkTime.part1.employers.entity;
+package com.home.MyWorkTime.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class EmployersModelDTO {
     private String jobTitle;
     private String schedule;
     private int bid;
-    private String codeLevelAccess;
+    private int codeLevelAccess;
     private String authorizationCode;
     private String keyId;
     private String status;

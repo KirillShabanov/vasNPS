@@ -10,7 +10,7 @@
  *  Date of creation: 29/06/2023
  */
 
-package com.home.MyWorkTime.part1.employers.validation;
+package com.home.MyWorkTime.exception;
 
 public class ValidationExceptionEmployers extends Exception {
 

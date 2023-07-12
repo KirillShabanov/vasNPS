@@ -10,14 +10,14 @@
  *  Date of creation: 26/06/2023
  */
 
-package com.home.MyWorkTime.part1.employers.repository;
+package com.home.MyWorkTime.repository;
 
 import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.home.MyWorkTime.part1.employers.entity.EmployersModel;
+import com.home.MyWorkTime.entity.EmployersModel;
 
 
 public interface EmployersRepository extends JpaRepository<EmployersModel, Long>{

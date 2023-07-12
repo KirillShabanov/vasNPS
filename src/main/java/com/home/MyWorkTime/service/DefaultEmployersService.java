@@ -10,7 +10,7 @@
  *  Date of creation: 29/06/2023
  */
 
-package com.home.MyWorkTime.part1.employers.service;
+package com.home.MyWorkTime.service;
 
 import static java.util.Objects.isNull;
 
@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.home.MyWorkTime.part1.employers.converter.EmployersConverter;
-import com.home.MyWorkTime.part1.employers.entity.EmployersModel;
-import com.home.MyWorkTime.part1.employers.entity.EmployersModelDTO;
-import com.home.MyWorkTime.part1.employers.repository.EmployersRepository;
-import com.home.MyWorkTime.part1.employers.validation.ValidationExceptionEmployers;
+import com.home.MyWorkTime.converter.EmployersConverter;
+import com.home.MyWorkTime.entity.EmployersModel;
+import com.home.MyWorkTime.entity.EmployersModelDTO;
+import com.home.MyWorkTime.exception.ValidationExceptionEmployers;
+import com.home.MyWorkTime.repository.EmployersRepository;
 
 @Service
 public class DefaultEmployersService implements EmployersService {

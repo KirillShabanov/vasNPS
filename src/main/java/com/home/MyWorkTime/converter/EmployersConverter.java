@@ -10,12 +10,12 @@
  *  Date of creation: 29/06/2023
  */
 
- package com.home.MyWorkTime.part1.employers.converter;
+ package com.home.MyWorkTime.converter;
 
 import org.springframework.stereotype.Component;
 
-import com.home.MyWorkTime.part1.employers.entity.EmployersModel;
-import com.home.MyWorkTime.part1.employers.entity.EmployersModelDTO;
+import com.home.MyWorkTime.entity.EmployersModel;
+import com.home.MyWorkTime.entity.EmployersModelDTO;
 
 
 @Component
@@ -45,7 +45,7 @@ public class EmployersConverter {
                 .jobTitle(employersModel.getJobTitle())
                 .schedule(employersModel.getSchedule())
                 .bid(employersModel.getBid())
-                .codeLevelAccess("(_I_)")
+                .codeLevelAccess(0)
                 .authorizationCode("(_I_)") //employersModel.getSchedule()
                 .keyId("(_I_)")
                 .status(employersModel.getStatus())
