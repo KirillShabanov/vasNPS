@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/popupUsers.css" >
     <link rel="stylesheet" href="css/popupTools.css" >
     <link rel="stylesheet" href="css/forms.css" >
+    <link rel="stylesheet" href="css/inputFormEmployer.css" >
     <script src="js/jquery.js" ></script>
     <title>MyWorkTime</title>
 </head>
@@ -57,11 +58,14 @@
                     <a href="checkListKia.html" class="header__nav_tools">
                         Чек-лист KIA
                     </a>
+                    <a href="calendarClient.html" class="header__nav_tools">
+                        Календарь клиента
+                    </a>
                 </nav>
             </div>
         </header>
         </div>
-
+    <!--Окно таблиц сотрудников-->
     <div id="popup_employers" class="popup">
         <div class="popup__body">
             <div class="popup__content">
@@ -75,15 +79,214 @@
                     </button>
                 </div>
                 <div class="popup__table">
-                    <table id="employersList" class="table table-striped">
+                    <table id="employersListHead" class="table table-striped">
+                    </table>
+                    <table id="employersListEngineerTehnical" class="table table-striped">
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <!--Окно добавления сотрудника-->
+    <div id="popup_addEmployers" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Заполните данные</div>
+                <div class="popup_addEmployers">
+                    <div>
+                        <p> ФИО:
+                            <input type="text" id="fullName" placeholder="" class="inputFormEmployer">
+                            <label for="fullName"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Подразделение:
+                            <select id="subdivision" name="subdivision" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">ОТОА</option>
+                                <option value="2">МКЦ</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Должность:
+                            <select id="jobTitle" name="jobTitle" class="inputFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">Руководитель</option>
+                                <option value="2">Инженер технолог</option>
+                                <option value="3">Инженер по гарантии</option>
+                                <option value="4">Слесарь по ремонту автомобилей</option>
+                                <option value="5">Слесарь по ремонту электрооборудования автомобилей</option>
+                                <option value="6">Мойщик-уборщик</option>
+                                <option value="7">Администратор</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> График:
+                            <select id="schedule" name="schedule" class="inputFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">Пятидневный график</option>
+                                <option value="2">Сменный график</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Ставка:
+                            <select id="bid" name="bid" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">1</option>
+                                <option value="2">0.5</option>
+                                <option value="3">0.1</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Уровень доступа:
+                            <select id="codeLevelAccess" name="codeLevelAccess" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Код авторизации:
+                            <input type="text" id="authorizationCode" placeholder="" class="inputFormEmployer">
+                            <label for="authorizationCode"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> ID пропуска:
+                            <input type="text" id="keyId" placeholder="" class="inputFormEmployer">
+                            <label for="keyId"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Email:
+                            <input type="text" id="email" placeholder="" class="inputFormEmployer">
+                            <label for="email"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Введите код авторизации:
+                            <input type="text" id="authorizationCodeForConfirmation" placeholder="" class="inputFormEmployer _selectFormEmployer">
+                            <label for="authorizationCodeForConfirmation"></label>
+                            <button onclick="createEmployers()" class="btn_user" type="submit">Добавить</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Окно редактирования сотрудника-->
+    <div id="popup_updateEmployers" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#popup_employers" class="popup__close popup-link" style="right: 35px"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Редактирование карточки сотрудника</div>
+                <div class="popup_updateEmployers">
+                    <input type="hidden" class="inputFormEmployer" id="idEmployer" placeholder="">
+                    <div>
+                        <p> ФИО:
+                            <input type="text" id="fullNameUpdate" placeholder="" class="inputFormEmployer">
+                            <label for="fullNameUpdate"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Подразделение:
+                            <select id="subdivisionUpdate" name="subdivision" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">ОТОА</option>
+                                <option value="2">МКЦ</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Должность:
+                            <select id="jobTitleUpdate" name="jobTitle" class="inputFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">Руководитель</option>
+                                <option value="2">Инженер технолог</option>
+                                <option value="3">Инженер по гарантии</option>
+                                <option value="4">Слесарь по ремонту автомобилей</option>
+                                <option value="5">Слесарь по ремонту электрооборудования автомобилей</option>
+                                <option value="6">Мойщик-уборщик</option>
+                                <option value="7">Администратор</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> График:
+                            <select id="scheduleUpdate" name="schedule" class="inputFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">Пятидневный график</option>
+                                <option value="2">Сменный график</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Ставка:
+                            <select id="bidUpdate" name="bid" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">1</option>
+                                <option value="2">0.5</option>
+                                <option value="3">0.1</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Уровень доступа:
+                            <select id="codeLevelAccessUpdate" name="codeLevelAccess" class="inputFormEmployer _selectFormEmployer">
+                                <option value="0">*</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Код авторизации:
+                            <input type="text" id="authorizationCodeUpdate" placeholder="" class="inputFormEmployer">
+                            <label for="authorizationCode"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> ID пропуска:
+                            <input type="text" id="keyIdUpdate" placeholder="" class="inputFormEmployer">
+                            <label for="keyId"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Email:
+                            <input type="text" id="emailUpdate" placeholder="" class="inputFormEmployer">
+                            <label for="email"></label>
+                        </p>
+                    </div>
+                    <div>
+                        <p> Введите код авторизации:
+                            <input type="text" id="authorizationCodeForConfirmationUpdate" placeholder="" class="inputFormEmployer _selectFormEmployer">
+                            <label for="authorizationCodeForConfirmationUpdate"></label>
+                            <button id="update_button_employer" onclick="updateEmployer()" class="btn_user" type="submit">Сохранить</button>
+                        </p>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
 
-    
 
+
+    <script src="js/updateEmployer.js"></script>
+    <script src="js/createEmployers.js"></script>
     <script src="js/showEmployers.js"></script>
     <script src="js/popupUsers.js"></script>
 </body>

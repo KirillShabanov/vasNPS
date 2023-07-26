@@ -186,3 +186,6 @@ CREATE TABLE vas_calendar_client_kia
     master_name VARCHAR(255) NULL
 )
     ENGINE = InnoDB;
+
+INSERT INTO vas_calendar_client_kia (owner, model, vehicle_identification_number, year_release, date_sale, phone, add_date, to1_date, to1_mileage, to2_date, to2_mileage, to3_date, to3_mileage)
+VALUES ('Сударев Игорь Михайлович', 'SPORTAGE', 'U5YPG81AALL895737', '2020', 31.03.2020, '375292132742', 05.12.2020, 05.12.2020, 14901, 20.11.2021, 29293, 06.09.2022, 43145);

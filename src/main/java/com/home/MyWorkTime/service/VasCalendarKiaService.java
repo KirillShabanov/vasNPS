@@ -32,10 +32,10 @@ public class VasCalendarKiaService {
             updateOldRowForCalendarKia(vasCalendarModelDTO);
         } else {
             addNewRowForCalendarKia(vasCalendarModelDTO);
-            LOGGER.log(Level.INFO, "Добавлена новая строка в календарь клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Добавлена новая строка в календарь клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Добавлена новая строка в календарь клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Добавлена новая строка в календарь клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
     }
 
@@ -68,7 +68,7 @@ public class VasCalendarKiaService {
 
         vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-        if (vasCalendarModelDTO.getMileage() > 250) {
+        if (vasCalendarModelDTO.getMileage() >= 250) {
             //Добавление нового автомобиля если авто с пробегом
             updateNewRowForCalendarKia(vasCalendarModelDTO);
         }
@@ -182,10 +182,10 @@ public class VasCalendarKiaService {
         }
         //Попытка добавить ТО за рамками 1-4
         else if ((key).equals("") && diffDays > 1580 || (key).equals("") && vasCalendarModelDTO.getMileage() > 64000){
-            LOGGER.log(Level.ERROR, "Попытка добавить ТО за рамками 1-4 в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.ERROR, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Попытка добавить ТО за рамками 1-4 в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin() + ". Номер заказ-наряда: " + vasCalendarModelDTO.getNumOrder());
-            System.out.println("Попытка добавить ТО за рамками 1-4 в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin() + ". Номер заказ-наряда: " + vasCalendarModelDTO.getNumOrder());
+            //System.out.println("Попытка добавить ТО за рамками 1-4 в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin() + ". Номер заказ-наряда: " + vasCalendarModelDTO.getNumOrder());
         }
     }
 
@@ -285,12 +285,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateZero(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageZero(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
 
@@ -315,12 +316,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateOne(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageOne(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
 
@@ -346,12 +348,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateTwo(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageTwo(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to3_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -376,12 +379,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateThree(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageThree(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to4_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -406,12 +410,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateFour(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageFour(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to5_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -436,12 +441,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateFive(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageFive(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to6_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -466,6 +472,7 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateSex(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageSex(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
             LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
@@ -496,12 +503,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateSeven(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageSeven(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to8_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -526,12 +534,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateEight(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageEight(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to9_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -556,12 +565,13 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateNine(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageNine(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
 
         if (newMileageKey.equals("to10_mileage") && !previousMileage.equals(vasCalendarModelDTO.getMileage()) && previousDate != vasCalendarModelDTO.getDateRepair()) {
@@ -586,12 +596,29 @@ public class VasCalendarKiaService {
             vasCalendarKiaModel.setToDateTen(vasCalendarModelDTO.getDateRepair());
             vasCalendarKiaModel.setToMileageTen(vasCalendarModelDTO.getMileage());
             vasCalendarKiaModel.setMasterName(vasCalendarModelDTO.getMasterName());
+            vasCalendarKiaModel.setRemmark(null);
+            vasCalendarKiaModel.setActivity("deactivated");
             vasCalendarKiaRepository.save(vasCalendarKiaModel);
 
-            LOGGER.log(Level.INFO, "Обновлена строка в календаре клиента KIA, с номером кузова: "
+            LOGGER.log(Level.INFO, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Обновлена строка в календаре клиента KIA, с номером кузова: "
                     + vasCalendarModelDTO.getVin());
-            System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
-                    + vasCalendarModelDTO.getVin());
+            //System.out.println("Обновлена строка в календаре клиента KIA, с номером кузова: "
+            //        + vasCalendarModelDTO.getVin());
         }
+    }
+
+    public List<VasCalendarKiaModel> findThisMonth() {
+        return vasCalendarKiaRepository.findThisMonth();
+    }
+
+    public List<VasCalendarKiaModel> findThisMonthTO(Long id) {
+        return vasCalendarKiaRepository.findThisMonthTO(id);
+    }
+
+    public Object addRemmark(VasCalendarKiaModel vasCalendarKiaModel) {
+        Long id = vasCalendarKiaModel.getId();
+        String remmark = vasCalendarKiaModel.getRemmark();
+        LOGGER.log(Level.INFO, "Добавлен комментарий в карточке ТО календаря KIA: " + vasCalendarKiaModel.getRemmark() + ". ID строки: " + vasCalendarKiaModel.getId() + ".");
+        return vasCalendarKiaRepository.addRemmark(id, remmark);
     }
 }

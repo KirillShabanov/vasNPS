@@ -38,5 +38,10 @@ public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
     @Query(value = "SELECT * FROM vas_nps WHERE num_order = :numOrder " +
             "AND brand LIKE 'Kia' ", nativeQuery = true)
     List<VasNpsModel> searchReport(@Param("numOrder") String numOrder);
+
+    @Modifying
+    @Transactional
+    @Query(value =  "UPDATE vas_nps SET calendar_client = 'selected' WHERE num_order = :numOrder ", nativeQuery = true)
+    void updateValueCalendar(@Param("numOrder") String numOrder);
 }
 

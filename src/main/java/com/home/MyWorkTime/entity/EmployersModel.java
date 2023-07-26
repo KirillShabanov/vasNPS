@@ -38,7 +38,7 @@ public class EmployersModel {
     @Column(name = "schedule")
     private String schedule;
     @Column(name = "bid")
-    private int bid;
+    private double bid;
     @Column(name = "code_level_access")
     private int codeLevelAccess;
     @Column(name = "authorization_code")
@@ -47,4 +47,6 @@ public class EmployersModel {
     private String keyId;
     @Column(name = "status")
     private String status;
+    @Column(name = "email")
+    private String email;
 }

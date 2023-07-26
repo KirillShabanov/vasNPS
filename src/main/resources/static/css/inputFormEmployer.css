@@ -1,0 +1,10 @@
+.inputFormEmployer {
+    padding-left: 10px; 
+    margin-left: 10px; 
+    width: 280px; 
+    background-color: rgba(143, 136, 136, 0.507);
+}
+
+._selectFormEmployer {
+    width: 85px;
+}

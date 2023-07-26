@@ -105,5 +105,7 @@ public class VasCalendarKiaModel {
     private String comment;
     @Column(name = "master_name")
     private String masterName;
+    @Column(name = "remmark")
+    private String remmark;
 
 }

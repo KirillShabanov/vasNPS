@@ -18,8 +18,3 @@ public class MyWorkTimeApplication {
 		DialogWindow.main(args);
 	}
 }
-
-
-
-
- 

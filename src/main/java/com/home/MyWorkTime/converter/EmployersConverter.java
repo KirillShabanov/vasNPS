@@ -33,6 +33,7 @@ public class EmployersConverter {
         employersModel.setAuthorizationCode(employersModelDTO.getAuthorizationCode());
         employersModel.setKeyId(employersModelDTO.getKeyId());
         employersModel.setStatus(employersModelDTO.getStatus());
+        employersModel.setEmail(employersModelDTO.getEmail());
         return employersModel;
     }
 
@@ -46,9 +47,10 @@ public class EmployersConverter {
                 .schedule(employersModel.getSchedule())
                 .bid(employersModel.getBid())
                 .codeLevelAccess(0)
-                .authorizationCode("(_I_)") //employersModel.getSchedule()
-                .keyId("(_I_)")
+                .authorizationCode("(_!_)") //employersModel.getSchedule()
+                .keyId("(_!_)")
                 .status(employersModel.getStatus())
+                .email(employersModel.getEmail())
                 .build();
     }
 }

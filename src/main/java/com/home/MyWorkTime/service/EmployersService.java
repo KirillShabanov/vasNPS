@@ -10,10 +10,14 @@ import com.home.MyWorkTime.exception.ValidationExceptionEmployers;
 
 public interface EmployersService {
 
-    EmployersModelDTO saveEmployers(EmployersModelDTO employersModelDTO) throws ValidationException, ValidationExceptionEmployers;
+    EmployersModelDTO saveEmployer(EmployersModelDTO employersModelDTO) throws ValidationException, ValidationExceptionEmployers;
 
     Optional<EmployersModel> findById(Long id);
 
     List<EmployersModelDTO> findAll();
+
+    String checkCodeLevelAccess(String checkCodeLevelAccess);
+
+    String findFullName(String checkCodeLevelAccess);
     
 }

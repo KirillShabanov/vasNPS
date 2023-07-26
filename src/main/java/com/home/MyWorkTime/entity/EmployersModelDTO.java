@@ -26,9 +26,10 @@ public class EmployersModelDTO {
     private String subdivision;
     private String jobTitle;
     private String schedule;
-    private int bid;
+    private double bid;
     private int codeLevelAccess;
     private String authorizationCode;
     private String keyId;
     private String status;
+    private String email;
 }

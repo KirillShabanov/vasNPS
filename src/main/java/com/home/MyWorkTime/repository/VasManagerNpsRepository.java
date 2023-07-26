@@ -335,6 +335,12 @@ public interface VasManagerNpsRepository extends JpaRepository<VasManagerNpsMode
 
     @Query(value = "SELECT * FROM vas_manager WHERE position_report_satisfaction_kia_copy = 'checked' ", nativeQuery = true)
     List<VasManagerNpsModel> forFullReportKiaForThisMonthCopy();
+
+    
+    @Query(value =  "SELECT calendar_client FROM vas_nps " +
+            "WHERE num_order = :numOrder ", nativeQuery = true)
+    String checkCalendarNpsInBase(String numOrder);
+
 }
 
 

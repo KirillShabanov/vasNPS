@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -60,4 +61,18 @@ public interface VasCalendarKiaRepository extends JpaRepository<VasCalendarKiaMo
                        @Param("planned_date") Date plannedDate);
 
 
+    @Query(value = "SELECT * FROM vas_calendar_client_kia " +
+            "WHERE MONTH(planned_date) = MONTH(NOW()) " + 
+            "AND YEAR(planned_date) = YEAR(NOW()) " +
+            "AND activity = 'active' " +
+            "ORDER BY planned_date ASC", nativeQuery = true)
+    List<VasCalendarKiaModel> findThisMonth();
+
+    @Query(value = "SELECT * FROM vas_calendar_client_kia WHERE id = :id ", nativeQuery = true)
+    List<VasCalendarKiaModel> findThisMonthTO(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE vas_calendar_client_kia SET remmark = :remmark WHERE id = :id ", nativeQuery = true)
+    Object addRemmark(@Param ("id") Long id, @Param ("remmark") String remmark);
 }

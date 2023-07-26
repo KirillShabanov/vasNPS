@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Level;
 import org.springframework.stereotype.Service;
 
 import com.home.MyWorkTime.converter.EmployersConverter;
@@ -26,8 +29,12 @@ import com.home.MyWorkTime.entity.EmployersModelDTO;
 import com.home.MyWorkTime.exception.ValidationExceptionEmployers;
 import com.home.MyWorkTime.repository.EmployersRepository;
 
+
+@Slf4j
 @Service
 public class DefaultEmployersService implements EmployersService {
+
+    private static final Logger LOGGER = Logger.getLogger(DefaultEmployersService.class.getName());
 
     private final EmployersRepository employersRepository;
     private final EmployersConverter employersConverter;
@@ -39,7 +46,7 @@ public class DefaultEmployersService implements EmployersService {
     }
 
     @Override
-    public EmployersModelDTO saveEmployers(EmployersModelDTO employersModelDTO) throws ValidationExceptionEmployers {
+    public EmployersModelDTO saveEmployer(EmployersModelDTO employersModelDTO) throws ValidationExceptionEmployers {
         validateEmployersModelDTO(employersModelDTO);
 
         EmployersModel savedEmployers = employersRepository.save(employersConverter.fromEmployersModelDTOToEmployersModel(employersModelDTO));
@@ -65,5 +72,18 @@ public class DefaultEmployersService implements EmployersService {
         return employersRepository.findById(id);
     }
 
-    
+    @Override
+    public String checkCodeLevelAccess(String checkCodeLevelAccess) {
+        if ((employersRepository.checkCodeLevelAccess(checkCodeLevelAccess) == null)){
+            return "null";
+        } else {
+            return employersRepository.checkCodeLevelAccess(checkCodeLevelAccess);
+        }
+    }
+
+    @Override
+    public String findFullName(String checkCodeLevelAccess) {
+        return employersRepository.findFullName(checkCodeLevelAccess);
+    }
+
 }

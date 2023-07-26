@@ -60,7 +60,7 @@ public class VasNpsService {
         }
 
         VasNpsModel vasNpsModel = new VasNpsModel();
-
+        VasCalendarModelDTO vasCalendarModelDTO = new VasCalendarModelDTO();
         try  {
             // Достал Фамилию и Имя
             String clientName = vasNpsModelDTO.getClientFullName();
@@ -339,28 +339,27 @@ public class VasNpsService {
             Date dateOrder = closeDate.parse(dateOrderClose);
 
             vasNpsModel.setDate_order(dateOrder); //Дата закрытия заказ-наряда для модели
+            
 
+            //Создал модель для календаря
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            Date sale = format.parse(vasNpsModelDTO.getDateSale());
+        
+            vasCalendarModelDTO.setNumOrder(numOrder);
+            vasCalendarModelDTO.setOwner(vasNpsModelDTO.getClientFullName());
+            vasCalendarModelDTO.setBrand(brand);
+            vasCalendarModelDTO.setModel(model);
+            vasCalendarModelDTO.setVin(vin1);
+            vasCalendarModelDTO.setYearRelease(yearRelease);
+            vasCalendarModelDTO.setSale(sale);
+            vasCalendarModelDTO.setPhone(vasNpsModel.getPhone_1() + " / " + vasNpsModel.getPhone_2());
+            vasCalendarModelDTO.setDateRepair(dateOrder);
+            vasCalendarModelDTO.setMileage(mileage);
+            vasCalendarModelDTO.setMasterName(masterName);
+            
             //Направляю в календарь
             if (calendarClient.equals("selected")){
-                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-
-                Date sale = format.parse(vasNpsModelDTO.getDateSale());
-
-                VasCalendarModelDTO vasCalendarModelDTO = new VasCalendarModelDTO();
-                vasCalendarModelDTO.setNumOrder(numOrder);
-                vasCalendarModelDTO.setOwner(vasNpsModelDTO.getClientFullName());
-                vasCalendarModelDTO.setBrand(brand);
-                vasCalendarModelDTO.setModel(model);
-                vasCalendarModelDTO.setVin(vin1);
-                vasCalendarModelDTO.setYearRelease(yearRelease);
-                vasCalendarModelDTO.setSale(sale);
-
-                vasCalendarModelDTO.setPhone(vasNpsModel.getPhone_1() + " / " + vasNpsModel.getPhone_2());
-                vasCalendarModelDTO.setDateRepair(dateOrder);
-                vasCalendarModelDTO.setMileage(mileage);
-                vasCalendarModelDTO.setMasterName(masterName);
-
-                //vasRedirectedCalendarService.redirectedCalendar(vasCalendarModelDTO);
+                vasRedirectedCalendarService.redirectedCalendar(vasCalendarModelDTO);
             }
 
             } catch (ParseException e) {
@@ -378,12 +377,20 @@ public class VasNpsService {
         vasNpsModel.setCall_status(call);
         String numOrder = vasNpsModel.getNum_order();
         String checkNumOrder = vasManagerNpsRepository.checkedNumOrder(numOrder);
+        String checkCalendarNps = vasManagerNpsRepository.checkCalendarNpsInBase(numOrder);
+    
         if (vasNpsModel.getOrganisation().equals("ВитебскАвтоСити")) {
             if (checkNumOrder == null){
                 //System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
                 LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Добавлен новый з/н: " + numOrder);
                 VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
                 return VasNpsRepository.saveOrder(savedOrder);
+            } else if (checkNumOrder != null && vasNpsModel.getCalendarClient().equals("selected") && checkCalendarNps.equals("not selected")) {
+                
+                vasRedirectedCalendarService.redirectedCalendar(vasCalendarModelDTO);
+                vasNpsRepository.updateValueCalendar(numOrder);
+                
+                LOGGER.log(Level.INFO, "Обновлен каленадрь из закрытой заявки, VIN: " + vasCalendarModelDTO.getVin() + ", " + numOrder);
             } else {
                 //System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
                 LOGGER.log(Level.INFO,"Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
