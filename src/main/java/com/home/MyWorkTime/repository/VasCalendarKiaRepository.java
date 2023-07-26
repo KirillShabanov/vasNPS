@@ -73,6 +73,6 @@ public interface VasCalendarKiaRepository extends JpaRepository<VasCalendarKiaMo
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE vas_calendar_client_kia SET remmark = :remmark WHERE id = :id ", nativeQuery = true)
-    Object addRemmark(@Param ("id") Long id, @Param ("remmark") String remmark);
+    @Query(value = "UPDATE vas_calendar_client_kia SET remmark = :remmark, date_remmark = :dateRemmark WHERE id = :id ", nativeQuery = true)
+    Object addRemmark(@Param ("id") Long id, @Param ("remmark") String remmark, @Param ("dateRemmark") Date dateRemmark);
 }

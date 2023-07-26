@@ -107,5 +107,8 @@ public class VasCalendarKiaModel {
     private String masterName;
     @Column(name = "remmark")
     private String remmark;
+    @Column(name = "date_remmark")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    public Date date_remmark;
 
 }

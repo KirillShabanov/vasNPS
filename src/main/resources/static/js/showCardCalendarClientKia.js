@@ -1,4 +1,4 @@
-var restApiAddressNPS = "http://localhost:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
+var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
 let client_TO_card = document.getElementById('client_TO_card');
 var idForButton;
@@ -134,6 +134,7 @@ function addRemarkCalendarKia(){
 
     var remmark = document.getElementById('remmarkText').value;
 
+    if (remmark != ""){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", restApiAddressNPS + `vas_calendar_client_kia/addRemmark/${idForButton}`);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -141,6 +142,7 @@ function addRemarkCalendarKia(){
 
     cleanRemmark();
     document.getElementById('remarkCard').innerHTML = remmark;
+    }
 }
 
 function cleanRemmark(){

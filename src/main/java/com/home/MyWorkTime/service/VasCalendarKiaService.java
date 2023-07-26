@@ -618,7 +618,9 @@ public class VasCalendarKiaService {
     public Object addRemmark(VasCalendarKiaModel vasCalendarKiaModel) {
         Long id = vasCalendarKiaModel.getId();
         String remmark = vasCalendarKiaModel.getRemmark();
+        Date dateRemmark = new Date();
+        
         LOGGER.log(Level.INFO, "Добавлен комментарий в карточке ТО календаря KIA: " + vasCalendarKiaModel.getRemmark() + ". ID строки: " + vasCalendarKiaModel.getId() + ".");
-        return vasCalendarKiaRepository.addRemmark(id, remmark);
+        return vasCalendarKiaRepository.addRemmark(id, remmark, dateRemmark);
     }
 }
