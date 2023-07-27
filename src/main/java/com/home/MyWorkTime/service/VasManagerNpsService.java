@@ -1,14 +1,24 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
+
 @Service
 public class VasManagerNpsService {
 

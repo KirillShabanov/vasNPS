@@ -1,10 +1,20 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 
 import com.home.MyWorkTime.entity.VasCalendarKiaModel;
 import com.home.MyWorkTime.entity.VasCalendarModelDTO;
 import com.home.MyWorkTime.repository.VasCalendarKiaRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -13,7 +23,6 @@ import java.time.Duration;
 import java.util.*;
 
 
-@Slf4j
 @Service
 public class VasCalendarKiaService {
 

@@ -47,8 +47,11 @@
         <header id="header__tools" class="header__tools lock-padding">
             <div class="header__container__tools _container">
                 <nav id="button_navigation" class="button_navigation">
-                    <a href="#calendar_clint_kia" class="header__nav_tools popup-link">
+                    <a href="#calendar_client_kia" class="header__nav_tools popup-link">
                         Календарь клиента KIA
+                    </a>
+                    <a href="#calendar_client_jac" class="header__nav_tools popup-link">
+                        Календарь клиента JAC
                     </a>
                     <a href="#" class="header__nav_tools popup-link">
                         Календарь клиента
@@ -58,7 +61,8 @@
         </header>
     </div>
 
-    <div id="calendar_clint_kia" class="popup">
+    <!--Календарь KIA-->
+    <div id="calendar_client_kia" class="popup">
         <div class="popup__body">
             <div class="popup__content">
                 <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -70,7 +74,7 @@
             </div>
         </div>
     </div>
-
+    <!--Карточка Календарь KIA-->
     <div id="client_TO_card" class="popup">
         <div class="popup__body">
             <div class="popup__content">
@@ -105,10 +109,62 @@
             </div>
         </div>
     </div>
+
+    <!--Календарь JAC-->
+    <div id="calendar_client_jac" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Календарь клиента JAC</div>
+                <div class="popup__table">
+                    <table id="calendarClientJac" class="table table-striped">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Карточка Календарь JAC-->
+    <div id="client_TO_card_jac" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientJac()" aria-hidden="true"></i></a>
+                <div class="popup__title">Карточка ТО</div>
+                <div style="margin-top: -15px;">ФИО: <input id="hidden1" style="display: none;"><label id="ownerCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden1"> </label></div>
+                <div style="margin-top: 0px;">VIN: <input id="hidden2" style="display: none;"><label id="vinCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden2"> </label></div>
+                <div style="margin-top: 0px;">Телефон: <input id="hidden3" style="display: none;"><label id="phoneCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden3"> </label></div>
+                <div style="margin-top: 0px;">Предполагаемая дата визита: <input id="hidden4" style="display: none;"><label id="dateTOCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden4"> </label></div>
+
+                <div>
+                    <div class="popup__title" style="margin-top: 20px;">Пройденные ТО</div>
+                    <div style="margin-top: -15px;">ТО-0: <input id="hiddenTO0" style="display: none;"><label id="to0Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO0"> </label></div>
+                    <div style="margin-top: 0px;">ТО-1: <input id="hiddenTO1" style="display: none;"><label id="to1Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO1"> </label></div>
+                    <div style="margin-top: 0px;">ТО-2: <input id="hiddenTO2" style="display: none;"><label id="to2Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO2"> </label></div>
+                    <div style="margin-top: 0px;">ТО-3: <input id="hiddenTO3" style="display: none;"><label id="to3Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO3"> </label></div>
+                    <div style="margin-top: 0px;">ТО-4: <input id="hiddenTO4" style="display: none;"><label id="to4Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO4"> </label></div>
+                    <div style="margin-top: 0px;">ТО-5: <input id="hiddenTO5" style="display: none;"><label id="to5Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO5"> </label></div>
+                    <div style="margin-top: 0px;">ТО-6: <input id="hiddenTO6" style="display: none;"><label id="to6Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO6"> </label></div>
+                    <div style="margin-top: 0px;">ТО-7: <input id="hiddenTO7" style="display: none;"><label id="to7Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO7"> </label></div>
+                    <div style="margin-top: 0px;">ТО-8: <input id="hiddenTO8" style="display: none;"><label id="to8Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO8"> </label></div>
+                    <div style="margin-top: 0px;">ТО-9: <input id="hiddenTO9" style="display: none;"><label id="to9Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO9"> </label></div>
+                    <div style="margin-top: 0px;">ТО-10: <input id="hiddenTO10" style="display: none;"><label id="to10Card_jac" style="font-size: 18px; font-weight: 600;" for="hiddenTO10"> </label></div>
+                </div>
+                <div>
+                    <div style="margin-top: 15px;">Примечания: <input id="remarkCardHidden" style="display: none;"><label id="remarkCard_jac" style="font-size: 18px; font-weight: 600;" for="remarkCardHidden"> </label></div>
+                </div>
+                <div>
+                    <textarea id="remmarkText_jac" style="margin-top: 15px; box-shadow: 1px 1px 2px 0 black; border-radius: 15px; padding: 10px;" name="details" cols="30" rows="3" placeholder="Введите дополнительную информацию"></textarea>
+                    <button onclick="addRemarkCalendarJac()" class="btn_user" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
                 
     
     <script src="js/popupUsers.js"></script>
     <script src="js/showCalendarClientKia.js"></script>
     <script src="js/showCardCalendarClientKia.js"></script>
+
+    <script src="js/showCalendarClientJac.js"></script>
+    <script src="js/showCardCalendarClientJac.js"></script>
 </body>
 </html>

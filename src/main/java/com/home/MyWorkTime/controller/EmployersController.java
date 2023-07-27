@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.home.MyWorkTime.converter.EmployersConverter;
+//import com.home.MyWorkTime.converter.EmployersConverter;
 import com.home.MyWorkTime.entity.EmployersModelDTO;
 import com.home.MyWorkTime.exception.ValidationException;
 import com.home.MyWorkTime.exception.ValidationExceptionEmployers;
@@ -39,7 +39,7 @@ import lombok.AllArgsConstructor;
 public class EmployersController {
 
     private final EmployersService employersService;
-    private final EmployersConverter employersConverter;
+    //private final EmployersConverter employersConverter;
 
     private static final Logger LOGGER = Logger.getLogger(EmployersController.class.getName());
 

@@ -17,12 +17,12 @@ import java.util.List;
 public class VasUserController {
 
     private final VasUserService vasUserService;
-    private final VasUserConverter vasUserConverter;
+    //private final VasUserConverter vasUserConverter;
 
 
     public VasUserController(VasUserService vasUserService, VasUserConverter vasUserConverter) {
         this.vasUserService = vasUserService;
-        this.vasUserConverter = vasUserConverter;
+        //this.vasUserConverter = vasUserConverter;
 
     }
 

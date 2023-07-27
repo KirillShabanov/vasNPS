@@ -21,31 +21,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.home.MyWorkTime.entity.VasCalendarKiaModel;
-import com.home.MyWorkTime.service.VasCalendarKiaService;
+import com.home.MyWorkTime.entity.VasCalendarJacModel;
+import com.home.MyWorkTime.service.VasCalendarJacService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/vas_calendar_client_kia")
+@RequestMapping("/vas_calendar_client_jac")
 @AllArgsConstructor
 @CrossOrigin
-public class CalendarClientKiaController {
+public class CalendarClientJacController {
 
-    private final VasCalendarKiaService vasCalendarKiaService;
+    private final VasCalendarJacService vasCalendarJacService;
 
     @GetMapping("/findThisMonth")
-    public List<VasCalendarKiaModel> findThisMonth(){
-        return vasCalendarKiaService.findThisMonth();
+    public List<VasCalendarJacModel> findThisMonth(){
+        return vasCalendarJacService.findThisMonth();
     }
     
     @GetMapping("/findThisMonthTO/{id}")
-    public List<VasCalendarKiaModel> findThisMonthTO (@PathVariable Long id){
-       return vasCalendarKiaService.findThisMonthTO(id);
+    public List<VasCalendarJacModel> findThisMonthTO (@PathVariable Long id){
+       return vasCalendarJacService.findThisMonthTO(id);
     }
 
     @PostMapping("/addRemmark/{idForButton}")
-    Object addRemmark(@RequestBody VasCalendarKiaModel vasCalendarKiaModel){
-        return vasCalendarKiaService.addRemmark(vasCalendarKiaModel);
+    Object addRemmark(@RequestBody VasCalendarJacModel vasCalendarJacModel){
+        return vasCalendarJacService.addRemmark(vasCalendarJacModel);
     }
 }

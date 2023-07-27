@@ -1,3 +1,14 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.GeeNpsModel;
@@ -6,7 +17,7 @@ import com.home.MyWorkTime.entity.VasNpsModel;
 import com.home.MyWorkTime.entity.VasNpsModelDTO;
 import com.home.MyWorkTime.repository.*;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -18,9 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-
-
-@Slf4j
 @Service
 @NoArgsConstructor
 public class VasNpsService {

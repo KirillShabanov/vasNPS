@@ -1,3 +1,14 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.VasFullReportNpsModel;
@@ -5,7 +16,6 @@ import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasFullReportNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellCopyPolicy;
@@ -24,7 +34,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Slf4j
+
 @Service
 public class VasMailSatisfactionReportService {
 

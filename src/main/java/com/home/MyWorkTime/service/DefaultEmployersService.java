@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Level;
 import org.springframework.stereotype.Service;
 
 import com.home.MyWorkTime.converter.EmployersConverter;
@@ -30,11 +27,8 @@ import com.home.MyWorkTime.exception.ValidationExceptionEmployers;
 import com.home.MyWorkTime.repository.EmployersRepository;
 
 
-@Slf4j
 @Service
 public class DefaultEmployersService implements EmployersService {
-
-    private static final Logger LOGGER = Logger.getLogger(DefaultEmployersService.class.getName());
 
     private final EmployersRepository employersRepository;
     private final EmployersConverter employersConverter;

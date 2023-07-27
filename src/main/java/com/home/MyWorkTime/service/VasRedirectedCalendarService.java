@@ -1,3 +1,14 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.VasCalendarModelDTO;
@@ -9,11 +20,14 @@ import org.springframework.stereotype.Service;
 public class VasRedirectedCalendarService {
 
     public final VasCalendarKiaService vasCalendarKiaService;
+    public final VasCalendarJacService vasCalendarJacService;
 
     private static final Logger LOGGER = Logger.getLogger(VasRedirectedCalendarService.class.getName());
 
-    public VasRedirectedCalendarService(VasCalendarKiaService vasCalendarKiaService) {
+    public VasRedirectedCalendarService(VasCalendarKiaService vasCalendarKiaService,
+                                        VasCalendarJacService vasCalendarJacService) {
         this.vasCalendarKiaService = vasCalendarKiaService;
+        this.vasCalendarJacService = vasCalendarJacService;
     }
 
 
@@ -21,8 +35,8 @@ public class VasRedirectedCalendarService {
 
         if (vasCalendarModelDTO.getBrand().equals("Kia")){
             vasCalendarKiaService.newRowForCalendarKia(vasCalendarModelDTO);
-        } else if (vasCalendarModelDTO.getBrand().equals("Skoda")) {
-            System.out.println("Прилитела Шкода");
+        } else if (vasCalendarModelDTO.getBrand().equals("Jac")) {
+            vasCalendarJacService.newRowForCalendarJac(vasCalendarModelDTO);
         } else {
             LOGGER.log(Level.INFO, "Календарь клиента не заведен под данный бренд. "
                     + vasCalendarModelDTO.getBrand()

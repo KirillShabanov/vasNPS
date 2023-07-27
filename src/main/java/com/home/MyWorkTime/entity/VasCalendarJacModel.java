@@ -21,10 +21,10 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-@Table(name = "vas_calendar_client_kia")
+@Table(name = "vas_calendar_client_jac")
 @NoArgsConstructor
 @AllArgsConstructor
-public class VasCalendarKiaModel {
+public class VasCalendarJacModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

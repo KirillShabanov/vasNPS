@@ -1,3 +1,14 @@
+/** 
+ *  Author: Shabanov Kirill Vladimirovich
+ * 
+ *  Republic of Belarus, Vitebsk
+ *  Mobile: +375 29 5112110
+ *
+ *  Description:
+ *  
+ * 
+ *  Date of remmark: 27/07/2023
+ */
 package com.home.MyWorkTime.service;
 
 import com.home.MyWorkTime.entity.VasMailNpsModel;
@@ -6,7 +17,6 @@ import com.home.MyWorkTime.repository.VasMailNpsRepository;
 import com.home.MyWorkTime.repository.VasManagerNpsRepository;
 
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +28,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.*;
 
 
-@Slf4j
+
 @Service
 public class VasMailNpsKiaService {
 
