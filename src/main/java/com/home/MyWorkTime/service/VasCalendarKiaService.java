@@ -35,6 +35,7 @@ public class VasCalendarKiaService {
     }
 
     public void newRowForCalendarKia(VasCalendarModelDTO vasCalendarModelDTO){
+        
         String vin = vasCalendarModelDTO.getVin();
         String vinInCalendar = vasCalendarKiaRepository.findVin(vin);
         if (vin.equals(vinInCalendar)){
@@ -205,7 +206,7 @@ public class VasCalendarKiaService {
         VasCalendarKiaModel vasCalendarKiaModel;
         vasCalendarKiaModel = vasCalendarKiaRepository.findCardByVin(vin);
         Date repairDate = vasCalendarModelDTO.getDateRepair();
-
+        
         HashMap<String,Long> calendarKiaMileage = new HashMap<>();
         HashMap<String,Date> calendarKiaDate = new HashMap<>();
 

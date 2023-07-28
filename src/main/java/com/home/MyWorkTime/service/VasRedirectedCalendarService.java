@@ -14,6 +14,7 @@ package com.home.MyWorkTime.service;
 import com.home.MyWorkTime.entity.VasCalendarModelDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +25,7 @@ public class VasRedirectedCalendarService {
 
     private static final Logger LOGGER = Logger.getLogger(VasRedirectedCalendarService.class.getName());
 
+    @Autowired
     public VasRedirectedCalendarService(VasCalendarKiaService vasCalendarKiaService,
                                         VasCalendarJacService vasCalendarJacService) {
         this.vasCalendarKiaService = vasCalendarKiaService;

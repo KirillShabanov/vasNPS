@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface VasMailNpsRepository extends JpaRepository<VasMailNpsModel, Long> {
 
@@ -39,4 +40,9 @@ public interface VasMailNpsRepository extends JpaRepository<VasMailNpsModel, Lon
             "AND call_status = 'not call' ", nativeQuery = true)
     ArrayList<VasMailNpsModel> npsListMultibrand();
 
+    @Query(value = "SELECT * FROM vas_nps " +
+                        "WHERE brand = 'Haval' " +
+                        "AND MONTH(date_order) = MONTH(NOW()) - 1 " +
+                        "AND YEAR (date_order) = YEAR(NOW()) ", nativeQuery = true)
+        List<VasMailNpsModel> npsListHaval();
 }

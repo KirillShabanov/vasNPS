@@ -74,4 +74,6 @@ public class VasMailNpsModel {
     private String admin_name;
     @Column(name = "admin_comment")
     private String admin_comment;
+    @Column(name = "mileage")
+    private Long mileage;
 }

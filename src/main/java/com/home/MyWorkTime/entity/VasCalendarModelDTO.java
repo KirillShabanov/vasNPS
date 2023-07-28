@@ -33,4 +33,6 @@ public class VasCalendarModelDTO {
     private Date dateRepair;
     private Long mileage;
     private String masterName;
+    private String remmark;
+    private Date date_remmark;
 }

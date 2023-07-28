@@ -69,6 +69,7 @@ public class VasNpsService {
 
         VasNpsModel vasNpsModel = new VasNpsModel();
         VasCalendarModelDTO vasCalendarModelDTO = new VasCalendarModelDTO();
+        
         try  {
             // Достал Фамилию и Имя
             String clientName = vasNpsModelDTO.getClientFullName();
@@ -394,10 +395,8 @@ public class VasNpsService {
                 VasNpsModel savedOrder = vasNpsRepository.save(vasNpsModel);
                 return VasNpsRepository.saveOrder(savedOrder);
             } else if (checkNumOrder != null && vasNpsModel.getCalendarClient().equals("selected") && checkCalendarNps.equals("not selected")) {
-                
                 vasRedirectedCalendarService.redirectedCalendar(vasCalendarModelDTO);
                 vasNpsRepository.updateValueCalendar(numOrder);
-                
                 LOGGER.log(Level.INFO, "Обновлен каленадрь из закрытой заявки, VIN: " + vasCalendarModelDTO.getVin() + ", " + numOrder);
             } else {
                 //System.out.println("Организация: " + vasNpsModel.getOrganisation() + ". " + "Сотрудник: " + vasNpsModel.getMaster_name() + ". " + "Попытка добавления неактуального з/н: " + numOrder);
