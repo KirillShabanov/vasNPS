@@ -32,6 +32,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -181,10 +182,38 @@ public class VasMailSatisfactionReportService {
                     listreportSatisfactionKia.getRow(z + 24).getCell(10).setCellValue(listFullReportKia.get(i).getDq040());
                 }
 
-                SimpleDateFormat dateReport = new SimpleDateFormat("MM.yyyy");
-                String date = dateReport.format(new Date());
+                LocalDate date = LocalDate.now();
+                    int months = date.getMonthValue();
+                    int year = date.getYear();
 
-                String newFile = "" + date + " - Customer Satisfaction Report VitebskAutoCity.xlsx";
+                    String partName = null;
+                    if (months == 1) {
+                        partName = "January";
+                    } else if (months == 2) {
+                        partName = "February";
+                    } else if (months == 3) {
+                        partName = "March";
+                    } else if (months == 4) {
+                        partName = "April";
+                    } else if (months == 5) {
+                        partName = "May";
+                    } else if (months == 6) {
+                        partName = "June";
+                    } else if (months == 7) {
+                        partName = "July";
+                    } else if (months == 8) {
+                        partName = "August";
+                    } else if (months == 9) {
+                        partName = "September";
+                    } else if (months == 10) {
+                        partName = "October";
+                    } else if (months == 11) {
+                        partName = "November";
+                    } else if (months == 12) {
+                        partName = "December";
+                    }
+
+                String newFile = "" + partName + year +" - Customer Feedback Report, VitebskAutoCity.xlsx";
                 FileOutputStream fileOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Kia reports\\Feedback\\" + newFile);
 
                 reportSatisfactionKia.write(fileOuts);

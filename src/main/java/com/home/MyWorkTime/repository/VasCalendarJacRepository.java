@@ -12,6 +12,7 @@
 package com.home.MyWorkTime.repository;
 
 import com.home.MyWorkTime.entity.VasCalendarJacModel;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -78,6 +79,14 @@ public interface VasCalendarJacRepository extends JpaRepository<VasCalendarJacMo
             "AND activity = 'active' " +
             "ORDER BY planned_date ASC", nativeQuery = true)
     List<VasCalendarJacModel> findThisMonth();
+
+    @Query(value = "SELECT * FROM vas_calendar_client_jac " +
+            "WHERE MONTH(planned_date) = :months " + 
+            "AND YEAR(planned_date) = :year " +
+            "AND activity = 'active' " +
+            "ORDER BY planned_date ASC", nativeQuery = true)
+    List<VasCalendarJacModel> findPreviousMonth(@Param ("months") int months, 
+                                                @Param ("year") int year);
 
     @Query(value = "SELECT * FROM vas_calendar_client_jac WHERE id = :id ", nativeQuery = true)
     List<VasCalendarJacModel> findThisMonthTO(@Param("id") Long id);

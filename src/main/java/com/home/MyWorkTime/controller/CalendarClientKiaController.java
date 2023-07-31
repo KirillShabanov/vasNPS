@@ -38,6 +38,10 @@ public class CalendarClientKiaController {
     public List<VasCalendarKiaModel> findThisMonth(){
         return vasCalendarKiaService.findThisMonth();
     }
+    @GetMapping("/findPreviousMonth")
+    public List<VasCalendarKiaModel> findPreviousMonth(){
+        return vasCalendarKiaService.findPreviousMonth();
+    }
     
     @GetMapping("/findThisMonthTO/{id}")
     public List<VasCalendarKiaModel> findThisMonthTO (@PathVariable Long id){

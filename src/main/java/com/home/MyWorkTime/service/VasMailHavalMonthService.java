@@ -72,8 +72,8 @@ public class VasMailHavalMonthService {
         String setTo = addressListHaval.toString().replace("[", "").replace("]", "");
         
           if(!(listHaval.isEmpty())){
-            FileInputStream reportHaval = new FileInputStream("D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\reports\\reportHaval.xlsx");
-            // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportHaval.xlsx"
+            FileInputStream reportHaval = new FileInputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\ReportTemplates\\reportHaval.xlsx");
+            // "D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\reports\\reportHaval.xlsx"
                try(
                     XSSFWorkbook report = new XSSFWorkbook(reportHaval)){
                     XSSFSheet listReport = report.getSheetAt(0); 
@@ -133,8 +133,8 @@ public class VasMailHavalMonthService {
                 
                     String reportName = "Отчет Сервисная эффективность " + partName + " " + String.valueOf(year) + "г.xlsx";
                     
-                    FileOutputStream reportOuts = new FileOutputStream("D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\outputReports\\" + reportName);
-                    // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Haval reports\\"
+                    FileOutputStream reportOuts = new FileOutputStream("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Haval reports\\" + reportName);
+                    // "D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\outputReports\\"
                     report.write(reportOuts);
                     reportOuts.close();
 
@@ -149,8 +149,8 @@ public class VasMailHavalMonthService {
                           
                         Отчёт прикреплён к письму. """);
                     
-                    FileSystemResource reports = new FileSystemResource("D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\outputReports\\" + reportName);
-                    // "C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Haval reports\\"
+                    FileSystemResource reports = new FileSystemResource("C:\\Users\\Shabanov\\Desktop\\Shabanov\\Output reports\\Haval reports\\" + reportName);
+                    // "D:\\MyWorkTime\\vasNPS\\src\\main\\resources\\outputReports\\"
                     helper.addAttachment(reportName, reports);
                     javaMailSender.send(messageVasNpsMail);
                }

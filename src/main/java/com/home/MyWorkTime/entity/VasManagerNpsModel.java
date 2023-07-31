@@ -54,6 +54,8 @@ public class VasManagerNpsModel {
     private String position_report_satisfaction_kia;
     @Column(name = "position_report_satisfaction_kia_copy")
     private String position_report_satisfaction_kia_copy;
+    @Column(name = "position_report_haval")
+    private String position_report_haval;
 
     @Override
     public boolean equals(Object o) {

@@ -38,6 +38,11 @@ public class CalendarClientJacController {
     public List<VasCalendarJacModel> findThisMonth(){
         return vasCalendarJacService.findThisMonth();
     }
+
+    @GetMapping("/findPreviousMonth")
+    public List<VasCalendarJacModel> findPreviousMonth(){
+        return vasCalendarJacService.findPreviousMonth();
+    }
     
     @GetMapping("/findThisMonthTO/{id}")
     public List<VasCalendarJacModel> findThisMonthTO (@PathVariable Long id){

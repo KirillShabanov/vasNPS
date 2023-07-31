@@ -79,6 +79,14 @@ public interface VasCalendarKiaRepository extends JpaRepository<VasCalendarKiaMo
             "ORDER BY planned_date ASC", nativeQuery = true)
     List<VasCalendarKiaModel> findThisMonth();
 
+    @Query(value = "SELECT * FROM vas_calendar_client_kia " +
+            "WHERE MONTH(planned_date) = :months " + 
+            "AND YEAR(planned_date) = :year " +
+            "AND activity = 'active' " +
+            "ORDER BY planned_date ASC", nativeQuery = true)
+    List<VasCalendarKiaModel> findPreviousMonth(@Param ("months") int months, 
+                                                @Param ("year") int year);
+
     @Query(value = "SELECT * FROM vas_calendar_client_kia WHERE id = :id ", nativeQuery = true)
     List<VasCalendarKiaModel> findThisMonthTO(@Param("id") Long id);
 

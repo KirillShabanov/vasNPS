@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -619,6 +620,23 @@ public class VasCalendarKiaService {
 
     public List<VasCalendarKiaModel> findThisMonth() {
         return vasCalendarKiaRepository.findThisMonth();
+    }
+    public List<VasCalendarKiaModel> findPreviousMonth() {
+        int months;
+        int year;
+        LocalDate date = LocalDate.now();
+
+        int monthsCheck = date.getMonthValue();
+        int yearCheck = date.getYear();
+
+        if (monthsCheck == 1){
+            months = 12;
+            year = yearCheck - 1;
+        } else {
+            months = monthsCheck - 1;
+            year = yearCheck;
+        }
+        return vasCalendarKiaRepository.findPreviousMonth(months, year);
     }
 
     public List<VasCalendarKiaModel> findThisMonthTO(Long id) {
