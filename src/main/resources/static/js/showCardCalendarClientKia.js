@@ -1,11 +1,11 @@
 var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
-let client_TO_card = document.getElementById('client_TO_card');
+var client_card = document.getElementById('client_TO_card_kia');
 var idForButton;
 
 function showCardCalendarClientKia(id){
 
-    client_TO_card.className = ('popup open');
+    client_card.className = ('popup open');
 
     idForButton = id;
 
@@ -132,7 +132,7 @@ function showCardCalendarClientKia(id){
 
 function addRemarkCalendarKia(){
 
-    var remmark = document.getElementById('remmarkText').value;
+    var remmark = document.getElementById('remmarkText_kia').value;
 
     if (remmark != ""){
     var xmlhttp = new XMLHttpRequest();
@@ -140,11 +140,11 @@ function addRemarkCalendarKia(){
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({"id":idForButton, "remmark":remmark}));
 
-    cleanRemmark();
+    cleanRemmarkKia();
     document.getElementById('remarkCard').innerHTML = remmark;
     }
 }
 
-function cleanRemmark(){
-    document.getElementById('remmarkText').value = "";
+function cleanRemmarkKia(){
+    document.getElementById('remmarkText_kia').value = "";
 }

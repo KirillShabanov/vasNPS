@@ -1,11 +1,11 @@
 var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
-function showCalendarClientJac(){
+function showCalendarClientHaval(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200) {
-            var clientsJac = JSON.parse(this.responseText);
-            var clientsJacTableHead = 
+            var clientsHaval = JSON.parse(this.responseText);
+            var clientsHavalTableHead = 
             '<tr>\n' +
             '<td>ФИО клиента</td>\n' +
             '<td>VIN</td>\n' +
@@ -14,49 +14,49 @@ function showCalendarClientJac(){
             '<td>Действия</td>' +
             '</tr>\n';
             
-            for (let i=0; i<clientsJac.length; i++){
-                var clientJac = clientsJac[i];
-                date = new Date(clientJac.plannedDate).toLocaleDateString();
+            for (let i=0; i<clientsHaval.length; i++){
+                var clientHaval = clientsHaval[i];
+                date = new Date(clientHaval.plannedDate).toLocaleDateString();
                 
                 dateForIcon = new Date();
-                dateRemmark = new Date(clientJac.date_remmark);
+                dateRemmark = new Date(clientHaval.date_remmark);
 
                 var countDay = ((dateForIcon - dateRemmark) / (60 * 60 * 24 * 1000));
                 var comment;
-                if (clientJac.remmark != null && countDay < 3){
+                if (clientHaval.remmark != null && countDay < 3){
                     comment = '<i style="color: green;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
-                } else if (clientJac.remmark != null && countDay > 3 && countDay < 7){
+                } else if (clientHaval.remmark != null && countDay > 3 && countDay < 7){
                     comment = '<i style="color: yellow;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
                 }
-                else if (clientJac.remmark != null && countDay > 7){
+                else if (clientHaval.remmark != null && countDay > 7){
                     comment = '<i style="color: red;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
                 } else {
                     comment = '<i style="color: grey;" class="fa fa-asterisk" aria-hidden="true"></i>';
                 }
 
-                clientsJacTableHead = clientsJacTableHead + '\n' +
-                '<tr><td>'+clientJac.owner+'</td>\n' +
-                '<td>'+clientJac.vin+'</td>\n' +
+                clientsHavalTableHead = clientsHavalTableHead + '\n' +
+                '<tr><td>'+clientHaval.owner+'</td>\n' +
+                '<td>'+clientHaval.vin+'</td>\n' +
                 '<td>'+date+'</td>\n' +
-                '<td>'+clientJac.phone+'</td>\n' +
-                '<td><i style="margin: 5px" onclick="showCardCalendarClientJac('+clientJac.id+')" type="button"  class="fa fa-cog aria-hidden=true"></i></button>\n' +
+                '<td>'+clientHaval.phone+'</td>\n' +
+                '<td><i style="margin: 5px" onclick="showCardCalendarClientHaval('+clientHaval.id+')" type="button"  class="fa fa-cog aria-hidden=true"></i></button>\n' +
                  comment + '</td></tr>';
                 
             }
 
-            document.getElementById("calendarClientJac").innerHTML = clientsJacTableHead; 
+            document.getElementById("calendarClientHaval").innerHTML = clientsHavalTableHead; 
         }
     };
-    xhttp.open("GET", restApiAddressNPS + "vas_calendar_client_jac/findThisMonth", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_calendar_client_haval/findThisMonth", true);
     xhttp.send();
 }
 
-function showCalendarClientJacPrevious(){
+function showCalendarClientHavalPrevious(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200) {
-            var clientsJac = JSON.parse(this.responseText);
-            var clientsJacTableHead = 
+            var clientsHaval = JSON.parse(this.responseText);
+            var clientsHavalTableHead = 
             '<tr>\n' +
             '<td>ФИО клиента</td>\n' +
             '<td>VIN</td>\n' +
@@ -65,40 +65,39 @@ function showCalendarClientJacPrevious(){
             '<td>Действия</td>' +
             '</tr>\n';
             
-            for (let i=0; i<clientsJac.length; i++){
-                var clientJac = clientsJac[i];
-                date = new Date(clientJac.plannedDate).toLocaleDateString();
+            for (let i=0; i<clientsHaval.length; i++){
+                var clientHaval = clientsHaval[i];
+                date = new Date(clientHaval.plannedDate).toLocaleDateString();
                 
                 dateForIcon = new Date();
-                dateRemmark = new Date(clientJac.date_remmark);
+                dateRemmark = new Date(clientHaval.date_remmark);
 
                 var countDay = ((dateForIcon - dateRemmark) / (60 * 60 * 24 * 1000));
                 var comment;
-                if (clientJac.remmark != null && countDay < 3){
+                if (clientHaval.remmark != null && countDay < 3){
                     comment = '<i style="color: green;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
-                } else if (clientJac.remmark != null && countDay > 3 && countDay < 7){
+                } else if (clientHaval.remmark != null && countDay > 3 && countDay < 7){
                     comment = '<i style="color: yellow;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
                 }
-                else if (clientJac.remmark != null && countDay > 7){
+                else if (clientHaval.remmark != null && countDay > 7){
                     comment = '<i style="color: red;" type="button" class="fa fa-thumbs-up" aria-hidden="true"></i>';
                 } else {
                     comment = '<i style="color: grey;" class="fa fa-asterisk" aria-hidden="true"></i>';
                 }
 
-                clientsJacTableHead = clientsJacTableHead + '\n' +
-                '<tr><td>'+clientJac.owner+'</td>\n' +
-                '<td>'+clientJac.vin+'</td>\n' +
+                clientsHavalTableHead = clientsHavalTableHead + '\n' +
+                '<tr><td>'+clientHaval.owner+'</td>\n' +
+                '<td>'+clientHaval.vin+'</td>\n' +
                 '<td>'+date+'</td>\n' +
-                '<td>'+clientJac.phone+'</td>\n' +
-                '<td><i style="margin: 5px" onclick="showCardCalendarClientJac('+clientJac.id+')" type="button"  class="fa fa-cog aria-hidden=true"></i></button>\n' +
+                '<td>'+clientHaval.phone+'</td>\n' +
+                '<td><i style="margin: 5px" onclick="showCardCalendarClientHaval('+clientHaval.id+')" type="button"  class="fa fa-cog aria-hidden=true"></i></button>\n' +
                  comment + '</td></tr>';
                 
             }
 
-            document.getElementById("calendarClientJacPrevious").innerHTML = clientsJacTableHead; 
+            document.getElementById("calendarClientHavalPrevious").innerHTML = clientsHavalTableHead; 
         }
     };
-    xhttp.open("GET", restApiAddressNPS + "vas_calendar_client_jac/findPreviousMonth", true);
+    xhttp.open("GET", restApiAddressNPS + "vas_calendar_client_haval/findPreviousMonth", true);
     xhttp.send();
 }
-

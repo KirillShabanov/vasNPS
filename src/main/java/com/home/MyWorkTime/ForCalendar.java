@@ -37,6 +37,7 @@ public class ForCalendar {
                 XSSFCell vin = rowCall.getCell(2);
                 XSSFCell relaese = rowCall.getCell(3);
                 String newRelaese = String.valueOf(relaese).substring(0, 4);
+                System.out.println(i + ", " + newRelaese);
                 
                 XSSFCell sale = rowCall.getCell(4);
                 String dateSale = String.valueOf(sale);
@@ -445,7 +446,7 @@ public class ForCalendar {
 
 
 
-                dataCall.createCell(0).setCellValue("INSERT INTO vas_calendar_client_jac (owner, model, vehicle_identification_number, year_release, date_sale, phone, planned_date, add_date, activity, to0_date, to0_mileage, to1_date, to1_mileage, to2_date, to2_mileage, to3_date, to3_mileage, to4_date, to4_mileage, to5_date, to5_mileage, to6_date, to6_mileage, to7_date, to7_mileage, to8_date, to8_mileage, to9_date, to9_mileage, to10_date, to10_mileage)"
+                dataCall.createCell(0).setCellValue("INSERT INTO vas_calendar_client_haval (owner, model, vehicle_identification_number, year_release, date_sale, phone, planned_date, add_date, activity, to0_date, to0_mileage, to1_date, to1_mileage, to2_date, to2_mileage, to3_date, to3_mileage, to4_date, to4_mileage, to5_date, to5_mileage, to6_date, to6_mileage, to7_date, to7_mileage, to8_date, to8_mileage, to9_date, to9_mileage, to10_date, to10_mileage)"
                 + " VALUES (" + "'"+name+"', " + "'"+model+"', " + "'"+vin+"', " + 
                 "'"+newRelaese+"', " +
                 saleDate+", " +

@@ -155,7 +155,7 @@ public class VasCalendarJacService {
             vasCalendarJacRepository.updateToOne(vin, to1_date, to1_mileage, plannedDate);
         }
         //ТО-2 если авто впервые с пробегом
-        else if ((key).equals("") && ((diffDays > 120 & diffDays < 790) && (vasCalendarModelDTO.getMileage() > 11000 & vasCalendarModelDTO.getMileage() < 30000))){
+        else if ((key).equals("") && ((diffDays > 120 & diffDays < 790) && (vasCalendarModelDTO.getMileage() > 11000 & vasCalendarModelDTO.getMileage() < 22000))){
             Long to2_mileage = vasCalendarModelDTO.getMileage();
             Date to2_date = vasCalendarModelDTO.getDateRepair();
             vin = vasCalendarModelDTO.getVin();
@@ -168,7 +168,7 @@ public class VasCalendarJacService {
 
         }
         //ТО-3 если авто впервые с пробегом
-        else if ((key).equals("") && ((diffDays > 120 & diffDays < 1185) && (vasCalendarModelDTO.getMileage() > 30000 & vasCalendarModelDTO.getMileage() < 41000))){
+        else if ((key).equals("") && ((diffDays > 120 & diffDays < 1185) && (vasCalendarModelDTO.getMileage() > 22000 & vasCalendarModelDTO.getMileage() < 33000))){
             Long to3_mileage = vasCalendarModelDTO.getMileage();
             Date to3_date = vasCalendarModelDTO.getDateRepair();
             vin = vasCalendarModelDTO.getVin();
@@ -180,7 +180,7 @@ public class VasCalendarJacService {
             vasCalendarJacRepository.updateToThree(vin, to3_date, to3_mileage, plannedDate);
         }
         //ТО-4 если авто впервые с пробегом
-        else if ((key).equals("") && ((diffDays > 120 & diffDays < 1580) && (vasCalendarModelDTO.getMileage() > 41000 & vasCalendarModelDTO.getMileage() < 52000))){
+        else if ((key).equals("") && ((diffDays > 120 & diffDays < 1580) && (vasCalendarModelDTO.getMileage() > 33000 & vasCalendarModelDTO.getMileage() < 44000))){
             Long to4_mileage = vasCalendarModelDTO.getMileage();
             Date to4_date = vasCalendarModelDTO.getDateRepair();
             vin = vasCalendarModelDTO.getVin();
@@ -192,7 +192,7 @@ public class VasCalendarJacService {
             vasCalendarJacRepository.updateToFour(vin, to4_date, to4_mileage, plannedDate);
         }
         //Попытка добавить ТО за рамками 1-4
-        else if ((key).equals("") && diffDays > 1580 || (key).equals("") && vasCalendarModelDTO.getMileage() > 52000){
+        else if ((key).equals("") && diffDays > 1580 || (key).equals("") && vasCalendarModelDTO.getMileage() > 44000){
             LOGGER.log(Level.ERROR, "Сотрудник: " + vasCalendarModelDTO.getMasterName() + ". Попытка добавить ТО за рамками 1-4 в календаре клиента Jac, с номером кузова: "
                     + vasCalendarModelDTO.getVin() + ". Номер заказ-наряда: " + vasCalendarModelDTO.getNumOrder());
             //System.out.println("Попытка добавить ТО за рамками 1-4 в календаре клиента Jac, с номером кузова: "

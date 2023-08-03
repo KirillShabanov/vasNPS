@@ -22,14 +22,17 @@ public class VasRedirectedCalendarService {
 
     public final VasCalendarKiaService vasCalendarKiaService;
     public final VasCalendarJacService vasCalendarJacService;
+    public final VasCalendarHavalService vasCalendarHavalService;
 
     private static final Logger LOGGER = Logger.getLogger(VasRedirectedCalendarService.class.getName());
 
     @Autowired
     public VasRedirectedCalendarService(VasCalendarKiaService vasCalendarKiaService,
-                                        VasCalendarJacService vasCalendarJacService) {
+                                        VasCalendarJacService vasCalendarJacService,
+                                        VasCalendarHavalService vasCalendarHavalService) {
         this.vasCalendarKiaService = vasCalendarKiaService;
         this.vasCalendarJacService = vasCalendarJacService;
+        this.vasCalendarHavalService = vasCalendarHavalService;
     }
 
 
@@ -39,7 +42,9 @@ public class VasRedirectedCalendarService {
             vasCalendarKiaService.newRowForCalendarKia(vasCalendarModelDTO);
         } else if (vasCalendarModelDTO.getBrand().equals("Jac")) {
             vasCalendarJacService.newRowForCalendarJac(vasCalendarModelDTO);
-        } else {
+        } else if (vasCalendarModelDTO.getBrand().equals("Haval")) {
+            vasCalendarHavalService.newRowForCalendarHaval(vasCalendarModelDTO);
+        }else {
             LOGGER.log(Level.INFO, "Календарь клиента не заведен под данный бренд. "
                     + vasCalendarModelDTO.getBrand()
                     + ". Номер заказ-наряда: "

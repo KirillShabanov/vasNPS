@@ -101,5 +101,3 @@ function showCalendarClientKiaPrevious(){
     xhttp.open("GET", restApiAddressNPS + "vas_calendar_client_kia/findPreviousMonth", true);
     xhttp.send();
 }
-showCalendarClientKia();
-showCalendarClientKiaPrevious()

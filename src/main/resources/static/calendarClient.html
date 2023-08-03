@@ -31,7 +31,7 @@
                     <span class="logo_img"></span>
                 </a>
                 <nav id="button_navigation" class="button_navigation">
-                    <a href="" class="header__nav popup-link">
+                    <a href="#description_of_working_with_the_Client_Calendar" class="header__nav_tools popup-link" style="margin-right: 0px;">
                         Помощь
                     </a>
                     <a href="" class="header__nav popup-link">
@@ -47,12 +47,15 @@
     <div class="wrapper__tools">
         <header id="header__tools" class="header__tools lock-padding">
             <div class="header__container__tools _container">
-                <nav id="button_navigation" class="button_navigation">
+                <nav id="button_navigation" class="button_navigation" style="width:290px">
                     <a href="#calendar_client_kia" class="header__nav_tools popup-link">
                         Календарь клиента KIA
                     </a>
                     <a href="#calendar_client_jac" class="header__nav_tools popup-link">
                         Календарь клиента JAC
+                    </a>
+                    <a href="#calendar_client_haval" class="header__nav_tools popup-link">
+                        Календарь клиента Haval
                     </a>
                     <a href="#" class="header__nav_tools popup-link">
                         Календарь клиента
@@ -70,8 +73,8 @@
                 <div class="popup__title">Календарь клиента KIA</div>
                 <!-- Ссылки вкладки -->
                 <div class="tab">
-                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOKiaThisMonths')">Текущий месяц</button>
-                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOKiaPreviousMonths')">Предыдущий месяц</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOKiaThisMonths'); showCalendarClientKia()">Текущий месяц</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOKiaPreviousMonths'); showCalendarClientKiaPrevious()">Предыдущий месяц</button>
                 </div>
                 <!-- Содержимое вкладки -->
                 <div id="TOKiaThisMonths" class="tabcontent">
@@ -90,10 +93,10 @@
         </div>
     </div>
     <!--Карточка Календарь KIA-->
-    <div id="client_TO_card" class="popup">
+    <div id="client_TO_card_kia" class="popup">
         <div class="popup__body">
             <div class="popup__content">
-                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientKia()" aria-hidden="true"></i></a>
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientKia(); showCalendarClientKiaPrevious()" aria-hidden="true"></i></a>
                 <div class="popup__title">Карточка ТО</div>
                 <div style="margin-top: -15px;">ФИО: <input id="hidden1" style="display: none;"><label id="ownerCard" style="font-size: 18px; font-weight: 600;" for="hidden1"> </label></div>
                 <div style="margin-top: 0px;">VIN: <input id="hidden2" style="display: none;"><label id="vinCard" style="font-size: 18px; font-weight: 600;" for="hidden2"> </label></div>
@@ -118,8 +121,8 @@
                     <div style="margin-top: 15px;">Примечания: <input id="remarkCardHidden" style="display: none;"><label id="remarkCard" style="font-size: 18px; font-weight: 600;" for="remarkCardHidden"> </label></div>
                 </div>
                 <div>
-                    <textarea id="remmarkText" style="margin-top: 15px; box-shadow: 1px 1px 2px 0 black; border-radius: 15px; padding: 10px;" name="details" cols="30" rows="3" placeholder="Введите дополнительную информацию"></textarea>
-                    <button onclick="addRemarkCalendarKia()" class="btn_user" type="submit">Сохранить</button>
+                    <textarea id="remmarkText_kia" style="margin-top: 15px; box-shadow: 1px 1px 2px 0 black; border-radius: 15px; padding: 10px;" name="details" cols="30" rows="3" placeholder="Введите дополнительную информацию"></textarea>
+                    <button id="remmarkText_kia_button" onclick="addRemarkCalendarKia()" class="btn_user" type="submit">Сохранить</button>
                 </div>
             </div>
         </div>
@@ -133,8 +136,8 @@
                 <div class="popup__title">Календарь клиента JAC</div>
                 <!-- Ссылки вкладки -->
                 <div class="tab">
-                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOJacThisMonths')">Текущий месяц</button>
-                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOJacPreviousMonths')">Предыдущий месяц</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOJacThisMonths'); showCalendarClientJac()">Текущий месяц</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOJacPreviousMonths'); showCalendarClientJacPrevious()">Предыдущий месяц</button>
                 </div>
                 <div id="TOJacThisMonths" class="tabcontent">
                     <div class="popup__table">
@@ -155,7 +158,7 @@
     <div id="client_TO_card_jac" class="popup">
         <div class="popup__body">
             <div class="popup__content">
-                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientJac()" aria-hidden="true"></i></a>
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientJac(); showCalendarClientJacPrevious()" aria-hidden="true"></i></a>
                 <div class="popup__title">Карточка ТО</div>
                 <div style="margin-top: -15px;">ФИО: <input id="hidden1" style="display: none;"><label id="ownerCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden1"> </label></div>
                 <div style="margin-top: 0px;">VIN: <input id="hidden2" style="display: none;"><label id="vinCard_jac" style="font-size: 18px; font-weight: 600;" for="hidden2"> </label></div>
@@ -181,8 +184,82 @@
                 </div>
                 <div>
                     <textarea id="remmarkText_jac" style="margin-top: 15px; box-shadow: 1px 1px 2px 0 black; border-radius: 15px; padding: 10px;" name="details" cols="30" rows="3" placeholder="Введите дополнительную информацию"></textarea>
-                    <button onclick="addRemarkCalendarJac()" class="btn_user" type="submit">Сохранить</button>
+                    <button id="remmarkText_jac_button" onclick="addRemarkCalendarJac()" class="btn_user" type="submit">Сохранить</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+     <!--Календарь Haval-->
+     <div id="calendar_client_haval" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Календарь клиента HAVAL</div>
+                <!-- Ссылки вкладки -->
+                <div class="tab">
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOHavalThisMonths'); showCalendarClientHaval()">Текущий месяц</button>
+                    <button class="tablinks" onclick="openTabsEngineer(event, 'TOHavalPreviousMonths'); showCalendarClientHavalPrevious()">Предыдущий месяц</button>
+                </div>
+                <!-- Содержимое вкладки -->
+                <div id="TOHavalThisMonths" class="tabcontent">
+                    <div class="popup__table">
+                        <table id="calendarClientHaval" class="table table-striped" style="margin-left: -15px;">
+                        </table>
+                    </div>
+                </div>
+                <div id="TOHavalPreviousMonths" class="tabcontent">
+                    <div class="popup__table">
+                        <table id="calendarClientHavalPrevious" class="table table-striped" style="margin-left: -15px;">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Карточка Календарь HAVAL-->
+    <div id="client_TO_card_haval" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" onclick="showCalendarClientHaval(); showCalendarClientHavalPrevious()" aria-hidden="true"></i></a>
+                <div class="popup__title">Карточка ТО</div>
+                <div style="margin-top: -15px;">ФИО: <input id="hidden1" style="display: none;"><label id="ownerCard_haval" style="font-size: 18px; font-weight: 600;" for="hidden1"> </label></div>
+                <div style="margin-top: 0px;">VIN: <input id="hidden2" style="display: none;"><label id="vinCard_haval" style="font-size: 18px; font-weight: 600;" for="hidden2"> </label></div>
+                <div style="margin-top: 0px;">Телефон: <input id="hidden3" style="display: none;"><label id="phoneCard_haval" style="font-size: 18px; font-weight: 600;" for="hidden3"> </label></div>
+                <div style="margin-top: 0px;">Предполагаемая дата визита: <input id="hidden4" style="display: none;"><label id="dateTOCard_haval" style="font-size: 18px; font-weight: 600;" for="hidden4"> </label></div>
+
+                <div>
+                    <div class="popup__title" style="margin-top: 20px;">Пройденные ТО</div>
+                    <div style="margin-top: -15px;">ТО-0: <input id="hiddenTO0" style="display: none;"><label id="to0Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO0"> </label></div>
+                    <div style="margin-top: 0px;">ТО-1: <input id="hiddenTO1" style="display: none;"><label id="to1Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO1"> </label></div>
+                    <div style="margin-top: 0px;">ТО-2: <input id="hiddenTO2" style="display: none;"><label id="to2Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO2"> </label></div>
+                    <div style="margin-top: 0px;">ТО-3: <input id="hiddenTO3" style="display: none;"><label id="to3Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO3"> </label></div>
+                    <div style="margin-top: 0px;">ТО-4: <input id="hiddenTO4" style="display: none;"><label id="to4Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO4"> </label></div>
+                    <div style="margin-top: 0px;">ТО-5: <input id="hiddenTO5" style="display: none;"><label id="to5Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO5"> </label></div>
+                    <div style="margin-top: 0px;">ТО-6: <input id="hiddenTO6" style="display: none;"><label id="to6Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO6"> </label></div>
+                    <div style="margin-top: 0px;">ТО-7: <input id="hiddenTO7" style="display: none;"><label id="to7Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO7"> </label></div>
+                    <div style="margin-top: 0px;">ТО-8: <input id="hiddenTO8" style="display: none;"><label id="to8Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO8"> </label></div>
+                    <div style="margin-top: 0px;">ТО-9: <input id="hiddenTO9" style="display: none;"><label id="to9Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO9"> </label></div>
+                    <div style="margin-top: 0px;">ТО-10: <input id="hiddenTO10" style="display: none;"><label id="to10Card_haval" style="font-size: 18px; font-weight: 600;" for="hiddenTO10"> </label></div>
+                </div>
+                <div>
+                    <div style="margin-top: 15px;">Примечания: <input id="remarkCardHidden" style="display: none;"><label id="remarkCard_haval" style="font-size: 18px; font-weight: 600;" for="remarkCardHidden"> </label></div>
+                </div>
+                <div>
+                    <textarea id="remmarkText_haval" style="margin-top: 15px; box-shadow: 1px 1px 2px 0 black; border-radius: 15px; padding: 10px;" name="details" cols="30" rows="3" placeholder="Введите дополнительную информацию"></textarea>
+                    <button id="remmarkText_haval_button" onclick="addRemarkCalendarHaval()" class="btn_user" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Вкладка помощь-->
+    <div id="description_of_working_with_the_Client_Calendar" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#header" class="popup__close close-popup"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <div class="popup__title">Описание работы с Календарем клиента</div>
+                ыдовлимыфвимдыфивмдифывдмифыдловимдыфоивмдфыивмдол
             </div>
         </div>
     </div>
@@ -190,11 +267,11 @@
     
     <script src="js/popupUsers.js"></script>
     <script src="js/tabsJs.js"></script>
-
     <script src="js/showCalendarClientKia.js"></script>
     <script src="js/showCardCalendarClientKia.js"></script>
-
     <script src="js/showCalendarClientJac.js"></script>
     <script src="js/showCardCalendarClientJac.js"></script>
+    <script src="js/showCalendarClientHaval.js"></script>
+    <script src="js/showCardCalendarClientHaval.js"></script>
 </body>
 </html>

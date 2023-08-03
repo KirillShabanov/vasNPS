@@ -1,11 +1,11 @@
 var restApiAddressNPS = "http://192.168.10.22:8080/"; //"http://localhost:8080/" "http://192.168.10.22:8080/"
 
-let client_TO_card_jac = document.getElementById('client_TO_card_jac');
+var client_card_jac = document.getElementById('client_TO_card_jac');
 var idForButton;
 
 function showCardCalendarClientJac(id){
 
-    client_TO_card_jac.className = ('popup open');
+    client_card_jac.className = ('popup open');
 
     idForButton = id;
 
@@ -125,9 +125,7 @@ function showCardCalendarClientJac(id){
         }
     };
     xhttp.open("GET", restApiAddressNPS + `vas_calendar_client_jac/findThisMonthTO/${id}`, true);
-    xhttp.send();
-
-    
+    xhttp.send(); 
 }
 
 function addRemarkCalendarJac(){
@@ -140,11 +138,11 @@ function addRemarkCalendarJac(){
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify({"id":idForButton, "remmark":remmark}));
 
-    cleanRemmark();
+    cleanRemmarkJac();
     document.getElementById('remarkCard_jac').innerHTML = remmark;
     }
 }
 
-function cleanRemmark(){
+function cleanRemmarkJac(){
     document.getElementById('remmarkText_jac').value = "";
 }
