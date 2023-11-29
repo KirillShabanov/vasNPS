@@ -11,6 +11,7 @@
  */
 package com.home.MyWorkTime.service;
 
+    /* 
 import com.home.MyWorkTime.entity.VasMailNpsModel;
 import com.home.MyWorkTime.entity.VasManagerNpsModel;
 import com.home.MyWorkTime.repository.VasMailNpsRepository;
@@ -46,6 +47,7 @@ public class VasMailNpsKiaService {
         this.vasManagerNpsRepository = vasManagerNpsRepository;
     }
 
+     
     @SneakyThrows
     @Scheduled(cron = "1 00 19 * * 1-5")
     @Scheduled(cron = "1 00 16 * * 6-7")
@@ -135,4 +137,6 @@ public class VasMailNpsKiaService {
             //LOGGER.log(Level.INFO, "Список KIA не сформирован, данных нет.");
         }
     }
+    
 }
+*/

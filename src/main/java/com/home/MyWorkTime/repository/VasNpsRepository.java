@@ -55,6 +55,9 @@ public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
     @Query(value =  "UPDATE vas_nps SET calendar_client = 'selected' WHERE num_order = :numOrder ", nativeQuery = true)
     void updateValueCalendar(@Param("numOrder") String numOrder);
 
-    
+
+    @Query(value = "SELECT * FROM vas_nps WHERE DATE(date_order) = DATE(:dateForSMS) " +
+                "AND brand LIKE 'Kia' ", nativeQuery = true)
+    List<VasNpsModel> getDataForBase(Date dateForSMS);   
 }
 
