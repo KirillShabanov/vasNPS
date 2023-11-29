@@ -54,5 +54,7 @@ public interface VasNpsRepository extends JpaRepository<VasNpsModel, Long> {
     @Transactional
     @Query(value =  "UPDATE vas_nps SET calendar_client = 'selected' WHERE num_order = :numOrder ", nativeQuery = true)
     void updateValueCalendar(@Param("numOrder") String numOrder);
+
+    
 }
 
